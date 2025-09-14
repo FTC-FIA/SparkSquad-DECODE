@@ -50,7 +50,7 @@ import org.firstinspires.ftc.teamcode.component.drive.TankDrive;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="TeleOp_TankStarter", group="Iterative OpMode")
+@TeleOp(name="Ollie_TeleOp_TankStarter", group="Iterative OpMode")
 public class TeleOp_Starter extends OpMode
 {
     // Declare OpMode members.
@@ -113,8 +113,7 @@ public class TeleOp_Starter extends OpMode
         tankDrive.drive(leftPower, rightPower, scaleFactor);
 
         // Send calculated power to wheels
-        leftDrive.setPower(leftPower);
-        rightDrive.setPower(rightPower);
+
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
