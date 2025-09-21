@@ -56,8 +56,11 @@ public class Auton_Starter extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftDrive = null;
-    private DcMotor rightDrive = null;
+    private DcMotor frontLeft= null;
+    private DcMotor frontRight = null;
+    private DcMotor rearLeft= null;
+    private DcMotor rearRight = null;
+
     private TankDrive tankDrive = null;
 
     /*
@@ -70,16 +73,19 @@ public class Auton_Starter extends OpMode
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_front_drive");
-        rightDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
-        tankDrive = new TankDrive(leftDrive, rightDrive);
+        frontLeft  = hardwareMap.get(DcMotor.class, "front_left");
+        frontRight = hardwareMap.get(DcMotor.class, "front_right");
+        rearLeft  = hardwareMap.get(DcMotor.class, "rear_left");
+        rearRight = hardwareMap.get(DcMotor.class, "rear_right");
+        // tankDrive = new TankDrive(leftDrive, rightDrive);
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        leftDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightDrive.setDirection(DcMotor.Direction.FORWARD);
-
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        rearLeft.setDirection(DcMotor.Direction.REVERSE);
+        rearRight.setDirection(DcMotor.Direction.FORWARD);
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
         System.out.println("TeleOp_Starter: Initializing Logging"); // where does this go?
@@ -111,7 +117,39 @@ public class Auton_Starter extends OpMode
         double rightPower = 1.0f;
         double scaleFactor = 0.1;
 
-        // run forward for 3 seconds then stop
+        // run forward for 3 s
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+
+        // seconds then stop
         if (runtime.seconds() > 1.0f) {
             leftPower = 0.0f;
             rightPower = 0.0f;
@@ -120,8 +158,10 @@ public class Auton_Starter extends OpMode
         tankDrive.drive(leftPower, rightPower, scaleFactor);
 
         // Send calculated power to wheels
-        leftDrive.setPower(leftPower);
-        rightDrive.setPower(rightPower);
+        frontLeft.setPower(leftPower);
+        frontRight.setPower(rightPower);
+        rearLeft.setPower(leftPower);
+        rearRight.setPower(rightPower);
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());

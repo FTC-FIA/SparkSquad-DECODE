@@ -69,8 +69,8 @@ public class TeleOp_Starter extends OpMode
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_front_drive");
-        rightDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
+        leftDrive  = hardwareMap.get(DcMotor.class, "left_front");
+        rightDrive = hardwareMap.get(DcMotor.class, "right_front");
         tankDrive = new TankDrive(leftDrive, rightDrive);
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
@@ -107,18 +107,19 @@ public class TeleOp_Starter extends OpMode
         // Setup a variable for each drive wheel to save power level for telemetry
         double leftPower = -gamepad1.left_stick_y;
         double rightPower = -gamepad1.right_stick_y;
-        double scaleFactor = 0.5;
+        double scaleFactor = 0.7;
 
         // Invoke the TankDrive to control the motors
         tankDrive.drive(leftPower, rightPower, scaleFactor);
 
         // Send calculated power to wheels
-        leftDrive.setPower(leftPower);
-        rightDrive.setPower(rightPower);
+//        leftDrive.setPower(leftPower);
+//       rightDrive.setPower(rightPower);
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+        telemetry.addData("hello", "6766767676777");
     }
 
     /*
