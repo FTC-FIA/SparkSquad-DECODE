@@ -71,7 +71,7 @@ public class TeleOp_ShooterPrototype extends OpMode {
 
         if (gamepad2.start && !modeButtonWasPressedLastLoop) {
             mode = mode + 1;
-            if (mode > 3) {
+            if (mode > 4) {
                 mode = 0;
             }
         }
@@ -85,6 +85,8 @@ public class TeleOp_ShooterPrototype extends OpMode {
             mode2();
         } else if (mode == 3) {
             mode3();
+        } else if (mode == 4) {
+            mode4();
         }
 
         // Show the elapsed game time and wheel power.
@@ -164,6 +166,19 @@ public class TeleOp_ShooterPrototype extends OpMode {
         }
         if (gamepad2.right_bumper) {
             shooterPower = shooterPower + .67;
+        }
+
+        shooter.setPower(shooterPower);
+    }
+
+    private void mode4() {
+        double shooterPower = 0;
+
+        if (gamepad2.left_bumper) {
+            shooterPower = shooterPower - 0.33;
+        }
+        if (gamepad2.right_bumper) {
+            shooterPower = shooterPower - 0.67;
         }
 
         shooter.setPower(shooterPower);
