@@ -16,6 +16,7 @@ public class TeleOp_ShooterPrototype extends OpMode {
     private DcMotor shooter;
     private Servo servo_1;
     private boolean modeButtonWasPressedLastLoop = false;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -70,7 +71,7 @@ public class TeleOp_ShooterPrototype extends OpMode {
 
         if (gamepad2.start && !modeButtonWasPressedLastLoop) {
             mode = mode + 1;
-            if (mode > 2) {
+            if (mode > 3) {
                 mode = 0;
             }
         }
@@ -82,6 +83,8 @@ public class TeleOp_ShooterPrototype extends OpMode {
             mode1();
         } else if (mode == 2) {
             mode2();
+        } else if (mode == 3) {
+            mode3();
         }
 
         // Show the elapsed game time and wheel power.
@@ -153,6 +156,18 @@ public class TeleOp_ShooterPrototype extends OpMode {
         shooter.setPower(gamepad2.right_stick_y);
     }
 
+    private void mode3() {
+        double shooterPower = 0;
+
+        if (gamepad2.left_bumper) {
+            shooterPower = shooterPower + .33;
+        }
+        if (gamepad2.right_bumper) {
+            shooterPower = shooterPower + .67;
+        }
+
+        shooter.setPower(shooterPower);
+    }
 
 
     /*
