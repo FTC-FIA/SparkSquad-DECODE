@@ -68,13 +68,13 @@ public class TeleOp_ShooterPrototype extends OpMode {
             servo_1.setPosition(.75);
         }
 
-        if (gamepad2.left_bumper && !modeButtonWasPressedLastLoop) {
+        if (gamepad2.start && !modeButtonWasPressedLastLoop) {
             mode = mode + 1;
             if (mode > 2) {
                 mode = 0;
             }
         }
-        modeButtonWasPressedLastLoop = gamepad2.left_bumper;
+        modeButtonWasPressedLastLoop = gamepad2.start;
 
         if (mode == 0) {
             mode0();
@@ -152,6 +152,8 @@ public class TeleOp_ShooterPrototype extends OpMode {
     private void mode2() {
         shooter.setPower(gamepad2.right_stick_y);
     }
+
+
 
     /*
      * Code to run ONCE after the driver hits STOP
