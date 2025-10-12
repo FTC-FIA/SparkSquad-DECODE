@@ -52,9 +52,11 @@ public class TeleOp_ShooterPrototype extends OpMode {
     @Override
     public void loop() {
         // Setup a variable for each drive wheel to save power level for telemetry
-        double shooterPower = 0;
 
-        if (gamepad2.dpad_down) {servo_1.setPosition(0);
+
+
+        if (gamepad2.dpad_down) {
+            servo_1.setPosition(0);
         }
         if (gamepad2.dpad_right){
             servo_1.setPosition(0.25);
@@ -66,18 +68,20 @@ public class TeleOp_ShooterPrototype extends OpMode {
             servo_1.setPosition(.75);
         }
 
-        if (gamepad2.left_bumper) {
+        if (gamepad2.left_bumper && !modeButtonWasPressedLastLoop) {
             mode = mode + 1;
-            if (mode > 1) {
+            if (mode > 2) {
                 mode = 0;
             }
         }
+        modeButtonWasPressedLastLoop = gamepad2.left_bumper;
 
         if (mode == 0) {
             mode0();
-        }
-        if (mode == 1) {
+        } else if (mode == 1) {
             mode1();
+        } else if (mode == 2) {
+            mode2();
         }
 
         // Show the elapsed game time and wheel power.
@@ -143,6 +147,10 @@ public class TeleOp_ShooterPrototype extends OpMode {
             shooter.setPower(-1);
 
         }
+    }
+
+    private void mode2() {
+        shooter.setPower(gamepad2.right_stick_y);
     }
 
     /*
