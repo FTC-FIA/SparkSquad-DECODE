@@ -1,15 +1,14 @@
 package org.firstinspires.ftc.teamcode.opmode;
 
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.component.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.component.mechanism.Shooter;
-import org.firstinspires.ftc.teamcode.component.sensor.GoBildaPinpointDriver;
 import org.firstinspires.ftc.teamcode.component.util.SparkLogger;
 
 public abstract class RobotBaseOpMode extends OpMode
@@ -21,6 +20,9 @@ public abstract class RobotBaseOpMode extends OpMode
     final String SHOOTER_MOTOR_NAME = "motor_0";
     final String TRIGGER_SERVO_NAME = "servo_1";
     final String INTAKE_MOTOR_NAME = "intake_motor";
+
+    final double ODOMETER_X_OFFSET = -82.5;
+    final double ODOMETER_Y_OFFSET = 125.0;
 
     protected final ElapsedTime runtime = new ElapsedTime();
 
@@ -49,31 +51,40 @@ public abstract class RobotBaseOpMode extends OpMode
     @Override
     public void init() {
 
+        // Initialize devices
         frontLeftMotor  = hardwareMap.get(DcMotor.class, FRONT_LEFT_DRIVE_MOTOR_NAME);
         frontRightMotor = hardwareMap.get(DcMotor.class, FRONT_RIGHT_DRIVE_MOTOR_NAME);
         rearLeftMotor  = hardwareMap.get(DcMotor.class, REAR_LEFT_DRIVE_MOTOR_NAME);
         rearRightMotor = hardwareMap.get(DcMotor.class, REAR_RIGHT_DRIVE_MOTOR_NAME);
+        shooterMotor = hardwareMap.get(DcMotor.class, SHOOTER_MOTOR_NAME);
+        triggerServo = hardwareMap.get(Servo.class, TRIGGER_SERVO_NAME);
+        intakeMotor = hardwareMap.get(DcMotor.class, INTAKE_MOTOR_NAME);
+        odometer = hardwareMap.get(com.qualcomm.hardware.gobilda.GoBildaPinpointDriver.class,"odo");
 
+        // Configure devices
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
         frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
         rearLeftMotor.setDirection(DcMotor.Direction.FORWARD);
         rearRightMotor.setDirection(DcMotor.Direction.REVERSE);
-
-        shooterMotor = hardwareMap.get(DcMotor.class, SHOOTER_MOTOR_NAME);
-        triggerServo = hardwareMap.get(Servo.class, TRIGGER_SERVO_NAME);
-        intakeMotor = hardwareMap.get(DcMotor.class, INTAKE_MOTOR_NAME);
-
         shooterMotor.setDirection(DcMotor.Direction.FORWARD);
         intakeMotor.setDirection(DcMotor.Direction.FORWARD);
+        // TODO: servo config?
+        odometer.setOffsets(ODOMETER_X_OFFSET, ODOMETER_Y_OFFSET, DistanceUnit.MM); // TODO: check if signs are correct +/-
+        odometer.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
+        odometer.setEncoderDirections(
+                GoBildaPinpointDriver.EncoderDirection.FORWARD,
+                GoBildaPinpointDriver.EncoderDirection.FORWARD
+        );
+        odometer.resetPosAndIMU();
+        odometer.recalibrateIMU();
 
+        // Initialize components
         mecanumDrive = new MecanumDrive(frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor);
         shooter = new Shooter(shooterMotor, triggerServo);
 
-        telemetry.addData("Status", "Initialized");
+        // Log status
+        telemetry.addData("Status", "Robot Base Initialized");
         telemetry.update();
-
-        logger.log("Robot initialized");
+        logger.log("Robot Base Initialized");
     }
-
-
 }
