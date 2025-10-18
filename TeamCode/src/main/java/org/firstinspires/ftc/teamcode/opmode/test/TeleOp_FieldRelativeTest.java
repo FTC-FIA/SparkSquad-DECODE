@@ -30,18 +30,7 @@ public class TeleOp_FieldRelativeTest extends RobotBaseOpMode
         double rotate = -gamepad1.right_stick_x;
 
         fieldRelativeDrive.drive(forward, strafe, rotate);
-
-        // Show the elapsed game time and wheel power.
-        telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Motors", "forward (%.2f), strafe (%.2f), rotate (%.2f)", forward, strafe, rotate);
-
     }
 
-    /*
-     * Code to run ONCE after the driver hits STOP
-     */
-    @Override
-    public void stop() {
-    }
 
 }
