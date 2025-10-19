@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.component.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
 
-@TeleOp(name="TeleOp_MecanumPinpoint", group="Production")
+@TeleOp(name="TeleOp_FieldRelativeTest", group="Production")
 public class TeleOp_FieldRelativeTest extends RobotBaseOpMode
 {
 
@@ -19,7 +19,7 @@ public class TeleOp_FieldRelativeTest extends RobotBaseOpMode
     @Override
     public void init() {
         super.init();
-        fieldRelativeDrive = new FieldRelativeDrive(mecanumDrive, odometer);
+        fieldRelativeDrive = new FieldRelativeDrive(mecanumDrive, odometer, telemetry);
     }
 
     @Override

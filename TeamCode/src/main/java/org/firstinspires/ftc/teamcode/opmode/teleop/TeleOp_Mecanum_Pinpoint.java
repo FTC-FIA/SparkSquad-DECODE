@@ -1,12 +1,12 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.component.drive.MecanumDrive;
-import org.firstinspires.ftc.teamcode.component.sensor.GoBildaPinpointDriver;
 
 
 @TeleOp(name="TeleOp_MecanumPinpoint", group="Production")
