@@ -14,13 +14,13 @@ import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 public class TeleOp_FieldRelativeTest extends RobotBaseOpMode
 {
 
-    private FieldRelativeDrive fieldRelativeDrive = null;
-
-    @Override
-    public void init() {
-        super.init();
-        fieldRelativeDrive = new FieldRelativeDrive(mecanumDrive, odometer, telemetry);
-    }
+//    private FieldRelativeDrive fieldRelativeDrive = null;
+//
+//    @Override
+//    public void init() {
+//        super.init();
+//        fieldRelativeDrive = new FieldRelativeDrive(mecanumDrive, odometer, telemetry);
+//    }
 
     @Override
     public void loop() {
