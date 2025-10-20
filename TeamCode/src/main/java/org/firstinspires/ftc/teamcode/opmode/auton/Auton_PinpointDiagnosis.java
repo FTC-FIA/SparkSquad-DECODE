@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode.opmode.auton;
 
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.component.sensor.GoBildaPinpointDriver;
 import org.firstinspires.ftc.teamcode.component.drive.MecanumDrive;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
