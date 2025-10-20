@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.test;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -12,6 +11,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
 @TeleOp(name="TeleOp_ShooterPrototype", group="Test")
+@Disabled
 public class TeleOp_ShooterPrototype extends OpMode {
     final String SHOOTER_MOTOR_NAME = "motor_0";
     final String SERVO_1_NAME = "servo_1";
@@ -21,8 +21,6 @@ public class TeleOp_ShooterPrototype extends OpMode {
     private Servo servo_1;
     private boolean modeButtonWasPressedLastLoop = false;
 
-    private FtcDashboard dashboard = FtcDashboard.getInstance();
-    private Telemetry dashboardTelemetry  = dashboard.getTelemetry();
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -34,8 +32,6 @@ public class TeleOp_ShooterPrototype extends OpMode {
         servo_1  = hardwareMap.get(Servo.class,SERVO_1_NAME);
         shooter.setDirection(DcMotor.Direction.FORWARD);
 
-        dashboardTelemetry.addData("x", 33);
-        dashboardTelemetry.update();
 
         telemetry.addData("Status", "Initialized");
         System.out.println("TeleOp_Starter: Initializing Logging"); // where does this go?
@@ -56,9 +52,6 @@ public class TeleOp_ShooterPrototype extends OpMode {
         runtime.reset();
     }
 
-    /*
-     * Code to run REPEATEDLY after the driver hits START but before they hit STOP
-     */
     @Override
     public void loop() {
         // Setup a variable for each drive wheel to save power level for telemetry
@@ -122,8 +115,6 @@ public class TeleOp_ShooterPrototype extends OpMode {
             shooterPower = 1.0;
         }
         shooter.setPower(shooterPower);
-        dashboardTelemetry.addData("Shooter Power", shooterPower);
-        dashboardTelemetry.update();
     }
 
     private void mode1() {
@@ -132,7 +123,6 @@ public class TeleOp_ShooterPrototype extends OpMode {
         boolean shooter50 =  gamepad2.b;
         boolean shooter75 =  gamepad2.y;
         boolean shooter100 =  gamepad2.x;
-
 
         if (Stop) {
             shooter.setPower(0);
@@ -143,24 +133,14 @@ public class TeleOp_ShooterPrototype extends OpMode {
         if (shooter50) {
             shooter.setPower(-.5);
         }
-
         if (shooter75) {
             shooter.setPower(-.75);
-
         }
-
         if (shooter100) {
             shooter.setPower(-1);
-
         }
     }
 
-    /*
-     * Code to run ONCE after the driver hits STOP
-     */
-    @Override
-    public void stop() {
-    }
 }
 
 

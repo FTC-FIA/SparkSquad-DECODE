@@ -14,86 +14,25 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.robotcore.external.navigation.UnnormalizedAngleUnit;
+import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
 import java.util.Locale;
 
 @TeleOp(name="TeleOp_MecanumStarter", group="Iterative OpMode")
 @Disabled
-public class TeleOp_Mecanum_Pinpoint_Demo extends OpMode
-{
-    final String FRONT_LEFT_DRIVE_MOTOR_NAME = "front_left";
-    final String FRONT_RIGHT_DRIVE_MOTOR_NAME = "front_right";
-    final String REAR_LEFT_DRIVE_MOTOR_NAME = "rear_left";
-    final String REAR_RIGHT_DRIVE_MOTOR_NAME = "rear_right";
+public class TeleOp_Mecanum_Pinpoint_Demo extends RobotBaseOpMode {
 
-    private final ElapsedTime runtime = new ElapsedTime();
-    private MecanumDrive mecanumDrive = null;
-    private GoBildaPinpointDriver odo; // Declare OpMode member for the Odometry Computer
-
-    /*
-     * Code to run ONCE when the driver hits INIT
-     */
-    @Override
-    public void init() {
-        telemetry.addData("Status", "Initializing");
-
-        // INIT DRIVETRAIN
-        DcMotor frontLeft  = hardwareMap.get(DcMotor.class, FRONT_LEFT_DRIVE_MOTOR_NAME);
-        DcMotor frontRight = hardwareMap.get(DcMotor.class, FRONT_RIGHT_DRIVE_MOTOR_NAME);
-        DcMotor rearLeft  = hardwareMap.get(DcMotor.class, REAR_LEFT_DRIVE_MOTOR_NAME);
-        DcMotor rearRight = hardwareMap.get(DcMotor.class, REAR_RIGHT_DRIVE_MOTOR_NAME);
-
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        rearLeft.setDirection(DcMotor.Direction.FORWARD);
-        rearRight.setDirection(DcMotor.Direction.REVERSE);
-
-        mecanumDrive = new MecanumDrive(frontLeft, frontRight, rearLeft, rearRight);
-
-        // INIT PINPOINT
-        odo = hardwareMap.get(GoBildaPinpointDriver.class,"odo");
-        odo.setOffsets(-82.5, 125, DistanceUnit.MM); // TODO: check if signs are correct +/-
-        odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
-        odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
-        odo.resetPosAndIMU();
-
-        // INIT OTHER MECHANISMS - SHOOTER, INTAKE, LIFT, LIMELIGHT, ETC.
-
-        // PRINT TELEMETRY
-
-        telemetry.addData("Status", "Initialized");
-        System.out.println("TeleOp_Starter: Initializing Logging"); // TODO: where does this go?
-    }
-
-    /*
-     * Code to run REPEATEDLY after the driver hits INIT, but before they hit START
-     */
-    @Override
-    public void init_loop() {
-    }
-
-    /*
-     * Code to run ONCE when the driver hits START
-     */
-    @Override
-    public void start() {
-        runtime.reset(); // TODO: do we care about runtime?
-    }
-
-    /*
-     * Code to run REPEATEDLY after the driver hits START but before they hit STOP
-     */
     @Override
     public void loop() {
 
         // Read sensors and inputs
-        odo.update();
+        odometer.update();
 
         if (gamepad1.a) {
-            odo.resetPosAndIMU();
+            odometer.resetPosAndIMU();
         }
         if (gamepad1.b) {
-            odo.recalibrateIMU();
+            odometer.recalibrateIMU();
         }
 
         double forward = -gamepad1.left_stick_y;
@@ -104,7 +43,7 @@ public class TeleOp_Mecanum_Pinpoint_Demo extends OpMode
         mecanumDrive.drive(forward, strafe, rotate);
 
         // Print telemetry
-        Pose2D pos = odo.getPosition();
+        Pose2D pos = odometer.getPosition();
         String position = String.format(
                 Locale.US, "{X: %.3f, Y: %.3f, H: %.3f}",
                 pos.getX(DistanceUnit.MM),
@@ -115,20 +54,11 @@ public class TeleOp_Mecanum_Pinpoint_Demo extends OpMode
 
         String velocity = String.format(
                 Locale.US, "{XVel: %.3f, YVel: %.3f, HVel: %.3f}",
-                odo.getVelX(DistanceUnit.MM),
-                odo.getVelY(DistanceUnit.MM),
-                odo.getHeadingVelocity(UnnormalizedAngleUnit.DEGREES)
+                odometer.getVelX(DistanceUnit.MM),
+                odometer.getVelY(DistanceUnit.MM),
+                odometer.getHeadingVelocity(UnnormalizedAngleUnit.DEGREES)
         );
         telemetry.addData("Velocity", velocity);
-        telemetry.addData("Pinppoint Device Status", odo.getDeviceStatus());
-
+        telemetry.addData("Pinppoint Device Status", odometer.getDeviceStatus());
     }
-
-    /*
-     * Code to run ONCE after the driver hits STOP
-     */
-    @Override
-    public void stop() {
-    }
-
 }

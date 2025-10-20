@@ -1,69 +1,15 @@
 package org.firstinspires.ftc.teamcode.opmode.test;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.teamcode.component.drive.MecanumDrive;
+import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
 
-@TeleOp(name="Test_TeleOp_Mecanum", group="Iterative OpMode")
-public class TeleOp_MotorTester extends OpMode
+@TeleOp(name="Test_TeleOp_MotorTester", group="Iterative OpMode")
+@Disabled
+public class TeleOp_MotorTester extends RobotBaseOpMode
 {
-    final String FRONT_LEFT_DRIVE_MOTOR_NAME = "front_left";
-    final String FRONT_RIGHT_DRIVE_MOTOR_NAME = "front_right";
-    final String REAR_LEFT_DRIVE_MOTOR_NAME = "rear_left";
-    final String REAR_RIGHT_DRIVE_MOTOR_NAME = "rear_right";
-    // Declare OpMode members.
-    private final ElapsedTime runtime = new ElapsedTime();
-    private MecanumDrive mecanumDrive = null;
 
-    DcMotor frontLeft;
-    DcMotor frontRight;
-    DcMotor rearLeft;
-    DcMotor rearRight;
-    /*
-     * Code to run ONCE when the driver hits INIT
-     */
-    @Override
-    public void init() {
-        telemetry.addData("Status", "Initialized");
-
-        frontLeft  = hardwareMap.get(DcMotor.class, FRONT_LEFT_DRIVE_MOTOR_NAME);
-        frontRight = hardwareMap.get(DcMotor.class, FRONT_RIGHT_DRIVE_MOTOR_NAME);
-        rearLeft  = hardwareMap.get(DcMotor.class, REAR_LEFT_DRIVE_MOTOR_NAME);
-        rearRight = hardwareMap.get(DcMotor.class, REAR_RIGHT_DRIVE_MOTOR_NAME);
-
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        rearLeft.setDirection(DcMotor.Direction.FORWARD);
-        rearRight.setDirection(DcMotor.Direction.REVERSE);
-
-        mecanumDrive = new MecanumDrive(frontLeft, frontRight, rearLeft, rearRight);
-
-        telemetry.addData("Status", "Initialized");
-        System.out.println("TeleOp_Starter: Initializing Logging"); // where does this go?
-    }
-
-    /*
-     * Code to run REPEATEDLY after the driver hits INIT, but before they hit START
-     */
-    @Override
-    public void init_loop() {
-    }
-
-    /*
-     * Code to run ONCE when the driver hits START
-     */
-    @Override
-    public void start() {
-        runtime.reset();
-    }
-
-    /*
-     * Code to run REPEATEDLY after the driver hits START but before they hit STOP
-     */
     @Override
     public void loop() {
         // Setup a variable for each drive wheel to save power level for telemetry
@@ -72,23 +18,15 @@ public class TeleOp_MotorTester extends OpMode
         double rearLeftPower = gamepad1.dpad_left ? 0.5 : 0.0;
         double rearRightPower = gamepad1.dpad_right ? 0.5 : 0.0;
 
-        this.frontLeft.setPower(frontLeftPower);
-        this.frontRight.setPower(frontRightPower);
-        this.rearLeft.setPower(rearLeftPower);
-        this.rearRight.setPower(rearRightPower);
-
+        this.frontLeftMotor.setPower(frontLeftPower);
+        this.frontRightMotor.setPower(frontRightPower);
+        this.rearLeftMotor.setPower(rearLeftPower);
+        this.rearRightMotor.setPower(rearRightPower);
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
-        //telemetry.addData("Motors", "forward (%.2f), strafe (%.2f), rotate (%.2f)", forward, strafe, rotate);
-
+        telemetry.update();
     }
 
-    /*
-     * Code to run ONCE after the driver hits STOP
-     */
-    @Override
-    public void stop() {
-    }
 
 }

@@ -1,6 +1,7 @@
-package org.firstinspires.ftc.teamcode.opmode.auton;
+package org.firstinspires.ftc.teamcode.opmode.test;
 
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -11,12 +12,12 @@ import org.firstinspires.ftc.teamcode.component.drive.MecanumDrive;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-import org.firstinspires.ftc.robotcore.external.navigation.UnnormalizedAngleUnit;
 
 import java.util.Locale;
-import java.lang.Math;
-@Autonomous(name="Auton_PinpointDiagnosis", group="Iterative OpMode")
-public class Auton_PinpointDiagnosis extends OpMode
+
+@Autonomous(name="Auton_PinpointDiagnosis", group="Test")
+@Disabled
+public class Auton_Pinpoint_Diagnosis extends OpMode
 {
     final String FRONT_LEFT_DRIVE_MOTOR_NAME = "front_left";
     final String FRONT_RIGHT_DRIVE_MOTOR_NAME = "front_right";

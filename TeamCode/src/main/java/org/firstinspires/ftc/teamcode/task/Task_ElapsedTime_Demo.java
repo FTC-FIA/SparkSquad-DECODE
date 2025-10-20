@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.task;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-public class Task_ElapsedTimeDemo implements Task {
+public class Task_ElapsedTime_Demo implements Task {
 
     private final double DEFAULT_DURATION = 1.0f; // in seconds
 
@@ -10,7 +10,7 @@ public class Task_ElapsedTimeDemo implements Task {
     private boolean isInitialized = false;
     private ElapsedTime elapsedTime = new ElapsedTime();
 
-    public Task_ElapsedTimeDemo(double dur) {
+    public Task_ElapsedTime_Demo(double dur) {
         duration = dur;
     }
 

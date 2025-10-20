@@ -9,14 +9,13 @@ import org.firstinspires.ftc.teamcode.component.drive.FieldRelativeDrive;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import org.firstinspires.ftc.teamcode.task.AutonTaskRunner;
 import org.firstinspires.ftc.teamcode.task.Task;
-import org.firstinspires.ftc.teamcode.task.Task_DriveToPose;
 import org.firstinspires.ftc.teamcode.task.Task_RelativeDriveToPose;
 
 import java.util.Locale;
 
 
-@Autonomous(name="Auton_TaskRunnerDrive_Demo", group="Test")
-public class Auton_TaskRunnerRelativeDrive extends RobotBaseOpMode {
+@Autonomous(name="Auton_TaskRunner_RelativeDrive", group="Test")
+public class Auton_TaskRunner_RelativeDrive extends RobotBaseOpMode {
 
     private FieldRelativeDrive relativeDrive = null;
     private Pose2D targetPoseFwd = new Pose2D(DistanceUnit.MM, 500.0, 0.0, AngleUnit.DEGREES, 45.0);

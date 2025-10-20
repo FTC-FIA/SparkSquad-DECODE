@@ -13,8 +13,8 @@ import org.firstinspires.ftc.teamcode.task.Task_DriveToPose;
 import java.util.Locale;
 
 
-@Autonomous(name="Auton_TaskRunnerDrive_Demo", group="Test")
-public class Auton_TaskRunnerDrive extends RobotBaseOpMode {
+@Autonomous(name="Auton_TaskRunner_MecanumDrive", group="Test")
+public class Auton_TaskRunner_MecanumDrive extends RobotBaseOpMode {
 
 
     private Pose2D targetPoseFwd = new Pose2D(DistanceUnit.MM, 500.0, 0.0, AngleUnit.DEGREES, 0.0);

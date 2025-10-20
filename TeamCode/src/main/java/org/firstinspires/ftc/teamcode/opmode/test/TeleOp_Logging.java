@@ -12,7 +12,7 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@TeleOp(name="TeleOp_Logging", group="Iterative OpMode")
+@TeleOp(name="TeleOp_Logging", group="Test")
 public class TeleOp_Logging extends OpMode {
 
     private final SparkLogger logger = SparkLogger.getLogger();

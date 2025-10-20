@@ -14,8 +14,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
 import java.util.Locale;
 import java.lang.Math;
-@Autonomous(name="Auton_MecanumPinpoint", group="Iterative OpMode")
-public class Auton_MecanumPinpoint extends OpMode
+@Autonomous(name="Auton_MecanumPinpoint", group="Auton Main")
+public class Auton_Mecanum_Pinpoint extends OpMode
 {
     final String FRONT_LEFT_DRIVE_MOTOR_NAME = "front_left";
     final String FRONT_RIGHT_DRIVE_MOTOR_NAME = "front_right";

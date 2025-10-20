@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.component.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.component.mechanism.Shooter;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
-@TeleOp(name="TeleOp_No_Cap", group="Production")
+@TeleOp(name="TeleOp_No_Cap", group="TeleOp Main")
 public class TeleOp_No_Cap extends RobotBaseOpMode
 {
     @Override
