@@ -19,8 +19,6 @@ public class Auton_TaskRunner_RelativeDrive3 extends RobotBaseOpMode {
     private FieldRelativeDrive relativeDrive = null;
     private Pose2D targetPoseFwdTurn = new Pose2D(DistanceUnit.INCH, 5.0, 0.0, AngleUnit.DEGREES, 45.0);
     private Pose2D targetPoseBackTurn = new Pose2D(DistanceUnit.INCH, 0.0, -5.0, AngleUnit.DEGREES, 0.0);
-    private Pose2D targetPoseCW = new Pose2D(DistanceUnit.INCH, -5.0, -5.0, AngleUnit.DEGREES, -45.0);
-    private Pose2D targetPose00 = new Pose2D(DistanceUnit.INCH, 0.0, 0.0, AngleUnit.DEGREES, 0.0);
 
     private AutonTaskRunner autonTaskRunner;
 
