@@ -2,16 +2,20 @@ package org.firstinspires.ftc.teamcode.task;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-public class Task_ElapsedTime_Demo implements Task {
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
+public class Task_Wait implements Task {
 
     private final double DEFAULT_DURATION = 1.0f; // in seconds
 
     private double duration;
     private boolean isInitialized = false;
     private ElapsedTime elapsedTime = new ElapsedTime();
+    private Telemetry telemetry;
 
-    public Task_ElapsedTime_Demo(double dur) {
-        duration = dur;
+    public Task_Wait(double durInSeconds, Telemetry telemetry) {
+        duration = durInSeconds;
+        this.telemetry = telemetry;
     }
 
     /**
@@ -24,13 +28,9 @@ public class Task_ElapsedTime_Demo implements Task {
             elapsedTime.reset();
             isInitialized = true;
         }
+        telemetry.addData("Elapsed time", elapsedTime.seconds());
 
-        // are we done?
-        if (elapsedTime.seconds() > duration) {
-            return true;
-        } else {
-            return false;
-        }
-        // simplified: return (elapsedTime.seconds() > duration);
+        // are we still going? true=yes, false=no
+        return (elapsedTime.seconds() < duration);
     }
 }

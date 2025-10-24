@@ -9,6 +9,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.component.util.SparkLogger;
 
+import java.util.Locale;
+
 public class FieldRelativeDrive {
 
     private MecanumDrive mecanumDrive = null;
@@ -34,8 +36,9 @@ public class FieldRelativeDrive {
         odometer.update();
         Pose2D currentPose = odometer.getPosition();
         double heading = currentPose.getHeading(AngleUnit.RADIANS);
-        double x = currentPose.getX(DistanceUnit.MM);
-        double y = currentPose.getY(DistanceUnit.MM);
+        double h = currentPose.getHeading(AngleUnit.DEGREES); // for display
+        double x = currentPose.getX(DistanceUnit.INCH);
+        double y = currentPose.getY(DistanceUnit.INCH);
 
         // from https://www.ctrlaltftc.com/practical-examples/drivetrain-control
         double forwardAdjusted = forward * Math.cos(heading) - strafe * Math.sin(heading);
@@ -50,10 +53,8 @@ public class FieldRelativeDrive {
         logger.log(commands);
         logger.log(adjCommands);
 
-        telemetry.addData("Pose", pose);
-        telemetry.addData("Commands", commands);
-        telemetry.addData("Adj commands", adjCommands);
-        telemetry.update();
-
+        telemetry.addData("X", String.format(Locale.US, "%.1f", x));
+        telemetry.addData("Y", String.format(Locale.US, "%.1f", y));
+        telemetry.addData("H", String.format(Locale.US, "%.1f", h));
     }
 }

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.test;
+package org.firstinspires.ftc.teamcode.opmode.auton;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -10,16 +10,17 @@ import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import org.firstinspires.ftc.teamcode.task.AutonTaskRunner;
 import org.firstinspires.ftc.teamcode.task.Task;
 import org.firstinspires.ftc.teamcode.task.Task_RelativeDriveToPose;
-
-import java.util.Locale;
+import org.firstinspires.ftc.teamcode.task.Task_Wait;
 
 
 @Autonomous(name="Auton_TaskRunner_RelativeDrive", group="Test")
 public class Auton_TaskRunner_RelativeDrive extends RobotBaseOpMode {
 
     private FieldRelativeDrive relativeDrive = null;
-    private Pose2D targetPoseFwd = new Pose2D(DistanceUnit.MM, 500.0, 0.0, AngleUnit.DEGREES, 45.0);
-    private Pose2D targetPoseRight = new Pose2D(DistanceUnit.MM, 0.0, 500.0, AngleUnit.DEGREES, -45.0);
+    private Pose2D targetPoseFwd = new Pose2D(DistanceUnit.INCH, 5.0, 0.0, AngleUnit.DEGREES, 0.0);
+    private Pose2D targetPoseRight = new Pose2D(DistanceUnit.INCH, 5.0, 5.0, AngleUnit.DEGREES, 0.0);
+    private Pose2D targetPoseCW = new Pose2D(DistanceUnit.INCH, 5.0, 5.0, AngleUnit.DEGREES, 45.0);
+    private Pose2D targetPose00 = new Pose2D(DistanceUnit.INCH, 0.0, 0.0, AngleUnit.DEGREES, 0.0);
 
     private AutonTaskRunner autonTaskRunner;
 
@@ -29,34 +30,52 @@ public class Auton_TaskRunner_RelativeDrive extends RobotBaseOpMode {
         relativeDrive = new FieldRelativeDrive(mecanumDrive, odometer, telemetry);
 
         Task_RelativeDriveToPose driveTaskFwd = new Task_RelativeDriveToPose(
+                "Forward 5",
                 relativeDrive,
                 odometer,
                 targetPoseFwd,
                 telemetry
         );
+        Task_Wait waitTask1 = new Task_Wait(2.0, telemetry);
         Task_RelativeDriveToPose driveTaskRight = new Task_RelativeDriveToPose(
+                "Right 5",
                 relativeDrive,
                 odometer,
                 targetPoseRight,
                 telemetry
         );
-        Task[] theTasks = {driveTaskFwd, driveTaskRight};
+        Task_Wait waitTask2 = new Task_Wait(2.0, telemetry);
+        Task_RelativeDriveToPose driveTaskCW = new Task_RelativeDriveToPose(
+                "CW 45",
+                relativeDrive,
+                odometer,
+                targetPoseCW,
+                telemetry
+        );
+        Task_Wait waitTask3 = new Task_Wait(2.0, telemetry);
+        Task_RelativeDriveToPose driveTask00 = new Task_RelativeDriveToPose(
+                "Back to Start",
+                relativeDrive,
+                odometer,
+                targetPose00,
+                telemetry
+        );
+        Task[] theTasks = {
+                driveTaskFwd,
+                waitTask1,
+                driveTaskRight,
+                waitTask2,
+                driveTaskCW,
+                waitTask3,
+//                driveTask00
+        };
         autonTaskRunner = new AutonTaskRunner(theTasks);
 
-        // PRINT TELEMETRY
-        Pose2D pos = odometer.getPosition();
-        String position = String.format(
-                Locale.US, "{X: %.3f, Y: %.3f, H: %.3f}",
-                pos.getX(DistanceUnit.MM),
-                pos.getY(DistanceUnit.MM),
-                pos.getHeading(AngleUnit.DEGREES)
-        );
-        telemetry.addData("Position", position);
         telemetry.update();
-        logger.log("Odometer starting position:" + position);
     }
 
     public void loop() {
         autonTaskRunner.execute();
+        telemetry.update();
     }
 }
