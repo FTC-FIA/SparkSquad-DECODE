@@ -6,7 +6,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 import org.firstinspires.ftc.teamcode.component.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.component.mechanism.Shooter;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
@@ -23,7 +25,9 @@ public class TeleOp_No_Cap extends RobotBaseOpMode
     public void start() {
         runtime.reset();
     }
-
+    public double getVelocity() {
+        return shooter.getShooterVelocity();
+    }
     @Override
     public void loop() {
         // Setup a variable for each drive wheel to save power level for telemetry
@@ -33,21 +37,44 @@ public class TeleOp_No_Cap extends RobotBaseOpMode
 
         mecanumDrive.drive(forward, strafe, rotate);
 
-        double shooterSpeed = 0.0;
-        if (gamepad2.a) {
-            shooterSpeed = 0.75;
-        }
-        shooter.spinUp(shooterSpeed);
 
-        boolean trigger = gamepad2.rightBumperWasPressed();
-        if (trigger) {
-            shooter.shoot();
+
+
+
+        double shooterPower = 0.0;
+
+        if ( gamepad2.a || gamepad2.b ) {
+            shooterPower = 1.0;
+            shooter.spinUp(shooterPower);
+
+            int targetVelocity = 0;
+            if ( gamepad2.a ) {
+                targetVelocity = 600;
+            } else if ( gamepad2.b ) {
+                targetVelocity = 750;
+            }
+
+            if (getVelocity() > targetVelocity)
+            {
+                shooter.triggerActivate();
+            }
+        } else {
+            shooter.triggerDeactivate();
+            shooter.spinUp(0);
         }
+
+
+
+
 
         // Display Telemetry
+
+        telemetry.addData("Trigger Pos", String.valueOf(shooter.getTriggerPosition()) );
         telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Drive params", "forward (%.2f), strafe (%.2f), rotate (%.2f)", forward, strafe, rotate);
-        telemetry.addData("Shooter params", "shooterSpeed (%.2f), trigger (%b)", shooterSpeed, trigger);
+        telemetry.addData("Drive params", "forward (%.2f), strafe (.2f), rotate (%.2f)", forward, strafe, rotate);
+//        telemetry.addData("Shooter params", "shooterSpeed (%.2f), trigger (%b)", shooterPower, trigger);
+        telemetry.addData("Velocity",String.valueOf(getVelocity()) );
+        telemetry.update();
     }
 
     /*

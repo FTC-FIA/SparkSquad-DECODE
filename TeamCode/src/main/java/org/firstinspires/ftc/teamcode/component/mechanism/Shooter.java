@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.component.mechanism;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Shooter {
@@ -14,12 +15,29 @@ public class Shooter {
         this.trigger = trigger;
     }
 
-    public void spinUp(double speed) {
-        shooterMotor.setPower(speed);
+    public void spinUp(double power) {
+        shooterMotor.setPower(power);
     }
 
     public void shoot() {
         double triggerPosition = trigger.getPosition();
         trigger.setPosition(triggerPosition + TRIGGER_INCREMENT);
     }
+
+    public void triggerActivate() {
+        trigger.setPosition(.4);
+    }
+
+    public void triggerDeactivate() {
+        trigger.setPosition(1);
+    }
+
+    public double getTriggerPosition() {
+        return trigger.getPosition();
+    }
+
+    public double getShooterVelocity() {
+        return ((DcMotorEx)(shooterMotor)).getVelocity();
+    }
+
 }
