@@ -33,20 +33,20 @@ public class Auton_2 extends RobotBaseOpMode {
         Task[] theTasks = {
                 new StartAt(this, -60, 12, 0),
                 new TurnTo(this, 25),
-                new SpinUpAndShoot(this, 600),
-                new SpinUpAndShoot(this, 600),
-                new SpinUpAndShoot(this, 600),
+//                new SpinUpAndShoot(this, 600),
+//                new SpinUpAndShoot(this, 600),
+//                new SpinUpAndShoot(this, 600),
                 new MoveTo(this, -36, 24),
                 new TurnTo(this, -90),
-                new StartIntake(this),
+//                new StartIntake(this),
                 new MoveTo(this, -36, 72.0),
                 new MoveTo(this, -60, 12),
-                new StopIntake(this),
+//                new StopIntake(this),
                 new TurnTo(this, 25),
                 new MoveTo(this, -60, 12),
-                new SpinUpAndShoot(this, 600),
-                new SpinUpAndShoot(this, 600),
-                new SpinUpAndShoot(this, 600),
+//                new SpinUpAndShoot(this, 600),
+//                new SpinUpAndShoot(this, 600),
+//                new SpinUpAndShoot(this, 600),
                 new MoveTo(this, 32, -36),  // park
 
         };
