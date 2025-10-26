@@ -10,7 +10,7 @@ public class SparkLogger {
     private static final String LOGGER_NAME = "SparkSquadLogger";
 
     private static Logger javaLogger = Logger.getLogger(LOGGER_NAME);
-    private static Locale locale = Locale.US
+    private static Locale locale = Locale.US;
 ;
     private SparkLogger() {
         ConsoleHandler consoleHandler = new ConsoleHandler();
