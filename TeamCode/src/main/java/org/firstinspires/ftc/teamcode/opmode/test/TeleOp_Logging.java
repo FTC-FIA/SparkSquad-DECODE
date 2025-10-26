@@ -5,13 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.component.util.SparkLogger;
-
-import java.io.Console;
-import java.util.Locale;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.firstinspires.ftc.teamcode.util.SparkLogger;
 
 @TeleOp(name="TeleOp_Logging", group="Test")
 @Disabled

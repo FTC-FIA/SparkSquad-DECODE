@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmode;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -13,7 +14,9 @@ import org.firstinspires.ftc.teamcode.component.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.component.mechanism.Intake;
 import org.firstinspires.ftc.teamcode.component.mechanism.Shooter;
 import org.firstinspires.ftc.teamcode.component.mechanism.Trigger;
-import org.firstinspires.ftc.teamcode.component.util.SparkLogger;
+import org.firstinspires.ftc.teamcode.controller.DriveController;
+import org.firstinspires.ftc.teamcode.controller.ShooterController;
+import org.firstinspires.ftc.teamcode.util.SparkLogger;
 
 public abstract class RobotBaseOpMode extends OpMode
 {
@@ -30,8 +33,6 @@ public abstract class RobotBaseOpMode extends OpMode
     final double ODOMETER_Y_OFFSET = 125.0;
 
     protected final ElapsedTime runtime = new ElapsedTime();
-
-
 
     // raw devices
     protected DcMotor frontLeftMotor = null;
@@ -53,6 +54,10 @@ public abstract class RobotBaseOpMode extends OpMode
     protected Shooter shooter = null;
     protected Intake intake = null;
     protected Trigger trigger = null;
+
+    // controllers
+    protected ShooterController shooterController = null;
+    protected DriveController driveController = null;
 
     // util
     protected SparkLogger logger = SparkLogger.getLogger();
@@ -89,7 +94,6 @@ public abstract class RobotBaseOpMode extends OpMode
         intakeMotor.setDirection(DcMotor.Direction.FORWARD);
         intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
-
         // TODO: servo config?
         odometer.setOffsets(ODOMETER_X_OFFSET, ODOMETER_Y_OFFSET, DistanceUnit.MM); // TODO: check if signs are correct +/-
         odometer.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
@@ -106,6 +110,10 @@ public abstract class RobotBaseOpMode extends OpMode
         shooter = new Shooter(shooterMotor, triggerServo);
         intake = new Intake(intakeMotor);
         trigger = new Trigger(triggerServo);
+
+        // Initialize controllers
+        shooterController = new ShooterController(this);
+        driveController = new DriveController(this);
 
         // Log status
         telemetry.addData("Status", "Robot Base Initialized");
@@ -168,6 +176,14 @@ public abstract class RobotBaseOpMode extends OpMode
     public Trigger getTrigger() {
         return trigger;
     }
+
+    public Gamepad getDriverGamepad() { return gamepad1; }
+
+    public Gamepad getOperatorGamepad() { return gamepad2; }
+
+    public DriveController getDriveController() { return driveController; }
+
+    public ShooterController getShooterController() { return shooterController; }
 
     public Telemetry getTelemetry() {
         return telemetry;

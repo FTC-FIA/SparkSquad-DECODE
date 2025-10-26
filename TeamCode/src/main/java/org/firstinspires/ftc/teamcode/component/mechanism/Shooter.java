@@ -28,6 +28,7 @@ public class Shooter {
         trigger.setPosition(triggerPosition + TRIGGER_INCREMENT);
     }
 
+    // TODO: remove trigger from shooter
     public void triggerActivate() {
         trigger.setPosition(.4);
     }

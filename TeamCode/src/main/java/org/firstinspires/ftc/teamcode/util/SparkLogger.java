@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.component.util;
+package org.firstinspires.ftc.teamcode.util;
 
 import java.util.Locale;
 import java.util.logging.ConsoleHandler;

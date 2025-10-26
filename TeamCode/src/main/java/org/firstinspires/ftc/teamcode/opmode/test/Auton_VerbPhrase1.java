@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import org.firstinspires.ftc.teamcode.task.AutonTaskRunner;
 import org.firstinspires.ftc.teamcode.task.MoveTo;
 import org.firstinspires.ftc.teamcode.task.PullTrigger;
+import org.firstinspires.ftc.teamcode.task.SpinUpAndShoot;
 import org.firstinspires.ftc.teamcode.task.StartAt;
 import org.firstinspires.ftc.teamcode.task.StartIntake;
 import org.firstinspires.ftc.teamcode.task.StartShooter;
@@ -43,14 +44,11 @@ public class Auton_VerbPhrase1 extends RobotBaseOpMode {
                 new Wait(this, 1.0),
                 new TurnTo(this, -45.0),
                 new MoveTo(this, 5.0, 5.0),
-                new StartShooter(this),
-                new Wait(this, 1.0),
-                new StopShooter(this),
-                new Wait(this, 1.0),
                 new StartIntake(this),
                 new Wait(this, 1.0),
                 new StopIntake(this),
-                new PullTrigger(this)
+                new Wait(this, 1.0),
+                new SpinUpAndShoot(this, 600.0),
         };
         autonTaskRunner = new AutonTaskRunner(theTasks);
 

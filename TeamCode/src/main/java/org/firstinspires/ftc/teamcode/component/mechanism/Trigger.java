@@ -19,15 +19,30 @@ public class Trigger {
         this.trigger = trigger;
         this.startPosition = startPos;
         this.firingPosition = firingPos;
-        this.trigger.setPosition(startPosition);
+        reset();
     }
 
     public Trigger(Servo trigger) {
         this(trigger, DEFAULT_START_POSITION, DEFAULT_FIRING_POSITION);
     }
 
+    public double getPosition() {
+        return trigger.getPosition();
+    }
+
+    public double getFiringPosition() {
+        return firingPosition;
+    }
+
+    public double getStartPosition() {
+        return startPosition;
+    }
+
+    public void reset() {
+        trigger.setPosition(startPosition);
+    }
+
     public void fire() {
-        trigger.setPosition(firingPosition);
         trigger.setPosition(firingPosition);
     }
 }

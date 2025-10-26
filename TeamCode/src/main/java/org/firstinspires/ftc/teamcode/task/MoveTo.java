@@ -7,7 +7,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.component.drive.FieldRelativeDrive;
-import org.firstinspires.ftc.teamcode.component.util.SparkLogger;
+import org.firstinspires.ftc.teamcode.util.SparkLogger;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
 import java.util.Locale;

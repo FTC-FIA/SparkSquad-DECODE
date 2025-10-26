@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.task;
 
-import org.firstinspires.ftc.teamcode.component.util.SparkLogger;
+import org.firstinspires.ftc.teamcode.util.SparkLogger;
 
 public class AutonTaskRunner {
 

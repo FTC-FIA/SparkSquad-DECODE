@@ -1,13 +1,12 @@
 package org.firstinspires.ftc.teamcode.component.drive;
 
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
-import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-import org.firstinspires.ftc.teamcode.component.util.SparkLogger;
+import org.firstinspires.ftc.teamcode.util.SparkLogger;
 
 import java.util.Locale;
 
