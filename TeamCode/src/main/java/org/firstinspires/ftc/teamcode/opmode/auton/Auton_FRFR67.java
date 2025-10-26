@@ -28,15 +28,42 @@ public class Auton_FRFR67 extends RobotBaseOpMode {
         super.init();
 
         Task[] theTasks = {
-                new StartAt(this, 41.0, 54.5, 0.0),
+                new StartAt(this, 60, 60, 45),
+                new MoveTo(this, 12, 12),
                 new SpinUpAndShoot(this, 600),
-                new MoveTo(this, 13.0, 24.0),
-                new TurnTo(this, 90.0),
+                new SpinUpAndShoot(this, 600),
+                new SpinUpAndShoot(this, 600),
+                new TurnTo(this, -90),
                 new StartIntake(this),
-                new MoveTo(this, 13.0, 50.0),
+                new MoveTo(this, 12, 72.0),
+                new MoveTo(this, 12, 12),
                 new StopIntake(this),
-                new TurnTo(this, 0.0),
-                new SpinUpAndShoot(this, 700)
+                new TurnTo(this, 45),
+                new SpinUpAndShoot(this, 600),
+                new SpinUpAndShoot(this, 600),
+                new SpinUpAndShoot(this, 600),
+                new MoveTo(this, 32, -36),  // park
+
+        };
+        Task[] theTasks2 = {
+                new StartAt(this, -60, 12, 0),
+                new TurnTo(this, 25),
+                new SpinUpAndShoot(this, 600),
+                new SpinUpAndShoot(this, 600),
+                new SpinUpAndShoot(this, 600),
+                new MoveTo(this, -36, 24),
+                new TurnTo(this, -90),
+                new StartIntake(this),
+                new MoveTo(this, -36, 72.0),
+                new MoveTo(this, -60, 12),
+                new StopIntake(this),
+                new TurnTo(this, 25),
+                new MoveTo(this, -60, 12),
+                new SpinUpAndShoot(this, 600),
+                new SpinUpAndShoot(this, 600),
+                new SpinUpAndShoot(this, 600),
+                new MoveTo(this, 32, -36),  // park
+
         };
         autonTaskRunner = new AutonTaskRunner(theTasks);
 
