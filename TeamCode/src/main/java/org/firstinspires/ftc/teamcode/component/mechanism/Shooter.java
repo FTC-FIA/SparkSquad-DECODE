@@ -19,6 +19,10 @@ public class Shooter {
         shooterMotor.setPower(power);
     }
 
+    public void stop() {
+        shooterMotor.setPower(0.0);
+    }
+
     public void shoot() {
         double triggerPosition = trigger.getPosition();
         trigger.setPosition(triggerPosition + TRIGGER_INCREMENT);

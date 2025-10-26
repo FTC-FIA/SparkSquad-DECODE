@@ -6,10 +6,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.component.drive.FieldRelativeDrive;
 import org.firstinspires.ftc.teamcode.component.drive.MecanumDrive;
+import org.firstinspires.ftc.teamcode.component.mechanism.Intake;
 import org.firstinspires.ftc.teamcode.component.mechanism.Shooter;
+import org.firstinspires.ftc.teamcode.component.mechanism.Trigger;
 import org.firstinspires.ftc.teamcode.component.util.SparkLogger;
 
 public abstract class RobotBaseOpMode extends OpMode
@@ -27,6 +30,8 @@ public abstract class RobotBaseOpMode extends OpMode
     final double ODOMETER_Y_OFFSET = 125.0;
 
     protected final ElapsedTime runtime = new ElapsedTime();
+
+
 
     // raw devices
     protected DcMotor frontLeftMotor = null;
@@ -46,6 +51,8 @@ public abstract class RobotBaseOpMode extends OpMode
     protected MecanumDrive mecanumDrive = null;
     protected FieldRelativeDrive fieldRelativeDrive = null;
     protected Shooter shooter = null;
+    protected Intake intake = null;
+    protected Trigger trigger = null;
 
     // util
     protected SparkLogger logger = SparkLogger.getLogger();
@@ -97,10 +104,72 @@ public abstract class RobotBaseOpMode extends OpMode
         mecanumDrive = new MecanumDrive(frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor);
         fieldRelativeDrive = new FieldRelativeDrive(mecanumDrive, odometer, telemetry);
         shooter = new Shooter(shooterMotor, triggerServo);
+        intake = new Intake(intakeMotor);
+        trigger = new Trigger(triggerServo);
 
         // Log status
         telemetry.addData("Status", "Robot Base Initialized");
         telemetry.update();
         logger.log("Robot Base Initialized");
+    }
+
+    public DcMotor getFrontLeftMotor() {
+        return frontLeftMotor;
+    }
+
+    public DcMotor getFrontRightMotor() {
+        return frontRightMotor;
+    }
+
+    public DcMotor getRearLeftMotor() {
+        return rearLeftMotor;
+    }
+
+    public DcMotor getRearRightMotor() {
+        return rearRightMotor;
+    }
+
+    public DcMotor getShooterMotor() {
+        return shooterMotor;
+    }
+
+    public DcMotor getIntakeMotor() {
+        return intakeMotor;
+    }
+
+    public Servo getTriggerServo() {
+        return triggerServo;
+    }
+
+    public Servo getConveyorServo() {
+        return conveyorServo;
+    }
+
+    public GoBildaPinpointDriver getOdometer() {
+        return odometer;
+    }
+
+    public MecanumDrive getMecanumDrive() {
+        return mecanumDrive;
+    }
+
+    public FieldRelativeDrive getFieldRelativeDrive() {
+        return fieldRelativeDrive;
+    }
+
+    public Shooter getShooter() {
+        return shooter;
+    }
+
+    public Intake getIntake() {
+        return intake;
+    }
+
+    public Trigger getTrigger() {
+        return trigger;
+    }
+
+    public Telemetry getTelemetry() {
+        return telemetry;
     }
 }

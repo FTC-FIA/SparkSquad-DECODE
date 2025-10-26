@@ -1,21 +1,23 @@
 package org.firstinspires.ftc.teamcode.task;
 
+import com.qualcomm.robotcore.robot.Robot;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
-public class Task_Wait implements Task {
+public class Wait implements Task {
 
-    private final double DEFAULT_DURATION = 1.0f; // in seconds
-
-    private double duration;
+    private final double duration;
+    private final ElapsedTime elapsedTime = new ElapsedTime();
+    private final Telemetry telemetry;
     private boolean isInitialized = false;
-    private ElapsedTime elapsedTime = new ElapsedTime();
-    private Telemetry telemetry;
 
-    public Task_Wait(double durInSeconds, Telemetry telemetry) {
+    public Wait(
+            RobotBaseOpMode robot,
+            double durInSeconds) {
         duration = durInSeconds;
-        this.telemetry = telemetry;
+        this.telemetry = robot.getTelemetry();
     }
 
     /**

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auton;
+package org.firstinspires.ftc.teamcode.opmode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import org.firstinspires.ftc.teamcode.task.AutonTaskRunner;
 import org.firstinspires.ftc.teamcode.task.Task;
 import org.firstinspires.ftc.teamcode.task.Task_RelativeDriveToPose;
-import org.firstinspires.ftc.teamcode.task.Task_Wait;
+import org.firstinspires.ftc.teamcode.task.Wait;
 
 
 @Autonomous(name="Auton_TaskRunner_RelativeDrive", group="Test")
@@ -36,7 +36,7 @@ public class Auton_TaskRunner_RelativeDrive extends RobotBaseOpMode {
                 targetPoseFwd,
                 telemetry
         );
-        Task_Wait waitTask1 = new Task_Wait(2.0, telemetry);
+        Wait waitTask1 = new Wait(this, 2.0);
         Task_RelativeDriveToPose driveTaskRight = new Task_RelativeDriveToPose(
                 "Right 5",
                 relativeDrive,
@@ -44,7 +44,7 @@ public class Auton_TaskRunner_RelativeDrive extends RobotBaseOpMode {
                 targetPoseRight,
                 telemetry
         );
-        Task_Wait waitTask2 = new Task_Wait(2.0, telemetry);
+        Wait waitTask2 = new Wait(this, 2.0);
         Task_RelativeDriveToPose driveTaskCW = new Task_RelativeDriveToPose(
                 "CW 45",
                 relativeDrive,
@@ -52,7 +52,7 @@ public class Auton_TaskRunner_RelativeDrive extends RobotBaseOpMode {
                 targetPoseCW,
                 telemetry
         );
-        Task_Wait waitTask3 = new Task_Wait(2.0, telemetry);
+        Wait waitTask3 = new Wait(this, 2.0);
         Task_RelativeDriveToPose driveTask00 = new Task_RelativeDriveToPose(
                 "Back to Start",
                 relativeDrive,

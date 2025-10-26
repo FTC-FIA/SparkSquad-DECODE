@@ -8,36 +8,38 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import org.firstinspires.ftc.teamcode.task.AutonTaskRunner;
 import org.firstinspires.ftc.teamcode.task.Task;
-import org.firstinspires.ftc.teamcode.task.Task_RelativeDriveToPose;
+import org.firstinspires.ftc.teamcode.task.StartIntake;
+import org.firstinspires.ftc.teamcode.task.StartShooter;
+import org.firstinspires.ftc.teamcode.task.StopIntake;
+import org.firstinspires.ftc.teamcode.task.StopShooter;
 import org.firstinspires.ftc.teamcode.task.Wait;
 
 import java.util.Locale;
 
-@Autonomous(name="Auton_FRFR67", group="Test")
-public class Auton_FRFR67 extends RobotBaseOpMode {
-
-    private Pose2D targetPose1 = new Pose2D(DistanceUnit.INCH, 13.0, 24.0, AngleUnit.DEGREES, 0.0);
-    private Pose2D targetPoseRight = new Pose2D(DistanceUnit.INCH, 5.0, 5.0, AngleUnit.DEGREES, 0.0);
-    private Pose2D targetPoseCW = new Pose2D(DistanceUnit.INCH, 5.0, 5.0, AngleUnit.DEGREES, 45.0);
-    private Pose2D targetPose00 = new Pose2D(DistanceUnit.INCH, 0.0, 0.0, AngleUnit.DEGREES, 0.0);
+@Autonomous(name="Auton_Mechanisms", group="Test")
+public class Auton_Mechanisms extends RobotBaseOpMode {
 
     private AutonTaskRunner autonTaskRunner;
 
     public void init() {
         super.init();
 
-        Wait waitTask1 = new Wait(this, 2.0);
-        Task_RelativeDriveToPose driveTask1 = new Task_RelativeDriveToPose(
-                "task 1",
-                fieldRelativeDrive,
-                odometer,
-                targetPose1,
-                telemetry
-        );
+        StartIntake startIntakeTask = new StartIntake(this);
+        Wait waitTask1 = new Wait(this, 1.0);
+        StopIntake stopIntakeTask = new StopIntake(this);
+        Wait waitTask2 = new Wait(this, 1.0);
+        StartShooter startShooterTask = new StartShooter(this);
+        Wait waitTask3 = new Wait(this, 1.0);
+        StopShooter stopShooterTask = new StopShooter(this);
 
         Task[] theTasks = {
+                startIntakeTask,
                 waitTask1,
-                driveTask1
+                stopIntakeTask,
+                waitTask2,
+                startShooterTask,
+                waitTask3,
+                stopShooterTask
         };
         autonTaskRunner = new AutonTaskRunner(theTasks);
 
@@ -58,9 +60,11 @@ public class Auton_FRFR67 extends RobotBaseOpMode {
     }
 
     public void loop() {
+
+        autonTaskRunner.execute();
+
         odometer.update();
         Pose2D pos = odometer.getPosition();
-        autonTaskRunner.execute();
         telemetry.addData("X", pos.getX(DistanceUnit.INCH));
         telemetry.addData("Y", pos.getY(DistanceUnit.INCH));
         telemetry.addData("H", pos.getHeading(AngleUnit.DEGREES));
