@@ -19,33 +19,37 @@ import org.firstinspires.ftc.teamcode.task.Wait;
 
 import java.util.Locale;
 
-@Autonomous(name="Auton_FRFR67", group="Test")
-public class Auton_FRFR67 extends RobotBaseOpMode {
+@Autonomous(name="Auton_2", group="Test")
+public class Auton_2 extends RobotBaseOpMode {
 
     private AutonTaskRunner autonTaskRunner;
 
     public void init() {
         super.init();
 
+
+
+
         Task[] theTasks = {
-                new StartAt(this, 60, 60, 45),
-                new MoveTo(this, 12, 12),
+                new StartAt(this, -60, 12, 0),
+                new TurnTo(this, 25),
                 new SpinUpAndShoot(this, 600),
                 new SpinUpAndShoot(this, 600),
                 new SpinUpAndShoot(this, 600),
+                new MoveTo(this, -36, 24),
                 new TurnTo(this, -90),
                 new StartIntake(this),
-                new MoveTo(this, 12, 72.0),
-                new MoveTo(this, 12, 12),
+                new MoveTo(this, -36, 72.0),
+                new MoveTo(this, -60, 12),
                 new StopIntake(this),
-                new TurnTo(this, 45),
+                new TurnTo(this, 25),
+                new MoveTo(this, -60, 12),
                 new SpinUpAndShoot(this, 600),
                 new SpinUpAndShoot(this, 600),
                 new SpinUpAndShoot(this, 600),
                 new MoveTo(this, 32, -36),  // park
 
         };
-
         autonTaskRunner = new AutonTaskRunner(theTasks);
 
         double x = odometer.getPosX(DistanceUnit.INCH);
