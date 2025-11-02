@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.task;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -17,7 +18,7 @@ public class MoveWithPIDTo implements Task {
 
     private final double DEFAULT_TOLERANCE_X = 1.0; // in inches
     private final double DEFAULT_TOLERANCE_Y = 1.0; // in inches
-    private final double DEFAULT_TOLERANCE_H = 1; // in deg
+    private final double DEFAULT_TOLERANCE_H = 3; // in deg
     private final double MIN_POWER = 0.1;
 
     private double toleranceX = DEFAULT_TOLERANCE_X;
@@ -29,6 +30,7 @@ public class MoveWithPIDTo implements Task {
     private PIDController rotatePID = new PIDController();
 
     private final Telemetry telemetry;
+    private final FtcDashboard dashboard;
     private final FieldRelativeDrive drive;
     private final GoBildaPinpointDriver odometer;
 
@@ -44,6 +46,7 @@ public class MoveWithPIDTo implements Task {
         this.drive = robot.getFieldRelativeDrive();;
         this.odometer = robot.getOdometer();
         this.telemetry = robot.getTelemetry();
+        this.dashboard = robot.getDashboard();
 
         odometer.update();
         double heading = odometer.getHeading(AngleUnit.DEGREES);
@@ -109,18 +112,19 @@ public class MoveWithPIDTo implements Task {
             strafe = boostLowPower(strafePID.calculate(errorY));
         }
 
-        if (Math.abs(errorH) < toleranceH) {
-            rotate = 0.0;
-        } else if (errorH > 0) {
-            rotate = rotatePower;
-        } else {
-            rotate = -rotatePower;
-        }
-        if (Math.abs(errorH) > 180.0) {
-            rotate = -rotate;
-        }
+//        if (Math.abs(errorH) < toleranceH) {
+//            rotate = 0.0;
+//        } else if (errorH > 0) {
+//            rotate = rotatePower;
+//        } else {
+//            rotate = -rotatePower;
+//        }
+//        if (Math.abs(errorH) > 180.0) {
+//            rotate = -rotate;
+//        }
+
         // Actuate - execute robot functions
-        drive.drive(forward, strafe, rotate);
+        drive.drive(forward * 0.25, strafe * 0.25, rotate);
 
         telemetry.addData("Task",
                 String.format(Locale.US,
@@ -134,7 +138,11 @@ public class MoveWithPIDTo implements Task {
         telemetry.addData("errorY", String.format(Locale.US, "%.2f", errorY));
         telemetry.addData("errorH", String.format(Locale.US, "%.2f", errorH));
 
+        dashboard.getTelemetry().addData("errorX", String.format(Locale.US, "%.2f", errorX));
+        dashboard.getTelemetry().addData("errorY", String.format(Locale.US, "%.2f", errorY));
+        dashboard.getTelemetry().addData("errorH", String.format(Locale.US, "%.2f", errorH));
 
+        logger.log(String.format(Locale.US, "errorX %.2f, errorY %.2f, errorH %.2f", errorX, errorY, errorH));
         // if any errors are > tolerance, keep going
         return (
                 Math.abs(errorX) > toleranceX

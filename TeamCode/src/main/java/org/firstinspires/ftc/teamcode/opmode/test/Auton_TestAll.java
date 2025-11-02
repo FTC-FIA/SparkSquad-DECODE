@@ -38,7 +38,7 @@ public class Auton_TestAll extends RobotBaseOpMode {
 
         Task[] theTasks = {
                 new StartAt(this, 5.0, 5.0, 0.0),
-                new MoveWithPIDTo(this, 10.0, 10.0),
+                new MoveTo(this, 15.0, 15.0),
                 new Wait(this, 1.0),
                 new MoveTo(this, 0.0, 0.0),
                 new Wait(this, 1.0),
@@ -63,6 +63,7 @@ public class Auton_TestAll extends RobotBaseOpMode {
         autonTaskRunner = new AutonTaskRunner(theTasks);
 
         telemetry.update();
+        dashboard.getTelemetry().update();
     }
 
     public void loop() {
