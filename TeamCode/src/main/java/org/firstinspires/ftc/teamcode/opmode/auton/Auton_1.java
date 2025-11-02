@@ -8,10 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import org.firstinspires.ftc.teamcode.task.AutonTaskRunner;
 import org.firstinspires.ftc.teamcode.task.MoveTo;
-import org.firstinspires.ftc.teamcode.task.SpinUpAndShoot;
 import org.firstinspires.ftc.teamcode.task.StartAt;
-import org.firstinspires.ftc.teamcode.task.StartIntake;
-import org.firstinspires.ftc.teamcode.task.StopIntake;
 import org.firstinspires.ftc.teamcode.task.Task;
 import org.firstinspires.ftc.teamcode.task.TurnTo;
 

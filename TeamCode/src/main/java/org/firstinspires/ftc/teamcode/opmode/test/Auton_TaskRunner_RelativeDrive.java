@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -14,6 +15,7 @@ import org.firstinspires.ftc.teamcode.task.Wait;
 
 
 @Autonomous(name="Auton_TaskRunner_RelativeDrive", group="Test")
+@Disabled
 public class Auton_TaskRunner_RelativeDrive extends RobotBaseOpMode {
 
     private FieldRelativeDrive relativeDrive = null;

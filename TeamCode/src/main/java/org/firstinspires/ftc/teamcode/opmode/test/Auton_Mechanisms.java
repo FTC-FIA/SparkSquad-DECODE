@@ -1,6 +1,7 @@
-package org.firstinspires.ftc.teamcode.opmode.auton;
+package org.firstinspires.ftc.teamcode.opmode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -17,6 +18,7 @@ import org.firstinspires.ftc.teamcode.task.Wait;
 import java.util.Locale;
 
 @Autonomous(name="Auton_Mechanisms", group="Test")
+@Disabled
 public class Auton_Mechanisms extends RobotBaseOpMode {
 
     private AutonTaskRunner autonTaskRunner;

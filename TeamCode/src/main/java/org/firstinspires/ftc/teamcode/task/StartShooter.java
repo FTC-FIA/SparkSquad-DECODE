@@ -19,7 +19,7 @@ public class StartShooter implements Task {
         this(robot, DEFAULT_SHOOTER_SPEED);
     }
     public boolean execute() {
-        shooter.spinUp(shooterSpeed);
+        shooter.setPower(shooterSpeed);
         return false; // we're done here!
     }
 }

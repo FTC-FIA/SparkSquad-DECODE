@@ -27,36 +27,16 @@ public class TeleOp_No_Cap extends RobotBaseOpMode
 
     @Override
     public void loop() {
-        // Setup a variable for each drive wheel to save power level for telemetry
 
+        // let controllers do their thing
         shooterController.handleInput();
+        kickerController.handleInput();
+        feederController.handleInput();
         driveController.handleInput();
-//
-//        double shooterPower = 0.0;
-//
-//        if ( gamepad2.a || gamepad2.b ) {
-//            shooterPower = 1.0;
-//            shooter.spinUp(shooterPower);
-//
-//            int targetVelocity = 0;
-//            if ( gamepad2.a ) {
-//                targetVelocity = 600;
-//            } else if ( gamepad2.b ) {
-//                targetVelocity = 750;
-//            }
-//
-//            if (getVelocity() > targetVelocity)
-//            {
-//                shooter.triggerActivate();
-//            }
-//        } else {
-//            shooter.triggerDeactivate();
-//            shooter.spinUp(0);
-//        }
+        intakeController.handleInput();
 
         // Display Telemetry
-
-        telemetry.addData("Status", "Run Time: " + runtime.toString());
+        telemetry.addData("Runtime:", runtime.toString());
         telemetry.update();
     }
 

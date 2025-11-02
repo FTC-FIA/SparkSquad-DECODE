@@ -8,7 +8,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import org.firstinspires.ftc.teamcode.task.AutonTaskRunner;
 import org.firstinspires.ftc.teamcode.task.MoveTo;
-import org.firstinspires.ftc.teamcode.task.SpinUpAndShoot;
 import org.firstinspires.ftc.teamcode.task.StartAt;
 import org.firstinspires.ftc.teamcode.task.StartIntake;
 import org.firstinspires.ftc.teamcode.task.StopIntake;
@@ -18,7 +17,7 @@ import org.firstinspires.ftc.teamcode.task.Wait;
 
 import java.util.Locale;
 
-@Autonomous(name="Auton_FRFR67", group="Test")
+@Autonomous(name="Auton_bryson", group="Test")
 public class Auton_bryson extends RobotBaseOpMode {
 
     private AutonTaskRunner autonTaskRunner;
