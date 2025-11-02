@@ -24,8 +24,8 @@ import org.firstinspires.ftc.teamcode.task.TurnTo;
 import org.firstinspires.ftc.teamcode.task.Wait;
 
 
-@Autonomous(name="Auton_VerbPhrase1", group="Test")
-public class Auton_VerbPhrase1 extends RobotBaseOpMode {
+@Autonomous(name="Auton_TestAll", group="Test")
+public class Auton_TestAll extends RobotBaseOpMode {
 
     private FieldRelativeDrive relativeDrive = null;
 

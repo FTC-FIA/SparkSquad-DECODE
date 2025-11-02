@@ -81,6 +81,7 @@ public class MoveWithPIDTo implements Task {
 
     public boolean execute() {
 
+        double rotatePower = 0.2; //TODO: get PID working for rotate
         odometer.update();
 
         double forward;
@@ -110,10 +111,11 @@ public class MoveWithPIDTo implements Task {
 
         if (Math.abs(errorH) < toleranceH) {
             rotate = 0.0;
+        } else if (errorH > 0) {
+            rotate = rotatePower;
         } else {
-            rotate = boostLowPower(rotatePID.calculate(errorH));
+            rotate = -rotatePower;
         }
-
         if (Math.abs(errorH) > 180.0) {
             rotate = -rotate;
         }
