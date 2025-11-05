@@ -1,15 +1,18 @@
 package org.firstinspires.ftc.teamcode.task;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.util.SparkLogger;
 
 public class AutonTaskRunner {
 
     private final SparkLogger logger = SparkLogger.getLogger();
     private final Task[] taskSequence;
+    private final Telemetry telemetry;
     private int currentTaskIndex = 0;
 
-    public AutonTaskRunner(Task[] tasks) {
+    public AutonTaskRunner(Task[] tasks, Telemetry telemetry) {
         taskSequence = tasks;
+        this.telemetry = telemetry;
     }
 
     public boolean execute() {
@@ -18,6 +21,11 @@ public class AutonTaskRunner {
         }
 
         boolean taskResult = taskSequence[currentTaskIndex].execute();
+
+        if ( telemetry != null ) {
+            telemetry.addData( "Executing task", currentTaskIndex );
+        }
+
         if (!taskResult) {
             logger.log("Finished task " + currentTaskIndex);
             currentTaskIndex++; // note: will run one more time when done

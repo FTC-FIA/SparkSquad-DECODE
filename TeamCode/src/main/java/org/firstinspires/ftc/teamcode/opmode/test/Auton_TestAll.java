@@ -60,7 +60,7 @@ public class Auton_TestAll extends RobotBaseOpMode {
                 new StopIntake(this),
                 new Wait(this, 1.0),
         };
-        autonTaskRunner = new AutonTaskRunner(theTasks);
+        autonTaskRunner = new AutonTaskRunner(theTasks, this.telemetry);
 
         telemetry.update();
     }

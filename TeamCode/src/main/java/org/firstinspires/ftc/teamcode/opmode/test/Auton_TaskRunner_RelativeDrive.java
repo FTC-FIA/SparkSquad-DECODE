@@ -71,7 +71,7 @@ public class Auton_TaskRunner_RelativeDrive extends RobotBaseOpMode {
                 waitTask3,
 //                driveTask00
         };
-        autonTaskRunner = new AutonTaskRunner(theTasks);
+        autonTaskRunner = new AutonTaskRunner(theTasks, this.telemetry);
 
         telemetry.update();
     }

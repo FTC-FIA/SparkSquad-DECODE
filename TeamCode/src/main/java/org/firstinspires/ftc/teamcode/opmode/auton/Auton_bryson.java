@@ -35,7 +35,7 @@ public class Auton_bryson extends RobotBaseOpMode {
                 new MoveTo(this,41.0, 38.5),
                 new TurnTo(this,45),
         };
-        autonTaskRunner = new AutonTaskRunner(theTasks);
+        autonTaskRunner = new AutonTaskRunner(theTasks, this.telemetry);
 
         double x = odometer.getPosX(DistanceUnit.INCH);
         double y = odometer.getPosY(DistanceUnit.INCH);

@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
 public class ShooterController {
 
-    private static final double DEFAULT_VELOCITY = 750;
+    private static final double DEFAULT_VELOCITY = 650;
     private static final double MAX_VELOCITY = 1600;
 
     private final Shooter shooter;

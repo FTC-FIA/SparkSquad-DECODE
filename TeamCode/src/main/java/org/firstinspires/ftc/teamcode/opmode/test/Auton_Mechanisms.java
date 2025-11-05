@@ -43,7 +43,7 @@ public class Auton_Mechanisms extends RobotBaseOpMode {
                 waitTask3,
                 stopShooterTask
         };
-        autonTaskRunner = new AutonTaskRunner(theTasks);
+        autonTaskRunner = new AutonTaskRunner(theTasks, this.telemetry);
 
         double x = odometer.getPosX(DistanceUnit.INCH);
         double y = odometer.getPosY(DistanceUnit.INCH);

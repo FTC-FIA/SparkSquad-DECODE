@@ -39,7 +39,7 @@ public class Auton_TaskRunner_MecanumDrive extends RobotBaseOpMode {
                 telemetry
         );
         Task[] theTasks = {driveTaskFwd, driveTaskRight};
-        autonTaskRunner = new AutonTaskRunner(theTasks);
+        autonTaskRunner = new AutonTaskRunner(theTasks, this.telemetry);
 
         // PRINT TELEMETRY
         Pose2D pos = odometer.getPosition();
