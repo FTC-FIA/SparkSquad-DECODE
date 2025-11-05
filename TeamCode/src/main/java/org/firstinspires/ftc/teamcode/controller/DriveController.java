@@ -28,10 +28,10 @@ public class DriveController {
         double rotate = driverGamepad.right_stick_x;
 
         if (driverGamepad.bWasPressed()) {
-            double newScale = Math.min(forwardScale * 1.5, 1.0);
+            double newScale = Math.min(forwardScale + 0.1, 1.0);
             forwardScale = strafeScale = rotateScale = newScale;
         } else if (driverGamepad.xWasPressed()) {
-            double newScale = Math.max(forwardScale * 0.5, 0.0);
+            double newScale = Math.max(forwardScale - 0.1, 0.0);
             forwardScale = strafeScale = rotateScale = newScale;
         }
 
@@ -41,6 +41,7 @@ public class DriveController {
 
         drive.drive(forward, strafe, rotate);
 
+        telemetry.addData("Speed scale", forwardScale);
         telemetry.addData("Forward", forward);
         telemetry.addData("Strafe", strafe);
         telemetry.addData("Rotate", rotate);
