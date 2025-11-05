@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.task;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.component.mechanism.Shooter;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 

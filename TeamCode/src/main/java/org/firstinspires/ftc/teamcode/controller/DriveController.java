@@ -12,6 +12,10 @@ public class DriveController {
     private final Gamepad driverGamepad;
     private final Telemetry telemetry;
 
+    private double forwardScale = 1.0;
+    private double strafeScale = 1.0;
+    private double rotateScale = 1.0;
+
     public DriveController(RobotBaseOpMode robot) {
         drive = robot.getFieldRelativeDrive();
         driverGamepad = robot.getDriverGamepad();
@@ -23,9 +27,23 @@ public class DriveController {
         double strafe = driverGamepad.left_stick_x;
         double rotate = driverGamepad.right_stick_x;
 
+        if (driverGamepad.bWasPressed()) {
+            double newScale = Math.min(forwardScale * 1.5, 1.0);
+            forwardScale = strafeScale = rotateScale = newScale;
+        } else if (driverGamepad.xWasPressed()) {
+            double newScale = Math.max(forwardScale * 0.5, 0.0);
+            forwardScale = strafeScale = rotateScale = newScale;
+        }
+
+        forward *= forwardScale;
+        strafe *= strafeScale;
+        rotate *= rotateScale;
+
         drive.drive(forward, strafe, rotate);
 
-        telemetry.addData("Drive params", "forward (%.2f), strafe (%.2f), rotate (%.2f)", forward, strafe, rotate);
+        telemetry.addData("Forward", forward);
+        telemetry.addData("Strafe", strafe);
+        telemetry.addData("Rotate", rotate);
 
     }
 }

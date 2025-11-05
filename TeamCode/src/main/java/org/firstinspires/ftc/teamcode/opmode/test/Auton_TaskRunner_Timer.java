@@ -19,7 +19,7 @@ public class Auton_TaskRunner_Timer extends RobotBaseOpMode {
         Wait timerTask1 = new Wait(this, 2.0f);
         Wait timerTask2 = new Wait(this, 2.5f);
         Task[] theTasks = {timerTask1, timerTask2};
-        autonTaskRunner = new AutonTaskRunner(theTasks);
+        autonTaskRunner = new AutonTaskRunner(theTasks, this.telemetry);
     }
 
     public void loop() {

@@ -7,27 +7,27 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.component.drive.FieldRelativeDrive;
-import org.firstinspires.ftc.teamcode.util.SparkLogger;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
+import org.firstinspires.ftc.teamcode.util.PIDController;
+import org.firstinspires.ftc.teamcode.util.SparkLogger;
 
 import java.util.Locale;
 
-public class MoveTo implements Task {
+public class MoveWithPIDTo implements Task {
 
-    private final double DEFAULT_FORWARD_POWER = 0.3;
-    private final double DEFAULT_STRAFE_POWER = 0.3;
-    private final double DEFAULT_ROTATE_POWER = 0.3;
     private final double DEFAULT_TOLERANCE_X = 1.0; // in inches
     private final double DEFAULT_TOLERANCE_Y = 1.0; // in inches
-    private final double DEFAULT_TOLERANCE_H = 5; // in deg
-    private double forwardPower = DEFAULT_FORWARD_POWER;
-    private double strafePower = DEFAULT_STRAFE_POWER;
-    private double rotatePower = DEFAULT_ROTATE_POWER;
+    private final double DEFAULT_TOLERANCE_H = 1; // in deg
+    private final double MIN_POWER = 0.1;
+
     private double toleranceX = DEFAULT_TOLERANCE_X;
     private double toleranceY = DEFAULT_TOLERANCE_Y;
     private double toleranceH = DEFAULT_TOLERANCE_H;
 
-    private final RobotBaseOpMode robot;
+    private PIDController forwardPID = new PIDController();
+    private PIDController strafePID = new PIDController();
+    private PIDController rotatePID = new PIDController();
+
     private final Telemetry telemetry;
     private final FieldRelativeDrive drive;
     private final GoBildaPinpointDriver odometer;
@@ -36,12 +36,11 @@ public class MoveTo implements Task {
 
     private final Pose2D targetPose;
 
-    public MoveTo(
+    public MoveWithPIDTo(
             RobotBaseOpMode robot,
             double targetXInches,
             double targetYInches
     ) {
-        this.robot = robot;
         this.drive = robot.getFieldRelativeDrive();;
         this.odometer = robot.getOdometer();
         this.telemetry = robot.getTelemetry();
@@ -57,18 +56,6 @@ public class MoveTo implements Task {
         );
     }
 
-    public void setForwardPower(double forwardPower) {
-        this.forwardPower = forwardPower;
-    }
-
-    public void setStrafePower(double strafePower) {
-        this.strafePower = strafePower;
-    }
-
-    public void setRotatePower(double rotatePower) {
-        this.rotatePower = rotatePower;
-    }
-
     public void setToleranceX(double toleranceX) {
         this.toleranceX = toleranceX;
     }
@@ -81,8 +68,20 @@ public class MoveTo implements Task {
         this.toleranceH = toleranceH;
     }
 
+
+    /**
+     * If power to motors gets too low they won't move at all
+     * @param power the requested power
+     * @return power if > MIN_POWER else MIN_POWER
+     */
+    private double boostLowPower(double power) {
+        return Math.min(MIN_POWER, Math.abs(power)) *
+                power > 0.0 ? 1.0 : -1.0;
+    }
+
     public boolean execute() {
 
+        double rotatePower = 0.2; //TODO: get PID working for rotate
         odometer.update();
 
         double forward;
@@ -94,24 +93,20 @@ public class MoveTo implements Task {
         double currentY = pos.getY(DistanceUnit.INCH);
         double currentH = pos.getHeading(AngleUnit.DEGREES);
 
-        double errorX = currentX - targetPose.getX(DistanceUnit.INCH);
-        double errorY = currentY - targetPose.getY(DistanceUnit.INCH);
-        double errorH = currentH - targetPose.getHeading(AngleUnit.DEGREES);
+        double errorX = targetPose.getX(DistanceUnit.INCH) - currentX;
+        double errorY = targetPose.getY(DistanceUnit.INCH) - currentY;
+        double errorH = targetPose.getHeading(AngleUnit.DEGREES) - currentH;
 
         if (Math.abs(errorX) < toleranceX) {
             forward = 0.0;
-        } else if (errorX > 0) {
-            forward = -forwardPower;
         } else {
-            forward = forwardPower;
+            forward = boostLowPower(forwardPID.calculate(errorX));
         }
 
         if (Math.abs(errorY) < toleranceY) {
             strafe = 0.0;
-        } else if (errorY > 0) {
-            strafe = -strafePower;
         } else {
-            strafe = strafePower;
+            strafe = boostLowPower(strafePID.calculate(errorY));
         }
 
         if (Math.abs(errorH) < toleranceH) {
@@ -127,10 +122,18 @@ public class MoveTo implements Task {
         // Actuate - execute robot functions
         drive.drive(forward, strafe, rotate);
 
-        telemetry.addData("Task", "MoveTo");
+        telemetry.addData("Task",
+                String.format(Locale.US,
+                        "MoveWithPIDTo %.2f, %.2f",
+                        targetPose.getX(DistanceUnit.INCH),
+                        targetPose.getY(DistanceUnit.INCH)));
         telemetry.addData("fwdPower", String.format(Locale.US, "%.2f", forward));
         telemetry.addData("stfPower", String.format(Locale.US, "%.2f", strafe));
-        telemetry.addData("rotPower", String.format(Locale.US, "%.2f", strafe));
+        telemetry.addData("rotPower", String.format(Locale.US, "%.2f", rotate));
+        telemetry.addData("errorX", String.format(Locale.US, "%.2f", errorX));
+        telemetry.addData("errorY", String.format(Locale.US, "%.2f", errorY));
+        telemetry.addData("errorH", String.format(Locale.US, "%.2f", errorH));
+
 
         // if any errors are > tolerance, keep going
         return (

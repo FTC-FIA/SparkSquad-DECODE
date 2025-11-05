@@ -3,42 +3,31 @@ package org.firstinspires.ftc.teamcode.component.mechanism;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.configuration.ConfigurationType;
 
 public class Shooter {
 
-    private final double TRIGGER_INCREMENT = 0.5;
-    private final DcMotor shooterMotor;
-    private final Servo trigger;
+    private final DcMotorEx shooterMotor;
 
-    public Shooter(DcMotor shooterMotor, Servo trigger) {
+    public Shooter(DcMotorEx shooterMotor) {
         this.shooterMotor = shooterMotor;
-        this.trigger = trigger;
     }
 
-    public void spinUp(double power) {
+    public void setVelocity(double vel) {
+        shooterMotor.setVelocity(vel);
+    }
+
+    public void setPower(double power) {
         shooterMotor.setPower(power);
+    }
+
+    public double getPower() {
+        return shooterMotor.getPower();
     }
 
     public void stop() {
         shooterMotor.setPower(0.0);
-    }
-
-    public void shoot() {
-        double triggerPosition = trigger.getPosition();
-        trigger.setPosition(triggerPosition + TRIGGER_INCREMENT);
-    }
-
-    // TODO: remove trigger from shooter
-    public void triggerActivate() {
-        trigger.setPosition(.4);
-    }
-
-    public void triggerDeactivate() {
-        trigger.setPosition(1);
-    }
-
-    public double getTriggerPosition() {
-        return trigger.getPosition();
+        shooterMotor.setVelocity(0.0);
     }
 
     public double getShooterVelocity() {

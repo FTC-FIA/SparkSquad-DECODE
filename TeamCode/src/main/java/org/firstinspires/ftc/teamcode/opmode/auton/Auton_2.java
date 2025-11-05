@@ -8,14 +8,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import org.firstinspires.ftc.teamcode.task.AutonTaskRunner;
 import org.firstinspires.ftc.teamcode.task.MoveTo;
-import org.firstinspires.ftc.teamcode.task.SpinUpAndShoot;
 import org.firstinspires.ftc.teamcode.task.StartAt;
-import org.firstinspires.ftc.teamcode.task.StartIntake;
-import org.firstinspires.ftc.teamcode.task.StopIntake;
 import org.firstinspires.ftc.teamcode.task.Task;
-import org.firstinspires.ftc.teamcode.task.Task_RelativeDriveToPose;
 import org.firstinspires.ftc.teamcode.task.TurnTo;
-import org.firstinspires.ftc.teamcode.task.Wait;
 
 import java.util.Locale;
 
@@ -50,7 +45,7 @@ public class Auton_2 extends RobotBaseOpMode {
                 new MoveTo(this, 32, -36),  // park
 
         };
-        autonTaskRunner = new AutonTaskRunner(theTasks);
+        autonTaskRunner = new AutonTaskRunner(theTasks, this.telemetry);
 
         double x = odometer.getPosX(DistanceUnit.INCH);
         double y = odometer.getPosY(DistanceUnit.INCH);

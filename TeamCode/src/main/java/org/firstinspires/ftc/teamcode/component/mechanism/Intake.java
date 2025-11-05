@@ -12,7 +12,6 @@ public class Intake {
 
     public Intake(DcMotor intakeMotor) {
         this(intakeMotor, DEFAULT_INTAKE_SPEED);
-
     }
 
     public Intake(DcMotor intakeMotor, double intakeSpeed) {

@@ -9,21 +9,23 @@ import org.firstinspires.ftc.teamcode.component.drive.FieldRelativeDrive;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import org.firstinspires.ftc.teamcode.task.AutonTaskRunner;
 import org.firstinspires.ftc.teamcode.task.MoveTo;
-import org.firstinspires.ftc.teamcode.task.PullTrigger;
-import org.firstinspires.ftc.teamcode.task.SpinUpAndShoot;
+import org.firstinspires.ftc.teamcode.task.MoveWithPIDTo;
 import org.firstinspires.ftc.teamcode.task.StartAt;
+import org.firstinspires.ftc.teamcode.task.StartFeeder;
 import org.firstinspires.ftc.teamcode.task.StartIntake;
+import org.firstinspires.ftc.teamcode.task.StartKicker;
 import org.firstinspires.ftc.teamcode.task.StartShooter;
+import org.firstinspires.ftc.teamcode.task.StopFeeder;
 import org.firstinspires.ftc.teamcode.task.StopIntake;
+import org.firstinspires.ftc.teamcode.task.StopKicker;
 import org.firstinspires.ftc.teamcode.task.StopShooter;
 import org.firstinspires.ftc.teamcode.task.Task;
-import org.firstinspires.ftc.teamcode.task.Task_RelativeDriveToPose;
 import org.firstinspires.ftc.teamcode.task.TurnTo;
 import org.firstinspires.ftc.teamcode.task.Wait;
 
 
-@Autonomous(name="Auton_VerbPhrase1", group="Test")
-public class Auton_VerbPhrase1 extends RobotBaseOpMode {
+@Autonomous(name="Auton_TestAll", group="Test")
+public class Auton_TestAll extends RobotBaseOpMode {
 
     private FieldRelativeDrive relativeDrive = null;
 
@@ -36,7 +38,7 @@ public class Auton_VerbPhrase1 extends RobotBaseOpMode {
 
         Task[] theTasks = {
                 new StartAt(this, 5.0, 5.0, 0.0),
-                new MoveTo(this, 10.0, 10.0),
+                new MoveWithPIDTo(this, 10.0, 10.0),
                 new Wait(this, 1.0),
                 new MoveTo(this, 0.0, 0.0),
                 new Wait(this, 1.0),
@@ -46,11 +48,19 @@ public class Auton_VerbPhrase1 extends RobotBaseOpMode {
                 new MoveTo(this, 5.0, 5.0),
                 new StartIntake(this),
                 new Wait(this, 1.0),
+                new StartShooter(this),
+                new Wait(this, 1.0),
+                new StartFeeder(this),
+                new Wait(this, 1.0),
+                new StartKicker(this),
+                new Wait(this, 1.0),
+                new StopKicker(this),
+                new StopFeeder(this),
+                new StopShooter(this),
                 new StopIntake(this),
                 new Wait(this, 1.0),
-                new SpinUpAndShoot(this, 600.0),
         };
-        autonTaskRunner = new AutonTaskRunner(theTasks);
+        autonTaskRunner = new AutonTaskRunner(theTasks, this.telemetry);
 
         telemetry.update();
     }

@@ -4,22 +4,18 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.component.mechanism.Shooter;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
-public class StartShooter implements Task {
+public class StartShooterWithVelocity implements Task {
 
-    private final static double DEFAULT_SHOOTER_SPEED = 1.0;
-    private double shooterSpeed;
+    private double velocity;
     private final Shooter shooter;
 
-    public StartShooter(RobotBaseOpMode robot, double shooterSpeed) {
+    public StartShooterWithVelocity(RobotBaseOpMode robot, double velocity) {
         this.shooter = robot.getShooter();
-        this.shooterSpeed = shooterSpeed;
+        this.velocity = velocity;
     }
 
-    public StartShooter(RobotBaseOpMode robot) {
-        this(robot, DEFAULT_SHOOTER_SPEED);
-    }
     public boolean execute() {
-        shooter.setPower(shooterSpeed);
+        shooter.setVelocity(velocity);
         return false; // we're done here!
     }
 }
