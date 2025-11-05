@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.task.StartFeeder;
 import org.firstinspires.ftc.teamcode.task.StartIntake;
 import org.firstinspires.ftc.teamcode.task.StartKicker;
 import org.firstinspires.ftc.teamcode.task.StartShooter;
+import org.firstinspires.ftc.teamcode.task.StartShooterWithVelocity;
 import org.firstinspires.ftc.teamcode.task.StopFeeder;
 import org.firstinspires.ftc.teamcode.task.StopIntake;
 import org.firstinspires.ftc.teamcode.task.StopKicker;
@@ -35,23 +36,23 @@ public class Auton_Mechanum_1 extends RobotBaseOpMode {
         this.autonTaskRunner = new AutonTaskRunner(
             new Task[] {
                 new Drive( this, -1.0, 0.0, 0.0, 0.5 ),       // drive backwards
-                new Wait( this, 1.0 ),                        // for 1 second
+                new Wait( this, 1.5 ),                        // for 1.5 second
                 new Drive( this, 0.0, 0.0, 0.0, 0.0 ),        // then stop
-                new StartShooter(this, 650),                  // start the shooter
-                new Wait( this, 1.0 ),                        // wait for 1 second
+                new StartShooterWithVelocity(this, 650),      // start the shooter
                 new StartFeeder(this),                        // start the feeder
                 new Wait( this, 2.0 ),                        // wait for 2 seconds
 
-                // inch forward just a bit for the last ball(s)
-                new Drive( this, 1.0, 0.0, 0.0, 0.125 ),
-                new Wait( this, 1.0 ),
+                // jiggle
+                new Drive( this, 1.0, 0.0, 0.0, 0.5 ),
+                new Wait( this, 0.25 ),
+                new Drive( this, -1.0, 0.0, 0.0, 0.5 ),
+                new Wait( this, 0.25 ),
                 new Drive( this, 0.0, 0.0, 0.0, 0.0 ),
 
                 // start intake and rotate kicker for a while to get rest of balls
                 new StartIntake( this ),
-                new Wait( this, 1.0 ),
                 new StartKicker( this ),
-                new Wait( this, 3.0 ),
+                new Wait( this, 5.0 ),
 
                 new StopKicker( this ),
                 new StopShooter( this ),
@@ -62,30 +63,30 @@ public class Auton_Mechanum_1 extends RobotBaseOpMode {
 
                 // back up
                 new Drive( this, -1.0, 0.0, 0.0, 0.5 ),
-                new Wait( this, 1.0 ),
+                new Wait( this, 0.875 ),
                 new Drive( this, 0.0, 0.0, 0.0, 0.0 ),
 
                 // turn the robot so feeder faces balls
-                new Drive( this, 0.0, 0.0, -1.0, 0.25 ),
-                new Wait( this, 1.5 ),
+                new Drive( this, 0.0, 0.0, -1.0, 0.5 ),
+                new Wait( this, 1.1 ),
                 new Drive( this, 0.0, 0, 0, 0.0 ),  // stop rotation
 
                 // collect more balls
                 new StartIntake( this ),
-                new Drive( this, -1.0, 0.0, 0.0, 0.125 ),      // drive slowly
+                new Drive( this, -1.0, 0.0, 0.0, 0.5 ),      // drive slowly
                 new Wait( this, 2.0 ),
 
                 // drive back to shooting position
-                new Drive( this, 1.0, 0.0, 0.0, 0.125 ),
+                new Drive( this, 1.0, 0.0, 0.0, 0.5 ),
                 new Wait( this, 2.0 ),
 
                 // turn the robot so shooter faces basket
-                new Drive( this, 0.0, 0.0, 1.0, 0.25 ),
-                new Wait( this, 1.5 ),
+                new Drive( this, 0.0, 0.0, 1.0, 0.5 ),
+                new Wait( this, 1.1 ),
                 new Drive( this, 0.0, 0, 0, 0.0 ),  // stop rotation
 
                 // shoot etc - same as before
-                new StartShooter(this, 650),                  // start the shooter
+                new StartShooterWithVelocity(this, 650),      // start the shooter
                 new Wait( this, 1.0 ),                        // wait for 1 second
                 new StartFeeder(this),                        // start the feeder
                 new Wait( this, 2.0 ),                        // wait for 2 seconds
