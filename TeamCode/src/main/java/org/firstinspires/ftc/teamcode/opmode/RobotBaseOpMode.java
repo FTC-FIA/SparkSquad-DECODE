@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -74,6 +75,7 @@ public abstract class RobotBaseOpMode extends OpMode
 
     // util
     protected SparkLogger logger = SparkLogger.getLogger();
+    protected FtcDashboard dashboard = FtcDashboard.getInstance();
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -115,7 +117,7 @@ public abstract class RobotBaseOpMode extends OpMode
         odometer.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
         odometer.setEncoderDirections(
                 GoBildaPinpointDriver.EncoderDirection.REVERSED,
-                GoBildaPinpointDriver.EncoderDirection.FORWARD
+                GoBildaPinpointDriver.EncoderDirection.REVERSED
         );
         odometer.resetPosAndIMU();
         odometer.recalibrateIMU();
@@ -211,5 +213,9 @@ public abstract class RobotBaseOpMode extends OpMode
 
     public Telemetry getTelemetry() {
         return telemetry;
+    }
+
+    public FtcDashboard getDashboard() {
+        return dashboard;
     }
 }

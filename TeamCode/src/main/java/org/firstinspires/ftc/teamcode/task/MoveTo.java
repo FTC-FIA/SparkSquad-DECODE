@@ -14,12 +14,12 @@ import java.util.Locale;
 
 public class MoveTo implements Task {
 
-    private final double DEFAULT_FORWARD_POWER = 0.3;
-    private final double DEFAULT_STRAFE_POWER = 0.3;
-    private final double DEFAULT_ROTATE_POWER = 0.3;
+    private final double DEFAULT_FORWARD_POWER = 0.15;
+    private final double DEFAULT_STRAFE_POWER = 0.15;
+    private final double DEFAULT_ROTATE_POWER = 0.15;
     private final double DEFAULT_TOLERANCE_X = 1.0; // in inches
     private final double DEFAULT_TOLERANCE_Y = 1.0; // in inches
-    private final double DEFAULT_TOLERANCE_H = 5; // in deg
+    private final double DEFAULT_TOLERANCE_H = 3; // in deg
     private double forwardPower = DEFAULT_FORWARD_POWER;
     private double strafePower = DEFAULT_STRAFE_POWER;
     private double rotatePower = DEFAULT_ROTATE_POWER;
@@ -109,28 +109,29 @@ public class MoveTo implements Task {
         if (Math.abs(errorY) < toleranceY) {
             strafe = 0.0;
         } else if (errorY > 0) {
-            strafe = -strafePower;
-        } else {
             strafe = strafePower;
-        }
-
-        if (Math.abs(errorH) < toleranceH) {
-            rotate = 0.0;
-        } else if (errorH > 0) {
-            rotate = rotatePower;
         } else {
-            rotate = -rotatePower;
+            strafe = -strafePower;
         }
-        if (Math.abs(errorH) > 180.0) {
-            rotate = -rotate;
-        }
+//
+//        if (Math.abs(errorH) < toleranceH) {
+//            rotate = 0.0;
+//        } else if (errorH > 0) {
+//            rotate = rotatePower;
+//        } else {
+//            rotate = -rotatePower;
+//        }
+//        if (Math.abs(errorH) > 180.0) {
+//            rotate = -rotate;
+//        }
         // Actuate - execute robot functions
+        rotate = 0.0;
         drive.drive(forward, strafe, rotate);
 
         telemetry.addData("Task", "MoveTo");
         telemetry.addData("fwdPower", String.format(Locale.US, "%.2f", forward));
         telemetry.addData("stfPower", String.format(Locale.US, "%.2f", strafe));
-        telemetry.addData("rotPower", String.format(Locale.US, "%.2f", strafe));
+        telemetry.addData("rotPower", String.format(Locale.US, "%.2f", rotate));
 
         // if any errors are > tolerance, keep going
         return (
