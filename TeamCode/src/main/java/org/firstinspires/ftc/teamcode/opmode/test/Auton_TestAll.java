@@ -9,7 +9,6 @@ import org.firstinspires.ftc.teamcode.component.drive.FieldRelativeDrive;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import org.firstinspires.ftc.teamcode.task.AutonTaskRunner;
 import org.firstinspires.ftc.teamcode.task.MoveTo;
-import org.firstinspires.ftc.teamcode.task.MoveWithPIDTo;
 import org.firstinspires.ftc.teamcode.task.StartAt;
 import org.firstinspires.ftc.teamcode.task.StartFeeder;
 import org.firstinspires.ftc.teamcode.task.StartIntake;
@@ -37,14 +36,14 @@ public class Auton_TestAll extends RobotBaseOpMode {
         relativeDrive = new FieldRelativeDrive(mecanumDrive, odometer, telemetry);
 
         Task[] theTasks = {
-                new StartAt(this, 5.0, 5.0, 0.0),
+                //new StartAt(this, 5.0, 5.0, 0.0),
                 new MoveTo(this, 15.0, 15.0),
                 new Wait(this, 1.0),
                 new MoveTo(this, 0.0, 0.0),
                 new Wait(this, 1.0),
                 new TurnTo(this, 45.0),
                 new Wait(this, 1.0),
-                new TurnTo(this, -45.0),
+                new TurnTo(this, 0.0),
                 new MoveTo(this, 5.0, 5.0),
                 new StartIntake(this),
                 new Wait(this, 1.0),
@@ -69,7 +68,7 @@ public class Auton_TestAll extends RobotBaseOpMode {
     public void loop() {
         autonTaskRunner.execute();
 
-        Pose2D currentPose = odometer.getPosition();
+        Pose2D currentPose = pinpointDriver.getPosition();
         telemetry.addData("X", currentPose.getX(DistanceUnit.INCH));
         telemetry.addData("Y", currentPose.getY(DistanceUnit.INCH));
         telemetry.addData("H", currentPose.getHeading(AngleUnit.DEGREES));

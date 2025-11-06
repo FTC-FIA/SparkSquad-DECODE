@@ -45,9 +45,9 @@ public class Auton_Mechanisms extends RobotBaseOpMode {
         };
         autonTaskRunner = new AutonTaskRunner(theTasks, this.telemetry);
 
-        double x = odometer.getPosX(DistanceUnit.INCH);
-        double y = odometer.getPosY(DistanceUnit.INCH);
-        double h = odometer.getHeading(AngleUnit.DEGREES);
+        double x = pinpointDriver.getPosX(DistanceUnit.INCH);
+        double y = pinpointDriver.getPosY(DistanceUnit.INCH);
+        double h = pinpointDriver.getHeading(AngleUnit.DEGREES);
 
         telemetry.addData("X", String.format(Locale.US, "%.1f", x));
         telemetry.addData("Y", String.format(Locale.US, "%.1f", y));
@@ -57,16 +57,16 @@ public class Auton_Mechanisms extends RobotBaseOpMode {
 
     @Override
     public void init_loop() {
-        odometer.setPosition(new Pose2D(DistanceUnit.INCH, 41.0, 54.5, AngleUnit.DEGREES, 0.0));
-        odometer.update();
+        pinpointDriver.setPosition(new Pose2D(DistanceUnit.INCH, 41.0, 54.5, AngleUnit.DEGREES, 0.0));
+        pinpointDriver.update();
     }
 
     public void loop() {
 
         autonTaskRunner.execute();
 
-        odometer.update();
-        Pose2D pos = odometer.getPosition();
+        pinpointDriver.update();
+        Pose2D pos = pinpointDriver.getPosition();
         telemetry.addData("X", pos.getX(DistanceUnit.INCH));
         telemetry.addData("Y", pos.getY(DistanceUnit.INCH));
         telemetry.addData("H", pos.getHeading(AngleUnit.DEGREES));

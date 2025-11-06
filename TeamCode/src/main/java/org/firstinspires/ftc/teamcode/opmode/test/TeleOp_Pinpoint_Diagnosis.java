@@ -1,12 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.test;
 
-import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.teamcode.component.drive.MecanumDrive;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -17,6 +12,7 @@ import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import java.util.Locale;
 
 @TeleOp(name="TeleOp_Pinpoint_Diagnosis", group="Test")
+@Disabled
 public class TeleOp_Pinpoint_Diagnosis extends RobotBaseOpMode
 {
     private double targetX = 0.0;
@@ -33,8 +29,8 @@ public class TeleOp_Pinpoint_Diagnosis extends RobotBaseOpMode
     @Override
     public void loop() {
         // Read sensors and inputs
-        odometer.update();
-        Pose2D pos = odometer.getPosition();
+        pinpointDriver.update();
+        Pose2D pos = pinpointDriver.getPosition();
         double currentX = pos.getX(DistanceUnit.MM);
         double currentY = pos.getY(DistanceUnit.MM);
         double currentH = pos.getHeading(AngleUnit.DEGREES);
@@ -101,10 +97,10 @@ public class TeleOp_Pinpoint_Diagnosis extends RobotBaseOpMode
             telemetry.addData("Heading to Target: ", headingToTarget );
         } else {
             if (gamepad1.a) {
-                odometer.resetPosAndIMU();
+                pinpointDriver.resetPosAndIMU();
             }
             if (gamepad1.b) {
-                odometer.recalibrateIMU();
+                pinpointDriver.recalibrateIMU();
             }
 
             shooterMotor.setPower(gamepad1.right_trigger);
@@ -139,12 +135,12 @@ public class TeleOp_Pinpoint_Diagnosis extends RobotBaseOpMode
 
         String velocity = String.format(
                 Locale.US, "{XVel: %.3f, YVel: %.3f, HVel: %.3f}",
-                odometer.getVelX(DistanceUnit.MM),
-                odometer.getVelY(DistanceUnit.MM),
-                odometer.getHeadingVelocity(UnnormalizedAngleUnit.DEGREES)
+                pinpointDriver.getVelX(DistanceUnit.MM),
+                pinpointDriver.getVelY(DistanceUnit.MM),
+                pinpointDriver.getHeadingVelocity(UnnormalizedAngleUnit.DEGREES)
         );
         telemetry.addData("Velocity", velocity);
-        telemetry.addData("Pinppoint Device Status", odometer.getDeviceStatus());
+        telemetry.addData("Pinppoint Device Status", pinpointDriver.getDeviceStatus());
         telemetry.addData("Elapsed time (ms)", runtime.milliseconds() );
         telemetry.update();
     }

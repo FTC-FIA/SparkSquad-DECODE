@@ -4,11 +4,13 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.component.drive.FieldRelativeDrive;
+import org.firstinspires.ftc.teamcode.component.sensor.Odometer;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
 public class DriveController {
 
     private final FieldRelativeDrive drive;
+    private final Odometer odometer;
     private final Gamepad driverGamepad;
     private final Telemetry telemetry;
 
@@ -18,6 +20,7 @@ public class DriveController {
 
     public DriveController(RobotBaseOpMode robot) {
         drive = robot.getFieldRelativeDrive();
+        odometer = robot.getOdometer();
         driverGamepad = robot.getDriverGamepad();
         telemetry = robot.getTelemetry();
     }
@@ -27,6 +30,9 @@ public class DriveController {
         double strafe = driverGamepad.left_stick_x;
         double rotate = driverGamepad.right_stick_x;
 
+        if (driverGamepad.backWasPressed()) {
+            odometer.reset();
+        }
         if (driverGamepad.bWasPressed()) {
             double newScale = Math.min(forwardScale + 0.1, 1.0);
             forwardScale = strafeScale = rotateScale = newScale;

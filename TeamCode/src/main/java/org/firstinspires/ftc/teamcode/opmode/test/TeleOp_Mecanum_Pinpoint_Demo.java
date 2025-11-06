@@ -1,14 +1,8 @@
 package org.firstinspires.ftc.teamcode.opmode.test;
 
 
-import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.teamcode.component.drive.MecanumDrive;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -26,13 +20,13 @@ public class TeleOp_Mecanum_Pinpoint_Demo extends RobotBaseOpMode {
     public void loop() {
 
         // Read sensors and inputs
-        odometer.update();
+        pinpointDriver.update();
 
         if (gamepad1.a) {
-            odometer.resetPosAndIMU();
+            pinpointDriver.resetPosAndIMU();
         }
         if (gamepad1.b) {
-            odometer.recalibrateIMU();
+            pinpointDriver.recalibrateIMU();
         }
 
         double forward = -gamepad1.left_stick_y;
@@ -43,7 +37,7 @@ public class TeleOp_Mecanum_Pinpoint_Demo extends RobotBaseOpMode {
         mecanumDrive.drive(forward, strafe, rotate);
 
         // Print telemetry
-        Pose2D pos = odometer.getPosition();
+        Pose2D pos = pinpointDriver.getPosition();
         String position = String.format(
                 Locale.US, "{X: %.3f, Y: %.3f, H: %.3f}",
                 pos.getX(DistanceUnit.MM),
@@ -54,11 +48,11 @@ public class TeleOp_Mecanum_Pinpoint_Demo extends RobotBaseOpMode {
 
         String velocity = String.format(
                 Locale.US, "{XVel: %.3f, YVel: %.3f, HVel: %.3f}",
-                odometer.getVelX(DistanceUnit.MM),
-                odometer.getVelY(DistanceUnit.MM),
-                odometer.getHeadingVelocity(UnnormalizedAngleUnit.DEGREES)
+                pinpointDriver.getVelX(DistanceUnit.MM),
+                pinpointDriver.getVelY(DistanceUnit.MM),
+                pinpointDriver.getHeadingVelocity(UnnormalizedAngleUnit.DEGREES)
         );
         telemetry.addData("Velocity", velocity);
-        telemetry.addData("Pinppoint Device Status", odometer.getDeviceStatus());
+        telemetry.addData("Pinppoint Device Status", pinpointDriver.getDeviceStatus());
     }
 }

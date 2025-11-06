@@ -44,7 +44,7 @@ public class MoveWithPIDTo implements Task {
             double targetYInches
     ) {
         this.drive = robot.getFieldRelativeDrive();;
-        this.odometer = robot.getOdometer();
+        this.odometer = robot.getPinpointDriver();
         this.telemetry = robot.getTelemetry();
         this.dashboard = robot.getDashboard();
 
@@ -58,19 +58,6 @@ public class MoveWithPIDTo implements Task {
                 heading
         );
     }
-
-    public void setToleranceX(double toleranceX) {
-        this.toleranceX = toleranceX;
-    }
-
-    public void setToleranceY(double toleranceY) {
-        this.toleranceY = toleranceY;
-    }
-
-    public void setToleranceH(double toleranceH) {
-        this.toleranceH = toleranceH;
-    }
-
 
     /**
      * If power to motors gets too low they won't move at all

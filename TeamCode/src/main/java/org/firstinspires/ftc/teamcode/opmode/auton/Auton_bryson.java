@@ -37,9 +37,9 @@ public class Auton_bryson extends RobotBaseOpMode {
         };
         autonTaskRunner = new AutonTaskRunner(theTasks, this.telemetry);
 
-        double x = odometer.getPosX(DistanceUnit.INCH);
-        double y = odometer.getPosY(DistanceUnit.INCH);
-        double h = odometer.getHeading(AngleUnit.DEGREES);
+        double x = pinpointDriver.getPosX(DistanceUnit.INCH);
+        double y = pinpointDriver.getPosY(DistanceUnit.INCH);
+        double h = pinpointDriver.getHeading(AngleUnit.DEGREES);
 
         telemetry.addData("X", String.format(Locale.US, "%.1f", x));
         telemetry.addData("Y", String.format(Locale.US, "%.1f", y));
@@ -51,8 +51,8 @@ public class Auton_bryson extends RobotBaseOpMode {
 
         autonTaskRunner.execute();
 
-        odometer.update();
-        Pose2D pos = odometer.getPosition();
+        pinpointDriver.update();
+        Pose2D pos = pinpointDriver.getPosition();
         telemetry.addData("X", pos.getX(DistanceUnit.INCH));
         telemetry.addData("Y", pos.getY(DistanceUnit.INCH));
         telemetry.addData("H", pos.getHeading(AngleUnit.DEGREES));

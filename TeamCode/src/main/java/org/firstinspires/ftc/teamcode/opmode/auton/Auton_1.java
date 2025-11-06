@@ -7,17 +7,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import org.firstinspires.ftc.teamcode.task.AutonTaskRunner;
-import org.firstinspires.ftc.teamcode.task.MoveTo;
-import org.firstinspires.ftc.teamcode.task.StartAt;
 import org.firstinspires.ftc.teamcode.task.StartFeeder;
 import org.firstinspires.ftc.teamcode.task.StartKicker;
 import org.firstinspires.ftc.teamcode.task.StopKicker;
 import org.firstinspires.ftc.teamcode.task.Task;
-import org.firstinspires.ftc.teamcode.task.TurnTo;
 import org.firstinspires.ftc.teamcode.task.StartShooter;
 import org.firstinspires.ftc.teamcode.task.StopShooter;
-import org.firstinspires.ftc.teamcode.task.StartIntake;
-import org.firstinspires.ftc.teamcode.task.StopIntake;
 import org.firstinspires.ftc.teamcode.task.Wait;
 
 
@@ -60,9 +55,9 @@ public class Auton_1 extends RobotBaseOpMode {
 
         autonTaskRunner = new AutonTaskRunner(theTasks, this.telemetry);
 
-        double x = odometer.getPosX(DistanceUnit.INCH);
-        double y = odometer.getPosY(DistanceUnit.INCH);
-        double h = odometer.getHeading(AngleUnit.DEGREES);
+        double x = pinpointDriver.getPosX(DistanceUnit.INCH);
+        double y = pinpointDriver.getPosY(DistanceUnit.INCH);
+        double h = pinpointDriver.getHeading(AngleUnit.DEGREES);
 
         telemetry.addData("X", String.format(Locale.US, "%.1f", x));
         telemetry.addData("Y", String.format(Locale.US, "%.1f", y));
@@ -74,8 +69,8 @@ public class Auton_1 extends RobotBaseOpMode {
 
         autonTaskRunner.execute();
 
-        odometer.update();
-        Pose2D pos = odometer.getPosition();
+        pinpointDriver.update();
+        Pose2D pos = pinpointDriver.getPosition();
         telemetry.addData("X", pos.getX(DistanceUnit.INCH));
         telemetry.addData("Y", pos.getY(DistanceUnit.INCH));
         telemetry.addData("H", pos.getHeading(AngleUnit.DEGREES));

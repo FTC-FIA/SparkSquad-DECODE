@@ -34,7 +34,7 @@ public class Auton_TaskRunner_RelativeDrive extends RobotBaseOpMode {
         Task_RelativeDriveToPose driveTaskFwd = new Task_RelativeDriveToPose(
                 "Forward 5",
                 relativeDrive,
-                odometer,
+                pinpointDriver,
                 targetPoseFwd,
                 telemetry
         );
@@ -42,7 +42,7 @@ public class Auton_TaskRunner_RelativeDrive extends RobotBaseOpMode {
         Task_RelativeDriveToPose driveTaskRight = new Task_RelativeDriveToPose(
                 "Right 5",
                 relativeDrive,
-                odometer,
+                pinpointDriver,
                 targetPoseRight,
                 telemetry
         );
@@ -50,7 +50,7 @@ public class Auton_TaskRunner_RelativeDrive extends RobotBaseOpMode {
         Task_RelativeDriveToPose driveTaskCW = new Task_RelativeDriveToPose(
                 "CW 45",
                 relativeDrive,
-                odometer,
+                pinpointDriver,
                 targetPoseCW,
                 telemetry
         );
@@ -58,7 +58,7 @@ public class Auton_TaskRunner_RelativeDrive extends RobotBaseOpMode {
         Task_RelativeDriveToPose driveTask00 = new Task_RelativeDriveToPose(
                 "Back to Start",
                 relativeDrive,
-                odometer,
+                pinpointDriver,
                 targetPose00,
                 telemetry
         );

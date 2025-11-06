@@ -28,13 +28,13 @@ public class Auton_TaskRunner_MecanumDrive extends RobotBaseOpMode {
 
         Task_DriveToPose driveTaskFwd = new Task_DriveToPose(
                 mecanumDrive,
-                odometer,
+                pinpointDriver,
                 targetPoseFwd,
                 telemetry
         );
         Task_DriveToPose driveTaskRight = new Task_DriveToPose(
                 mecanumDrive,
-                odometer,
+                pinpointDriver,
                 targetPoseRight,
                 telemetry
         );
@@ -42,7 +42,7 @@ public class Auton_TaskRunner_MecanumDrive extends RobotBaseOpMode {
         autonTaskRunner = new AutonTaskRunner(theTasks, this.telemetry);
 
         // PRINT TELEMETRY
-        Pose2D pos = odometer.getPosition();
+        Pose2D pos = pinpointDriver.getPosition();
         String position = String.format(
                 Locale.US, "{X: %.3f, Y: %.3f, H: %.3f}",
                 pos.getX(DistanceUnit.MM),
