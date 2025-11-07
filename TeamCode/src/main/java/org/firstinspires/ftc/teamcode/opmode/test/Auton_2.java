@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auton;
+package org.firstinspires.ftc.teamcode.opmode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -7,52 +7,44 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import org.firstinspires.ftc.teamcode.task.AutonTaskRunner;
-import org.firstinspires.ftc.teamcode.task.StartFeeder;
-import org.firstinspires.ftc.teamcode.task.StartKicker;
-import org.firstinspires.ftc.teamcode.task.StopKicker;
+import org.firstinspires.ftc.teamcode.task.MoveTo;
+import org.firstinspires.ftc.teamcode.task.StartAt;
 import org.firstinspires.ftc.teamcode.task.Task;
-import org.firstinspires.ftc.teamcode.task.StartShooter;
-import org.firstinspires.ftc.teamcode.task.StopShooter;
-import org.firstinspires.ftc.teamcode.task.Wait;
-
+import org.firstinspires.ftc.teamcode.task.TurnTo;
 
 import java.util.Locale;
 
-@Autonomous(name="Auton_1", group="Test")
-public class Auton_1 extends RobotBaseOpMode {
+@Autonomous(name="Auton_2", group="Test")
+public class Auton_2 extends RobotBaseOpMode {
 
     private AutonTaskRunner autonTaskRunner;
 
     public void init() {
         super.init();
 
+
+
+
         Task[] theTasks = {
-//                new StartAt(this, 60, 60, 45),
-//                new MoveTo(this, 12, 12),
-                new StartShooter(this, 650), // inch forward every shoot
-                new StartFeeder(this),
-//                new StartKicker(this),  // not using the kicker for when 3 balls in
-//                new MoveTo(this, 13, 13), //inch forward
-                new Wait(this, 2.0),
-                new StopKicker(this),
-                new StartKicker(this),
-//                new MoveTo(this, 14, 14), //inch forward
-                new StopShooter(this),
-//                new StopKicker(this),
-                //new StartKicker(this),
-//                new TurnTo(this, -90),
+                new StartAt(this, -60, 12, 0),
+                new TurnTo(this, 25),
+//                new SpinUpAndShoot(this, 600),
+//                new SpinUpAndShoot(this, 600),
+//                new SpinUpAndShoot(this, 600),
+                new MoveTo(this, -36, 24),
+                new TurnTo(this, -90),
 //                new StartIntake(this),
-//                new MoveTo(this, 12, 72.0),
-//                new MoveTo(this, 12, 12),
+                new MoveTo(this, -36, 72.0),
+                new MoveTo(this, -60, 12),
 //                new StopIntake(this),
-//                new TurnTo(this, 45),
-//                new StartShooter(this, 650),
-//                new StartShooter(this, 650),
-//                new StartShooter(this, 650),
-//                new MoveTo(this, 32, -36),  // park
+                new TurnTo(this, 25),
+                new MoveTo(this, -60, 12),
+//                new SpinUpAndShoot(this, 600),
+//                new SpinUpAndShoot(this, 600),
+//                new SpinUpAndShoot(this, 600),
+                new MoveTo(this, 32, -36),  // park
 
         };
-
         autonTaskRunner = new AutonTaskRunner(theTasks, this.telemetry);
 
         double x = pinpointDriver.getPosX(DistanceUnit.INCH);

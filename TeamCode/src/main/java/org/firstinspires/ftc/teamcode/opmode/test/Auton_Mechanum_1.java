@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auton;
+package org.firstinspires.ftc.teamcode.opmode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -43,7 +43,7 @@ public class Auton_Mechanum_1 extends RobotBaseOpMode {
 
                 // start intake and rotate kicker for a while to get rest of balls
                 new StartIntake( this ),
-                new StartKicker( this ),
+                new StartKicker( this, 0.4 ),
                 new Wait( this, 5.0 ),
 
                 new StopKicker( this ),
@@ -91,7 +91,7 @@ public class Auton_Mechanum_1 extends RobotBaseOpMode {
                 // start intake and rotate kicker for a while to get rest of balls
                 new StartIntake( this ),
                 new Wait( this, 1.0 ),
-                new StartKicker( this ),
+                new StartKicker( this, 0.4 ),
                 new Wait( this, 3.0 ),
 
                 new StopKicker( this ),

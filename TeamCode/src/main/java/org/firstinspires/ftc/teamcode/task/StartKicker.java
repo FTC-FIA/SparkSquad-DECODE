@@ -7,12 +7,15 @@ import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 public class StartKicker implements Task {
 
     private final Kicker kicker;
+    private double kickerSpeed;
 
-    public StartKicker(RobotBaseOpMode robot) {
+    public StartKicker(RobotBaseOpMode robot, double kickerSpeed) {
         this.kicker = robot.getKicker();
+        this.kickerSpeed = kickerSpeed;
     }
 
     public boolean execute() {
+        kicker.setPower(kickerSpeed);
         kicker.forward();
         return false;
     }

@@ -5,10 +5,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import org.firstinspires.ftc.teamcode.task.AutonTaskRunner;
-import org.firstinspires.ftc.teamcode.task.Drive;
 import org.firstinspires.ftc.teamcode.task.MoveTo;
 import org.firstinspires.ftc.teamcode.task.StartAt;
 import org.firstinspires.ftc.teamcode.task.StartFeeder;
@@ -23,8 +21,8 @@ import org.firstinspires.ftc.teamcode.task.Task;
 import org.firstinspires.ftc.teamcode.task.TurnTo;
 import org.firstinspires.ftc.teamcode.task.Wait;
 
-@Autonomous(name="Auton_FR", group="Test")
-public class Auton_FR extends RobotBaseOpMode {
+@Autonomous(name="Auton_I1S2E2_Blue", group="Test")
+public class Auton_I1S2E2_Blue extends RobotBaseOpMode {
 
     private final ElapsedTime elapsedTime = new ElapsedTime();
     private AutonTaskRunner autonTaskRunner;
@@ -33,32 +31,25 @@ public class Auton_FR extends RobotBaseOpMode {
         super.init();
         this.autonTaskRunner = new AutonTaskRunner(
             new Task[] {
-                new StartAt( this, -17.5, -59.2, 0.0 ),
-                //new Wait( this, 2.0 ),
-                new StartIntake( this ),
-                new MoveTo( this, 0.0, 0.0 ),
-                new TurnTo( this, 45.0 ),
+                    new StartAt( this, 18.0, -60.0, 0.0 ),      // in small triangle, towards blue side
+                    new StartIntake( this ),                    // helps keep balls in
+                    new MoveTo( this, 0.0, 0.0 ),               // center of field
+                    new TurnTo( this, 45.0 ),                   // turn towards target
 
-                new StartShooterWithVelocity(this, 650),      // start the shooter
-                new StartFeeder(this),                        // start the feeder
-                new Wait( this, 2.0 ),                        // wait for 2 seconds
+                    new StartShooterWithVelocity( this, 600 ),  // start the shooter
+                    new StartFeeder( this ),                    // start the feeder
+                    new Wait( this, 2.0 ),                      // wait for 2 seconds => 1st shot
 
-                // jiggle
-//                new Drive( this, 1.0, 0.0, 0.0, 0.5 ),
-//                new Wait( this, 0.25 ),
-//                new Drive( this, -1.0, 0.0, 0.0, 0.5 ),
-//                new Wait( this, 0.25 ),
-//                new Drive( this, 0.0, 0.0, 0.0, 0.0 ),
+                    new StartKicker( this, 0.4 ),               // try to kick the other two balls out
+                    new Wait( this, 8.0 ),                      // ... for 6 seconds
 
-                // start intake and rotate kicker for a while to get rest of balls
-                //new StartIntake( this ),
-                new StartKicker( this ),
-                new Wait( this, 10.0 ),
+                    new TurnTo( this, 0.0 ),                    // straighten back out to avoid weirdness
+                    new MoveTo( this, 0.0, 24.0 ),              // move to "safe zone" between triangles
 
-                new StopKicker( this ),
-                new StopShooter( this ),
-                new StopFeeder( this ),
-                new StopIntake( this ),
+                    new StopKicker( this ),                     // shut it down
+                    new StopShooter( this ),
+                    new StopFeeder( this ),
+                    new StopIntake( this ),
             },
             telemetry
         );
