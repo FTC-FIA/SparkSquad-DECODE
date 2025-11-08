@@ -28,6 +28,7 @@ public class Auton_I1S2E2_Blue extends RobotBaseOpMode {
     private AutonTaskRunner autonTaskRunner;
 
     public void init() {
+
         super.init();
         this.autonTaskRunner = new AutonTaskRunner(
             new Task[] {
