@@ -19,10 +19,11 @@ import org.firstinspires.ftc.teamcode.component.mechanism.Intake;
 import org.firstinspires.ftc.teamcode.component.mechanism.Shooter;
 import org.firstinspires.ftc.teamcode.component.mechanism.Kicker;
 import org.firstinspires.ftc.teamcode.component.sensor.Odometer;
-import org.firstinspires.ftc.teamcode.controller.DriveController;
+import org.firstinspires.ftc.teamcode.controller.FieldRelativeDriveController;
 import org.firstinspires.ftc.teamcode.controller.FeederController;
 import org.firstinspires.ftc.teamcode.controller.IntakeController;
 import org.firstinspires.ftc.teamcode.controller.KickerController;
+import org.firstinspires.ftc.teamcode.controller.RobotRelativeDriveController;
 import org.firstinspires.ftc.teamcode.controller.ShooterController;
 import org.firstinspires.ftc.teamcode.util.SparkLogger;
 
@@ -70,7 +71,8 @@ public abstract class RobotBaseOpMode extends OpMode
     protected KickerController kickerController = null;
     protected FeederController feederController = null;
     protected IntakeController intakeController = null;
-    protected DriveController driveController = null;
+    protected FieldRelativeDriveController fieldRelativeDriveController = null;
+    protected RobotRelativeDriveController robotRelativeDriveController = null;
 
     // util
     protected SparkLogger logger = SparkLogger.getLogger();
@@ -122,21 +124,22 @@ public abstract class RobotBaseOpMode extends OpMode
 
         // Initialize components
         mecanumDrive = new MecanumDrive(frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor);
+        fieldRelativeDrive = new FieldRelativeDrive(mecanumDrive, odometer, telemetry);
         shooter = new Shooter(shooterMotor);
         intake = new Intake(intakeMotor);
         kicker = new Kicker(kickerCRServo);
         feeder = new Feeder(feederCRServo);
         odometer = new Odometer(pinpointDriver);
-        fieldRelativeDrive = new FieldRelativeDrive(mecanumDrive, odometer, telemetry);
 
         odometer.reset();
 
         // Initialize controllers
         shooterController = new ShooterController(this);
         kickerController = new KickerController(this);
-        driveController = new DriveController(this);
         feederController = new FeederController(this);
         intakeController = new IntakeController(this);
+        fieldRelativeDriveController = new FieldRelativeDriveController(this);
+        robotRelativeDriveController = new RobotRelativeDriveController(this);
 
         // Log status
         telemetry.addData("Status", "Robot Base Initialized");
@@ -212,7 +215,11 @@ public abstract class RobotBaseOpMode extends OpMode
 
     public Gamepad getOperatorGamepad() { return gamepad2; }
 
-    public DriveController getDriveController() { return driveController; }
+    public FieldRelativeDriveController getFieldRelativeDriveController() { return fieldRelativeDriveController; }
+
+    public RobotRelativeDriveController getRobotRelativeDriveController() {
+        return robotRelativeDriveController;
+    }
 
     public ShooterController getShooterController() { return shooterController; }
 

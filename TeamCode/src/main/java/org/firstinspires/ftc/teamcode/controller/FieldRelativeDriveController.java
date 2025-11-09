@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.component.drive.FieldRelativeDrive;
 import org.firstinspires.ftc.teamcode.component.sensor.Odometer;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
-public class DriveController {
+public class FieldRelativeDriveController {
 
     private final FieldRelativeDrive drive;
     private final Odometer odometer;
@@ -18,7 +18,7 @@ public class DriveController {
     private double strafeScale = 1.0;
     private double rotateScale = 1.0;
 
-    public DriveController(RobotBaseOpMode robot) {
+    public FieldRelativeDriveController(RobotBaseOpMode robot) {
         drive = robot.getFieldRelativeDrive();
         odometer = robot.getOdometer();
         driverGamepad = robot.getDriverGamepad();
