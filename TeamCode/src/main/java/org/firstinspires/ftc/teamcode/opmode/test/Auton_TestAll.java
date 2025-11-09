@@ -51,7 +51,7 @@ public class Auton_TestAll extends RobotBaseOpMode {
                 new Wait(this, 1.0),
                 new StartFeeder(this),
                 new Wait(this, 1.0),
-                new StartKicker(this),
+                new StartKicker(this, 0.4),
                 new Wait(this, 1.0),
                 new StopKicker(this),
                 new StopFeeder(this),

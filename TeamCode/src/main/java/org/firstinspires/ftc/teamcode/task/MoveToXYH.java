@@ -21,7 +21,7 @@ public class MoveToXYH extends TaskList {
     ) {
 
         super( robot, new Task[] {
-                new TurnTo( robot, 0.0 ),
+                //new TurnTo( robot, 0.0 ),
                 new MoveTo( robot, targetXInches, targetYInches),
                 new TurnTo( robot, targetHDegrees)
         });

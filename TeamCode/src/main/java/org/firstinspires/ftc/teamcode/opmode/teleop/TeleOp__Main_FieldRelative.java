@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
-@TeleOp(name="TeleOp_No_Cap", group="Main")
-public class TeleOp_No_Cap extends RobotBaseOpMode
+@TeleOp(name="TeleOp_Main_RobotRelative", group="Main")
+public class TeleOp__Main_FieldRelative extends RobotBaseOpMode
 {
     @Override
     public void init() {
@@ -22,7 +23,7 @@ public class TeleOp_No_Cap extends RobotBaseOpMode
 
     @Override
     public void init_loop() {
-        fieldRelativeDrive.drive(0.0, 0.0, 0.0);
+        mecanumDrive.drive(0.0, 0.0, 0.0);
     }
 
     @Override
@@ -32,7 +33,7 @@ public class TeleOp_No_Cap extends RobotBaseOpMode
         shooterController.handleInput();
         kickerController.handleInput();
         feederController.handleInput();
-        driveController.handleInput();
+        fieldRelativeDriveController.handleInput();
         intakeController.handleInput();
 
         // Display Telemetry

@@ -15,10 +15,10 @@ import java.util.Locale;
 
 public class MoveTo implements Task {
 
-    private final double DEFAULT_FORWARD_POWER = 0.5;
-    private final double DEFAULT_STRAFE_POWER = 0.5;
-    private final double DEFAULT_TOLERANCE_X = 1.0; // in inches
-    private final double DEFAULT_TOLERANCE_Y = 1.0; // in inches
+    private final double DEFAULT_FORWARD_POWER = 0.3;
+    private final double DEFAULT_STRAFE_POWER = 0.3;
+    private final double DEFAULT_TOLERANCE_X = 2.0; // in inches
+    private final double DEFAULT_TOLERANCE_Y = 2.0; // in inches
     private double forwardPower = DEFAULT_FORWARD_POWER;
     private double strafePower = DEFAULT_STRAFE_POWER;
     private double toleranceX = DEFAULT_TOLERANCE_X;

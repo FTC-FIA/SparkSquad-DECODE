@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
 public class KickerController {
 
-    private final double DEFAULT_FORWARD_SPEED = 0.4;
+    private final double DEFAULT_FORWARD_SPEED = 0.2;
     private final double DEFAULT_REVERSE_SPEED = -0.25;
 
     private double forwardSpeed = DEFAULT_FORWARD_SPEED;
