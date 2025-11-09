@@ -26,8 +26,8 @@ public abstract class AutonBaseOpMode extends RobotBaseOpMode {
     protected ColorPose2D S4 = new ColorPose2D( 18.0, -64.0, 0.0, AllianceColor.BLUE);
 
     // Ending positions
-    protected ColorPose2D E1 = new ColorPose2D( -40.0, -60.0,  0.0, AllianceColor.BLUE);
-    protected ColorPose2D E2 = new ColorPose2D( 0.0, -24.0, 0.0, AllianceColor.BLUE);
+    protected ColorPose2D E1 = new ColorPose2D( 12.0, -36.0,  0.0, AllianceColor.BLUE);
+    protected ColorPose2D E2 = new ColorPose2D( 12.0, -12.0, 0.0, AllianceColor.BLUE);
     protected ColorPose2D E3 = new ColorPose2D( 60.0, 30.0, 0.0, AllianceColor.BLUE);
 
     public void loop() {
