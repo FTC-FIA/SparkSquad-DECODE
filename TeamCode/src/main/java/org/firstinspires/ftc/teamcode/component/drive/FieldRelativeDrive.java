@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.component.drive;
 
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -11,7 +12,7 @@ import org.firstinspires.ftc.teamcode.util.SparkLogger;
 
 import java.util.Locale;
 
-public class FieldRelativeDrive {
+public class FieldRelativeDrive extends MecanumDrive {
 
     private MecanumDrive mecanumDrive = null;
     private Odometer odometer = null;
@@ -19,11 +20,14 @@ public class FieldRelativeDrive {
     private SparkLogger logger = SparkLogger.getLogger();
 
     public FieldRelativeDrive(
-            MecanumDrive mecanumDrive,
+            DcMotor frontLeft,
+            DcMotor frontRight,
+            DcMotor rearLeft,
+            DcMotor rearRight,
             Odometer odometer,
             Telemetry telemetry
     ) {
-        this.mecanumDrive = mecanumDrive;
+        super( frontLeft, frontRight, rearLeft, rearRight );
         this.odometer = odometer;
         this.telemetry = telemetry;
     }
@@ -38,11 +42,13 @@ public class FieldRelativeDrive {
         double hInDegrees = odometer.getHeading(AngleUnit.DEGREES);
         double x = odometer.getX(DistanceUnit.INCH);
         double y = odometer.getY(DistanceUnit.INCH);
+
         // from https://www.ctrlaltftc.com/practical-examples/drivetrain-control
         double forwardAdjusted = forward * Math.cos(hInRadians) - strafe * Math.sin(hInRadians);
         double strafeAdjusted = forward * Math.sin(hInRadians) + strafe * Math.cos(hInRadians);
 
-        mecanumDrive.drive(forwardAdjusted, strafeAdjusted, rotate, speed);
+        super.drive(forwardAdjusted, strafeAdjusted, rotate, speed);
+
         String pose = "x " + x + " y " + y + " heading " + hInDegrees;
         String commands = "forward " + forward + " strafe " + strafe + " rotate " + rotate;
         String adjCommands = "forwardAdjusted " + forwardAdjusted + " strafeAdjusted " + strafeAdjusted;
