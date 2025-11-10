@@ -31,9 +31,9 @@ public class ShooterController {
         } else if (operatorGamepad.aWasPressed()) {
             isRunning = false;
         } else if (operatorGamepad.xWasPressed()) {
-            shooterVelocity = shooterVelocity * 0.9;
+            shooterVelocity = Math.min(shooterVelocity - 25, 0.0);
         } else if (operatorGamepad.bWasPressed()) {
-            shooterVelocity = Math.min(shooterVelocity * 1.1, MAX_VELOCITY);
+            shooterVelocity = Math.min(shooterVelocity + 25, MAX_VELOCITY);
         }
         double requestedVelocity = isRunning ? shooterVelocity : 0.0;
         shooter.setVelocity(requestedVelocity);
