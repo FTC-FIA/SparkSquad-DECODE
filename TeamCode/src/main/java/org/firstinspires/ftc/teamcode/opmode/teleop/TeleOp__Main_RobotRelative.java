@@ -1,14 +1,24 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
-@TeleOp(name="TeleOp_Main_RobotRelative", group="Main")
-public class TeleOp__Main_RobotRelative extends RobotBaseOpMode
+import org.firstinspires.ftc.teamcode.controller.AssistedShooterController;
+import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
+import org.firstinspires.ftc.teamcode.util.AllianceColor;
+
+public abstract class TeleOp__Main_RobotRelative extends RobotBaseOpMode
 {
+    protected AssistedShooterController assistedShooterController;
+    protected AllianceColor color;
+
+    protected void setColor(AllianceColor color) {
+        this.color = color;
+    }
+
     @Override
     public void init() {
         super.init();
+        assistedShooterController = new AssistedShooterController(this, color);
     }
 
     @Override
@@ -33,7 +43,8 @@ public class TeleOp__Main_RobotRelative extends RobotBaseOpMode
         kickerController.handleInput();
         feederController.handleInput();
         robotRelativeDriveController.handleInput();
-        intakeController.handleInput();
+        assistedShooterController.handleInput();
+        //intakeController.handleInput();
 
         // Display Telemetry
         telemetry.addData("Runtime:", runtime.toString());

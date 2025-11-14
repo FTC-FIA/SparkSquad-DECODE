@@ -1,10 +1,12 @@
-package org.firstinspires.ftc.teamcode.opmode.teleop;
+package org.firstinspires.ftc.teamcode.opmode.test;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
-@TeleOp(name="TeleOp_Main_RobotRelative", group="Main")
+@TeleOp(name="TeleOp_Main_FieldRelative", group="Main")
+@Disabled
 public class TeleOp__Main_FieldRelative extends RobotBaseOpMode
 {
     @Override

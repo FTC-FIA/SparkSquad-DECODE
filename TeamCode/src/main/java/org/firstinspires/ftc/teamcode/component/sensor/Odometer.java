@@ -38,6 +38,10 @@ public class Odometer {
         return pinpointDriver.getHeading(units) * (invertH? -1.0 : 1.0) ;
     }
 
+    public void setHeading(double heading, AngleUnit units) {
+        pinpointDriver.setHeading(heading * (invertH ? -1.0 : 1.0), units);
+    }
+
     public void setPosition(Pose2D newPosition) {
         DistanceUnit du = DistanceUnit.INCH;
         AngleUnit au = AngleUnit.DEGREES;

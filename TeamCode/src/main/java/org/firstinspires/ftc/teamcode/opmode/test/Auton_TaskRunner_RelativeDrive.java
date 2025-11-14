@@ -29,7 +29,7 @@ public class Auton_TaskRunner_RelativeDrive extends RobotBaseOpMode {
     public void init() {
         super.init();
 
-        relativeDrive = new FieldRelativeDrive(mecanumDrive, odometer, telemetry);
+        //relativeDrive = new FieldRelativeDrive(mecanumDrive, odometer, telemetry);
 
         Task_RelativeDriveToPose driveTaskFwd = new Task_RelativeDriveToPose(
                 "Forward 5",

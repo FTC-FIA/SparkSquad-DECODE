@@ -33,7 +33,7 @@ public class Auton_TestAll extends RobotBaseOpMode {
     public void init() {
         super.init();
 
-        relativeDrive = new FieldRelativeDrive(mecanumDrive, odometer, telemetry);
+        //relativeDrive = new FieldRelativeDrive(mecanumDrive, odometer, telemetry);
 
         Task[] theTasks = {
                 //new StartAt(this, 5.0, 5.0, 0.0),

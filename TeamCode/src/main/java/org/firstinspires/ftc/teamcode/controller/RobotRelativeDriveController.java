@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.robotcontroller.external.samples.RobotTeleopMecanumFieldRelativeDrive;
 import org.firstinspires.ftc.robotcontroller.internal.FtcOpModeRegister;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.component.drive.FieldRelativeDrive;
 import org.firstinspires.ftc.teamcode.component.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.component.sensor.Odometer;
@@ -42,9 +44,9 @@ public class RobotRelativeDriveController {
         double rotate = driverGamepad.right_stick_x;
 
         if (driverGamepad.backWasPressed()) {
-            odometer.reset();
-        }
-        if (driverGamepad.bWasPressed()) {
+            odometer.update();
+            odometer.setHeading(0.0, AngleUnit.DEGREES);
+        } else if (driverGamepad.bWasPressed()) {
             forwardScale = SLOW_FORWARD_SCALE;
             strafeScale = SLOW_STRAFE_SCALE;
             rotateScale = SLOW_ROTATE_SCALE;
