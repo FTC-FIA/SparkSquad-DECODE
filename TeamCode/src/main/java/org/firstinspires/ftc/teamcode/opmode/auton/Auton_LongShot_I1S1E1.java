@@ -55,11 +55,11 @@ public abstract class Auton_LongShot_I1S1E1 extends AutonBaseOpMode {
                     new TurnTo( this, shootPose.getHeading(AU)),
 
                     // Shoot!
-                    new Wait( this, 7.0 ),
+                    new Wait( this, 8.0 ),
                     new StartFeeder( this, 0.3 ),    // start the feeder
 
                     // let first 2 balls shoot
-                    new Wait( this, 10.0 ),        // wait for feeder to shoot 2 balls
+                    new Wait( this, 5.0 ),        // wait for feeder to shoot 2 balls
 
                     // Shoot the last one
                     new StartKicker( this, 0.1 ), // Kick the last ball out

@@ -43,43 +43,40 @@ public abstract class Auton_CloseUp_I3S3E3 extends AutonBaseOpMode {
         this.autonTaskList = new AutonTaskList(
             this,
             new Task[]{
-                    // Startposition
+                    // Start position
                     new StartAt(this, startPose.getX(DU), startPose.getY(DU), startPose.getHeading(AU)),
 
                     // Helps keep the balls in while moving, also with shooting
                     new StartIntake(this),
 
+                    // spin up shooter
+                    new StartShooterWithVelocity(this, 600),  // start the shooter
+
                     // move to shooting position using a TaskList
                     new MoveTo( this, shootPose.getX(DU), shootPose.getY(DU) ),
                     new TurnTo( this, shootPose.getHeading(AU))  ,
 
-                    //new MoveToXYH(this, shootPose.getX(DU), shootPose.getY(DU), shootPose.getHeading(AU)),
-
-                    // Shoot!
-                    new StartShooterWithVelocity(this, 600),  // start the shooter
-                    new Wait( this, 8.0 ),
-                    new StartFeeder( this, 0.3),                    // start the feeder
-                    //new Wait(this, 8.0),                      // wait for 2 seconds => 1st shot
+                    // Shoot 2 balls!
+                    new Wait( this, 8.0 ),                      // wait for shooter to hit target velocity
+                    new StartFeeder( this, 0.3),                // start the feeder
 
                     // Shoot more!
-
                     new Wait(this, 5.0),
                     new StartKicker(this, 0.1),
                     new Wait ( this, 0.5 ),
                     new StopKicker( this ),
 
+                    // make sure they're all gone!
                     new Wait ( this, 3.0 ),
                     new StartKicker(this, 0.1),
 
                     new Wait ( this, 5.0 ),
 
-
-//                    // move to end position
+                    // move to end position
                     new TurnTo( this, 0.0 ),
                     new MoveTo( this, endPose.getX(DU), endPose.getY(DU) ),
-                    //new MoveToXYH(this, endPose.getX(DU), endPose.getY(DU), endPose.getHeading(AU)),
-//
-//                    // shut it down
+
+                    // shut it down
                     new StopKicker(this),
                     new StopShooter(this),
                     new StopFeeder(this),
