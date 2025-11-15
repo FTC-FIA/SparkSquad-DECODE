@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.controller.AssistedShooterController;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import org.firstinspires.ftc.teamcode.util.AllianceColor;
 
-@TeleOp(name="AutoVel Blue", group="Prod")
+@TeleOp(name="Main", group="Prod")
 public class TeleOp_Main extends RobotBaseOpMode
 {
 

@@ -28,9 +28,9 @@ public class ShooterTestController {
     private double forwardVelocity = DEFAULT_FORWARD_VELOCITY;
     private double requestedVelocity = forwardVelocity;
 
-    private double kP = 10.0;
-    private double kI = 0.0;
-    private double kD = 0.0;
+    private double kP = 100.0;
+    private double kI = 40.0;
+    private double kD = 25.0;
 
     public ShooterTestController(RobotBaseOpMode robot) {
         this.shooter = robot.getShooter();
@@ -48,27 +48,27 @@ public class ShooterTestController {
     public void handleInput() {
 
         if (operatorGamepad.bWasPressed()) {
-            kP += 1.0;
+            kP += 5.0;
             updatePID();
         }
         if (operatorGamepad.xWasPressed()) {
-            kP = Math.max(kP - 1.0, 0.0);
+            kP = Math.max(kP - 5.0, 0.0);
             updatePID();
         }
         if (operatorGamepad.dpadUpWasPressed()) {
-            kD += 0.1;
+            kD += 1.0;
             updatePID();
         }
         if (operatorGamepad.dpadDownWasPressed()) {
-            kD = Math.max(kD - 0.1, 0.0);
+            kD = Math.max(kD - 1.0, 0.0);
             updatePID();
         }
         if (operatorGamepad.dpadRightWasPressed()) {
-            kI += 0.1;
+            kI += 1.0;
             updatePID();
         }
         if (operatorGamepad.dpadLeftWasPressed()) {
-            kI = Math.max(kI - 0.1, 0.0);
+            kI = Math.max(kI - 1.0, 0.0);
             updatePID();
         }
 

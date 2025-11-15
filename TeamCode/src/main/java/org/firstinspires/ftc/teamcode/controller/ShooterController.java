@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.controller;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -18,6 +20,11 @@ public class ShooterController {
     private static final double MAX_VELOCITY = 1600;
     private static final double VELOCITY_INCREMENT = 20.0;
 
+    private static final double kP = 100.0;
+    private static final double kI = 38.0;
+    private static final double kD = 25.0;
+
+
     private final Shooter shooter;
     private final Gamepad operatorGamepad;
     private final Telemetry telemetry;
@@ -33,6 +40,7 @@ public class ShooterController {
         this.operatorGamepad = robot.getOperatorGamepad();
         this.telemetry = robot.getTelemetry();
         this.shooterLed = robot.getShooterLed();
+        this.shooter.setPIDF(kP, kI, kD);
     }
 
     public void handleInput() {
@@ -62,6 +70,12 @@ public class ShooterController {
         } else {
             shooterLed.setPosition(Constants.LED_ORANGE);
         }
+
+        // TODO: REMOVE AFTER VERIFICATION
+        PIDFCoefficients pidf = shooter.getPIDF();
+        telemetry.addData("Shooter P", pidf.p);
+        telemetry.addData("Shooter I", pidf.i);
+        telemetry.addData("Shooter D", pidf.d);
 
         telemetry.addData("Shooter LED", shooterLed.getPosition());
         telemetry.addData("Shooter Velocity (req)", requestedVelocity);
