@@ -42,18 +42,23 @@ public class AssistedShooterController {
         double targetX = target.getX(DistanceUnit.INCH);
         double targetY = target.getY(DistanceUnit.INCH);
         double distance = ShooterUtils.calculateDistance(currentX, currentY, targetX, targetY);
-        double velocity = ShooterUtils.distance2Velocity(distance);
+        double recommendedVelocity = ShooterUtils.distance2Velocity(distance);
         double targetHeading = ShooterUtils.headingTowards(currentX, currentY, targetX, targetY);
 
-        shooter.setVelocity(velocity);
+        shooter.setVelocity(recommendedVelocity);
         telemetry.addData("X", currentX);
         telemetry.addData("Y", currentY);
-        telemetry.addData("H", odometer.getHeading(AngleUnit.DEGREES));
-        telemetry.addData("Distance to Target", distance);
-        telemetry.addData("Recommended velocity", velocity);
-        telemetry.addData("Target heading", targetHeading);
-        // when triggered, change orientation to face directly
 
-        //
+        double robotHeading = odometer.getHeading(AngleUnit.DEGREES);
+        telemetry.addData("Robot Heading", robotHeading);
+        telemetry.addData("Target heading", targetHeading);
+        telemetry.addData("** HEADING ERROR", targetHeading - robotHeading);
+
+        telemetry.addData("Distance to Target", distance);
+
+        double currVelocity = shooter.getShooterVelocity();
+        telemetry.addData("Target velocity", recommendedVelocity);
+        telemetry.addData("Current Velocity", currVelocity);
+        telemetry.addData("** VELOCITY ERROR", recommendedVelocity - currVelocity);
     }
 }

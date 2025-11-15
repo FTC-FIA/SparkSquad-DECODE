@@ -63,9 +63,5 @@ public class RobotRelativeDriveController {
         drive.drive(forward, strafe, rotate);
 
         telemetry.addData("Speed scale", forwardScale);
-        telemetry.addData("Forward", forward);
-        telemetry.addData("Strafe", strafe);
-        telemetry.addData("Rotate", rotate);
-
     }
 }

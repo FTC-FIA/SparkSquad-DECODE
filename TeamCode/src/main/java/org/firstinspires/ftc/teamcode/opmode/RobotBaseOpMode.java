@@ -172,7 +172,7 @@ public abstract class RobotBaseOpMode extends OpMode
         return rearRightMotor;
     }
 
-    public DcMotor getShooterMotor() {
+    public DcMotorEx getShooterMotor() {
         return shooterMotor;
     }
 

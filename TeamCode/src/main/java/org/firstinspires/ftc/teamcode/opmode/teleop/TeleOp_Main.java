@@ -6,28 +6,19 @@ import org.firstinspires.ftc.teamcode.controller.AssistedShooterController;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import org.firstinspires.ftc.teamcode.util.AllianceColor;
 
-public abstract class TeleOp__Main_RobotRelative extends RobotBaseOpMode
+@TeleOp(name="AutoVel Blue", group="Prod")
+public class TeleOp_Main extends RobotBaseOpMode
 {
-    protected AssistedShooterController assistedShooterController;
-    protected AllianceColor color;
 
-    protected void setColor(AllianceColor color) {
-        this.color = color;
-    }
 
     @Override
     public void init() {
         super.init();
-        assistedShooterController = new AssistedShooterController(this, color);
     }
 
     @Override
     public void start() {
         runtime.reset();
-    }
-
-    public double getVelocity() {
-        return shooter.getShooterVelocity();
     }
 
     @Override
@@ -39,12 +30,11 @@ public abstract class TeleOp__Main_RobotRelative extends RobotBaseOpMode
     public void loop() {
 
         // let controllers do their thing
-        shooterController.handleInput();
         kickerController.handleInput();
         feederController.handleInput();
         robotRelativeDriveController.handleInput();
-        assistedShooterController.handleInput();
-        //intakeController.handleInput();
+        intakeController.handleInput();
+        shooterController.handleInput();
 
         // Display Telemetry
         telemetry.addData("Runtime:", runtime.toString());

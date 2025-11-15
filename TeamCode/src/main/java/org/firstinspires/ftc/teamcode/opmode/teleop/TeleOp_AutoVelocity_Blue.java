@@ -4,10 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.util.AllianceColor;
 
-@TeleOp(name="TeleOp_Main_RobotRelative_Red", group="Main")
-public class TeleOp_Main_RobotRelative_Red extends TeleOp__Main_RobotRelative {
+@TeleOp(name="AutoVel Blue", group="Dev")
+public class TeleOp_AutoVelocity_Blue extends TeleOp_AutoVelocity {
     public void init() {
-        setColor(AllianceColor.RED);
+        setColor(AllianceColor.BLUE);
         super.init();
     }
 }

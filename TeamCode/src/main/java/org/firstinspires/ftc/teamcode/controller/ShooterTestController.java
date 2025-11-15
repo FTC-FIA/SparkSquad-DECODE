@@ -1,20 +1,20 @@
 package org.firstinspires.ftc.teamcode.controller;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.PIDCoefficients;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.component.mechanism.Shooter;
-import org.firstinspires.ftc.teamcode.component.mechanism.Kicker;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
-import javax.sql.ConnectionEventListener;
-
-public class ShooterController {
+public class ShooterTestController {
 
     private static final double DEFAULT_FORWARD_VELOCITY = 600;
-    private static final double DEFAULT_REVERSE_VELOCITY = -100;
     private static final double MAX_VELOCITY = 1600;
     private static final double VELOCITY_INCREMENT = 20.0;
 
@@ -22,35 +22,59 @@ public class ShooterController {
     private final Gamepad operatorGamepad;
     private final Telemetry telemetry;
     private final Servo shooterLed;
+    private final DcMotorEx shooterMotor;
 
     private boolean isRunning = true;
     private double forwardVelocity = DEFAULT_FORWARD_VELOCITY;
-    private double reverseVelocity = DEFAULT_REVERSE_VELOCITY;
     private double requestedVelocity = forwardVelocity;
 
-    public ShooterController(RobotBaseOpMode robot) {
+    private double kP = 10.0;
+    private double kI = 0.0;
+    private double kD = 0.0;
+
+    public ShooterTestController(RobotBaseOpMode robot) {
         this.shooter = robot.getShooter();
         this.operatorGamepad = robot.getOperatorGamepad();
         this.telemetry = robot.getTelemetry();
         this.shooterLed = robot.getShooterLed();
+        this.shooterMotor = robot.getShooterMotor();
+    }
+
+    private void updatePID() {
+        PIDFCoefficients newCoefficients = new PIDFCoefficients(kP, kI, kD, 0.0);
+        shooterMotor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, newCoefficients);
     }
 
     public void handleInput() {
 
         if (operatorGamepad.bWasPressed()) {
-            forwardVelocity += VELOCITY_INCREMENT;
-            requestedVelocity = forwardVelocity;
-        } else if (operatorGamepad.xWasPressed()) {
-            forwardVelocity -= VELOCITY_INCREMENT;
-            requestedVelocity = forwardVelocity;
+            kP += 1.0;
+            updatePID();
+        }
+        if (operatorGamepad.xWasPressed()) {
+            kP = Math.max(kP - 1.0, 0.0);
+            updatePID();
+        }
+        if (operatorGamepad.dpadUpWasPressed()) {
+            kD += 0.1;
+            updatePID();
+        }
+        if (operatorGamepad.dpadDownWasPressed()) {
+            kD = Math.max(kD - 0.1, 0.0);
+            updatePID();
+        }
+        if (operatorGamepad.dpadRightWasPressed()) {
+            kI += 0.1;
+            updatePID();
+        }
+        if (operatorGamepad.dpadLeftWasPressed()) {
+            kI = Math.max(kI - 0.1, 0.0);
+            updatePID();
         }
 
         if (operatorGamepad.yWasPressed()) {
             isRunning = !isRunning;
             requestedVelocity = forwardVelocity;
-        } else if (operatorGamepad.aWasPressed()) {
-            isRunning = !isRunning;
-            requestedVelocity = reverseVelocity;
         }
 
         requestedVelocity = isRunning ? requestedVelocity : 0.0;
@@ -62,10 +86,10 @@ public class ShooterController {
         } else {
             shooterLed.setPosition(Constants.LED_ORANGE);
         }
-
-        telemetry.addData("Shooter LED", shooterLed.getPosition());
-        telemetry.addData("Shooter Velocity (req)", requestedVelocity);
-        telemetry.addData("Shooter Velocity (actual)", String.valueOf(shooter.getShooterVelocity()));
+        PIDFCoefficients pidf = shooterMotor.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
+        telemetry.addData("P",pidf.p);
+        telemetry.addData("I",pidf.i);
+        telemetry.addData("D",pidf.d);
     }
 
 }

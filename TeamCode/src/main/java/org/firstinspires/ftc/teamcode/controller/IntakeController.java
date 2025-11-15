@@ -24,6 +24,7 @@ public class IntakeController {
     }
 
     public void handleInput() {
+
         if (driverGamepad.rightBumperWasPressed() && driverGamepad.leftBumperWasPressed()) {
             isRunning = !isRunning;
         }

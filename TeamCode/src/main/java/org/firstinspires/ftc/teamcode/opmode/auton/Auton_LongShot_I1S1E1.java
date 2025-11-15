@@ -48,38 +48,33 @@ public abstract class Auton_LongShot_I1S1E1 extends AutonBaseOpMode {
 
                     // Helps keep the balls in while moving, also with shooting
                     new StartIntake(this),
+                    new StartShooterWithVelocity(this, 730),  // start the shooter
 
                     // move to shooting position using a TaskList
                     new MoveTo( this, shootPose.getX(DU), shootPose.getY(DU) ),
-                    new TurnTo( this, shootPose.getHeading(AU))  ,
-
-                    //new MoveToXYH(this, shootPose.getX(DU), shootPose.getY(DU), shootPose.getHeading(AU)),
+                    new TurnTo( this, shootPose.getHeading(AU)),
 
                     // Shoot!
-                    new StartShooterWithVelocity(this, 750),  // start the shooter
-                    new Wait( this, 8.0 ),
-                    new StartFeeder( this ),                    // start the feeder
-                    //new Wait(this, 8.0),                      // wait for 2 seconds => 1st shot
+                    new Wait( this, 7.0 ),
+                    new StartFeeder( this ),    // start the feeder
 
-                    // Shoot more!
+                    // let first 2 balls shoot
+                    new Wait( this, 10.0 ),        // wait for feeder to shoot 2 balls
 
-                    new Wait(this, 5.0),
-                    new StartKicker(this, 0.1),
-                    new Wait ( this, 0.5 ),
-                    new StopKicker( this ),
+                    // Shoot the last one
+                    new StartKicker( this, 0.1 ), // Kick the last ball out
+                    new Wait ( this, 0.5 ),     // kick, kick!
+                    new StopKicker( this ),     // no more kicking
 
-                    new Wait ( this, 3.0 ),
-                    new StartKicker(this, 0.1),
+                    new Wait ( this, 3.0 ),     // doing a double-kick, prolly not needed
+                    new StartKicker(this, 0.1), // (kick?)
 
-                    new Wait ( this, 5.0 ),
+                    new Wait ( this, 5.0 ),     // Keep kicking.
 
-
-//                    // move to end position
-                    new TurnTo( this, 0.0 ),
+                    // move to end position
+                    new TurnTo( this, 0.0 ),    // still kicking!
                     new MoveTo( this, endPose.getX(DU), endPose.getY(DU) ),
-                    //new MoveToXYH(this, endPose.getX(DU), endPose.getY(DU), endPose.getHeading(AU)),
-//
-//                    // shut it down
+
                     new StopKicker(this),
                     new StopShooter(this),
                     new StopFeeder(this),
