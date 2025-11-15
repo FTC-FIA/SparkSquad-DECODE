@@ -47,7 +47,7 @@ public abstract class Auton_CloseUp_I3S3E3 extends AutonBaseOpMode {
                     new StartAt(this, startPose.getX(DU), startPose.getY(DU), startPose.getHeading(AU)),
 
                     // Helps keep the balls in while moving, also with shooting
-                    new StartIntake(this),
+                    //new StartIntake(this),
 
                     // spin up shooter
                     new StartShooterWithVelocity(this, 600),  // start the shooter
@@ -80,7 +80,7 @@ public abstract class Auton_CloseUp_I3S3E3 extends AutonBaseOpMode {
                     new StopKicker(this),
                     new StopShooter(this),
                     new StopFeeder(this),
-                    new StopIntake(this),
+                    //new StopIntake(this),
             }
         );
     }

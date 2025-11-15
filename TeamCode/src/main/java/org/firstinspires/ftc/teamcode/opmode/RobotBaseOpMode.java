@@ -141,7 +141,7 @@ public abstract class RobotBaseOpMode extends OpMode
         feeder = new Feeder(feederMotor);
 
         //odometer.reset();
-
+        feeder.setPower(0.0);
         // Initialize controllers
         shooterController = new ShooterController(this);
         kickerController = new KickerController(this);
@@ -149,6 +149,9 @@ public abstract class RobotBaseOpMode extends OpMode
         intakeController = new IntakeController(this);
         fieldRelativeDriveController = new FieldRelativeDriveController(this);
         robotRelativeDriveController = new RobotRelativeDriveController(this);
+
+        feeder.setPower(0.0);
+        feederMotor.setPower(0.0);
 
         // Log status
         telemetry.addData("Status", "Robot Base Initialized");

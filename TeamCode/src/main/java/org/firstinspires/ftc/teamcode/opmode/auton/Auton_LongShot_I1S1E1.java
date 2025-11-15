@@ -43,11 +43,13 @@ public abstract class Auton_LongShot_I1S1E1 extends AutonBaseOpMode {
         this.autonTaskList = new AutonTaskList(
             this,
             new Task[]{
-                    // Startposition
+                    // Start position
+                    new StopFeeder( this ),
+
                     new StartAt(this, startPose.getX(DU), startPose.getY(DU), startPose.getHeading(AU)),
 
                     // Helps keep the balls in while moving, also with shooting
-                    new StartIntake(this),
+                    //new StartIntake(this),
                     new StartShooterWithVelocity(this, 730),  // start the shooter
 
                     // move to shooting position using a TaskList
@@ -78,7 +80,7 @@ public abstract class Auton_LongShot_I1S1E1 extends AutonBaseOpMode {
                     new StopKicker(this),
                     new StopShooter(this),
                     new StopFeeder(this),
-                    new StopIntake(this),
+                    //new StopIntake(this),
             }
         );
     }

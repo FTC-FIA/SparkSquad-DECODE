@@ -13,7 +13,7 @@ public class StartFeeder implements Task {
 
     public StartFeeder(RobotBaseOpMode robot, double feederPower) {
         this.feeder = robot.getFeeder();
-        this.feeder.setPower(feederPower);
+        //this.feeder.setPower(feederPower);
     }
 
     public StartFeeder(RobotBaseOpMode robot) {
