@@ -56,7 +56,7 @@ public abstract class Auton_LongShot_I1S1E1 extends AutonBaseOpMode {
 
                     // Shoot!
                     new Wait( this, 7.0 ),
-                    new StartFeeder( this ),    // start the feeder
+                    new StartFeeder( this, 0.3 ),    // start the feeder
 
                     // let first 2 balls shoot
                     new Wait( this, 10.0 ),        // wait for feeder to shoot 2 balls

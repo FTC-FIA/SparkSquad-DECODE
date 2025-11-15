@@ -58,7 +58,7 @@ public abstract class Auton_CloseUp_I3S3E3 extends AutonBaseOpMode {
                     // Shoot!
                     new StartShooterWithVelocity(this, 600),  // start the shooter
                     new Wait( this, 8.0 ),
-                    new StartFeeder( this ),                    // start the feeder
+                    new StartFeeder( this, 0.3),                    // start the feeder
                     //new Wait(this, 8.0),                      // wait for 2 seconds => 1st shot
 
                     // Shoot more!

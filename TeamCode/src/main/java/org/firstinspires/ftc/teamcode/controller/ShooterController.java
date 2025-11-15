@@ -9,6 +9,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.component.mechanism.Shooter;
 import org.firstinspires.ftc.teamcode.component.mechanism.Kicker;
+import org.firstinspires.ftc.teamcode.component.sensor.Odometer;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
 import javax.sql.ConnectionEventListener;
@@ -23,7 +24,6 @@ public class ShooterController {
     private static final double kP = 100.0;
     private static final double kI = 38.0;
     private static final double kD = 25.0;
-
 
     private final Shooter shooter;
     private final Gamepad operatorGamepad;

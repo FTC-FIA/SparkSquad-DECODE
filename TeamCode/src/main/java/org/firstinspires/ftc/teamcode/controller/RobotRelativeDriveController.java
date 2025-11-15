@@ -6,6 +6,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.RobotTeleopMecanum
 import org.firstinspires.ftc.robotcontroller.internal.FtcOpModeRegister;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.component.drive.FieldRelativeDrive;
 import org.firstinspires.ftc.teamcode.component.drive.MecanumDrive;
@@ -62,6 +63,10 @@ public class RobotRelativeDriveController {
 
         drive.drive(forward, strafe, rotate);
 
+        odometer.update();
+        telemetry.addData("X", odometer.getX(DistanceUnit.INCH));
+        telemetry.addData("Y", odometer.getY(DistanceUnit.INCH));
+        telemetry.addData("H", odometer.getHeading(AngleUnit.DEGREES));
         telemetry.addData("Speed scale", forwardScale);
     }
 }
