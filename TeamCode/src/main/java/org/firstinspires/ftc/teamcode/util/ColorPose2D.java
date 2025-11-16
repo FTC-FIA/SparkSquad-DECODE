@@ -17,7 +17,7 @@ public class ColorPose2D {
         this.poseColor = poseColor;
     }
 
-    public ColorPose2D( double x, double y, double h, AllianceColor poseColor) {
+    public ColorPose2D( double x, double y, double h, AllianceColor poseColor ) {
         this(new Pose2D(DU, x, y, AU, h), poseColor);
     }
 

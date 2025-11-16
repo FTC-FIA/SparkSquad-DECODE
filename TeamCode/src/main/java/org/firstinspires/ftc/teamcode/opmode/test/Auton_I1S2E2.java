@@ -52,7 +52,7 @@ public class Auton_I1S2E2 extends AutonBaseOpMode {
                     new MoveToXYH( this, shootPose.getX(DU), shootPose.getY(DU), shootPose.getHeading(AU) ),
 
                     new StartShooterWithVelocity( this, 600 ),  // start the shooter
-                    new StartFeeder( this ),                    // start the feeder
+                    new StartFeeder( this, 0.3),                    // start the feeder
                     new Wait( this, 2.0 ),                      // wait for 2 seconds => 1st shot
 
                     new StartKicker( this, 0.4 ),               // try to kick the other two balls out

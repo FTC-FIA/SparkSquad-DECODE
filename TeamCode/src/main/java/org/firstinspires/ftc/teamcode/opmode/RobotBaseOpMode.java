@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -36,7 +37,8 @@ public abstract class RobotBaseOpMode extends OpMode
     final String SHOOTER_MOTOR_NAME = "shooter";
     final String INTAKE_MOTOR_NAME = "intake";
     final String KICKER_SERVO_NAME = "trigger"; // TODO: CHANGE TO KICKER
-    final String FEEDER_SERVO_NAME = "conveyor"; // TODO: CHANGE TO FEEDER
+    final String FEEDER_MOTOR_NAME = "feeder"; // TODO: CHANGE TO FEEDER
+    final String SHOOTER_LED_NAME = "shooter_led";
 
     final double ODOMETER_X_OFFSET = -82.5; // TODO: CHECK THAT THESE ARE CORRED
     final double ODOMETER_Y_OFFSET = 125.0;
@@ -53,8 +55,8 @@ public abstract class RobotBaseOpMode extends OpMode
     protected DcMotor intakeMotor = null;
 
     protected CRServo kickerCRServo = null;
-    protected CRServo feederCRServo = null;
-
+    protected DcMotorEx feederMotor = null;
+    protected Servo shooterLed = null;
     protected GoBildaPinpointDriver pinpointDriver = null;
 
     // components
@@ -91,10 +93,10 @@ public abstract class RobotBaseOpMode extends OpMode
         rearRightMotor = hardwareMap.get(DcMotor.class, REAR_RIGHT_DRIVE_MOTOR_NAME);
         shooterMotor = hardwareMap.get(DcMotorEx.class, SHOOTER_MOTOR_NAME);
         kickerCRServo = hardwareMap.get(CRServo.class, KICKER_SERVO_NAME);
-        feederCRServo = hardwareMap.get(CRServo.class, FEEDER_SERVO_NAME);
+        feederMotor = hardwareMap.get(DcMotorEx.class, FEEDER_MOTOR_NAME);
         intakeMotor = hardwareMap.get(DcMotor.class, INTAKE_MOTOR_NAME);
-        pinpointDriver = hardwareMap.get(com.qualcomm.hardware.gobilda.GoBildaPinpointDriver.class,"odo");
-
+        pinpointDriver = hardwareMap.get(GoBildaPinpointDriver.class,"odo");
+        shooterLed = hardwareMap.get(Servo.class, SHOOTER_LED_NAME);
         // Configure devices
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -113,7 +115,7 @@ public abstract class RobotBaseOpMode extends OpMode
         intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         kickerCRServo.setDirection(DcMotorSimple.Direction.REVERSE);
-        feederCRServo.setDirection(DcMotorSimple.Direction.REVERSE);
+        feederMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         pinpointDriver.setOffsets(ODOMETER_X_OFFSET, ODOMETER_Y_OFFSET, DistanceUnit.MM); // TODO: check if signs are correct +/-
         pinpointDriver.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
@@ -123,16 +125,23 @@ public abstract class RobotBaseOpMode extends OpMode
         );
 
         // Initialize components
+        odometer = new Odometer(pinpointDriver);
+
         mecanumDrive = new MecanumDrive(frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor);
-        fieldRelativeDrive = new FieldRelativeDrive(mecanumDrive, odometer, telemetry);
+        fieldRelativeDrive = new FieldRelativeDrive(
+                frontLeftMotor,
+                frontRightMotor,
+                rearLeftMotor,
+                rearRightMotor,
+                odometer,
+                telemetry);
         shooter = new Shooter(shooterMotor);
         intake = new Intake(intakeMotor);
         kicker = new Kicker(kickerCRServo);
-        feeder = new Feeder(feederCRServo);
-        odometer = new Odometer(pinpointDriver);
+        feeder = new Feeder(feederMotor);
 
-        odometer.reset();
-
+        //odometer.reset();
+        feeder.setPower(0.0);
         // Initialize controllers
         shooterController = new ShooterController(this);
         kickerController = new KickerController(this);
@@ -140,6 +149,9 @@ public abstract class RobotBaseOpMode extends OpMode
         intakeController = new IntakeController(this);
         fieldRelativeDriveController = new FieldRelativeDriveController(this);
         robotRelativeDriveController = new RobotRelativeDriveController(this);
+
+        feeder.setPower(0.0);
+        feederMotor.setPower(0.0);
 
         // Log status
         telemetry.addData("Status", "Robot Base Initialized");
@@ -163,7 +175,7 @@ public abstract class RobotBaseOpMode extends OpMode
         return rearRightMotor;
     }
 
-    public DcMotor getShooterMotor() {
+    public DcMotorEx getShooterMotor() {
         return shooterMotor;
     }
 
@@ -175,8 +187,8 @@ public abstract class RobotBaseOpMode extends OpMode
         return kickerCRServo;
     }
 
-    public CRServo getFeederServo() {
-        return feederCRServo;
+    public DcMotorEx getFeederMotor() {
+        return feederMotor;
     }
 
     public GoBildaPinpointDriver getPinpointDriver() {
@@ -198,6 +210,8 @@ public abstract class RobotBaseOpMode extends OpMode
     public Shooter getShooter() {
         return shooter;
     }
+
+    public Servo getShooterLed(){return shooterLed;}
 
     public Intake getIntake() {
         return intake;

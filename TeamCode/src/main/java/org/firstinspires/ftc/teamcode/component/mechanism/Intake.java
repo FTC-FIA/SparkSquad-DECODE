@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Intake {
 
-    private static final double DEFAULT_INTAKE_SPEED = 0.8;
+    private static final double DEFAULT_INTAKE_SPEED = 0.5;
     private double intakeSpeed;
     private final DcMotor intakeMotor;
 
@@ -21,6 +21,10 @@ public class Intake {
 
     public double getIntakeSpeed() {
         return intakeSpeed;
+    }
+
+    public double getActualIntakePower() {
+        return this.intakeMotor.getPower();
     }
 
     public void setIntakeSpeed(double intakeSpeed) {

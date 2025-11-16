@@ -50,9 +50,7 @@ public class KickerController {
         }
         kicker.setPower(kPower);
 
-        telemetry.addData("Kicker Pos", String.valueOf(kicker.getPosition()) );
-        telemetry.addData("Kicker - requested power", kPower);
-        telemetry.addData("Kicker - observed power", kicker.getPower());
+        telemetry.addData("Kicker power", kPower);
     }
 
 

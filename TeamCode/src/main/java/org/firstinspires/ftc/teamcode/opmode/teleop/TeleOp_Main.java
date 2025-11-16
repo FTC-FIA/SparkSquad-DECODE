@@ -1,11 +1,16 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
-@TeleOp(name="TeleOp_Main_RobotRelative", group="Main")
-public class TeleOp__Main_RobotRelative extends RobotBaseOpMode
+import org.firstinspires.ftc.teamcode.controller.AssistedShooterController;
+import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
+import org.firstinspires.ftc.teamcode.util.AllianceColor;
+
+@TeleOp(name="Main", group="Prod")
+public class TeleOp_Main extends RobotBaseOpMode
 {
+
+
     @Override
     public void init() {
         super.init();
@@ -14,10 +19,6 @@ public class TeleOp__Main_RobotRelative extends RobotBaseOpMode
     @Override
     public void start() {
         runtime.reset();
-    }
-
-    public double getVelocity() {
-        return shooter.getShooterVelocity();
     }
 
     @Override
@@ -29,11 +30,11 @@ public class TeleOp__Main_RobotRelative extends RobotBaseOpMode
     public void loop() {
 
         // let controllers do their thing
-        shooterController.handleInput();
         kickerController.handleInput();
         feederController.handleInput();
         robotRelativeDriveController.handleInput();
         intakeController.handleInput();
+        shooterController.handleInput();
 
         // Display Telemetry
         telemetry.addData("Runtime:", runtime.toString());

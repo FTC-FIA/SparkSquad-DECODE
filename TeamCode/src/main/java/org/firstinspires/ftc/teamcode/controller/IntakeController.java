@@ -11,13 +11,11 @@ public class IntakeController {
 
     private final double DEFAULT_INTAKE_POWER = 1.0;
 
-
     private final Intake intake;
     private final Gamepad driverGamepad;
     private final Telemetry telemetry;
 
-    private boolean isRunning = false;
-    private double shooterPower = DEFAULT_INTAKE_POWER;
+    private boolean isRunning = true;
 
     public IntakeController(RobotBaseOpMode robot) {
         this.intake = robot.getIntake();
@@ -26,7 +24,8 @@ public class IntakeController {
     }
 
     public void handleInput() {
-        if (driverGamepad.rightBumperWasPressed() || driverGamepad.leftBumperWasPressed()) {
+
+        if (driverGamepad.rightBumperWasPressed() && driverGamepad.leftBumperWasPressed()) {
             isRunning = !isRunning;
         }
         if (isRunning) {
@@ -34,6 +33,9 @@ public class IntakeController {
         } else {
             intake.stop();
         }
+        telemetry.addData("Intake running?", isRunning);
+        telemetry.addData("Intake power (req)", intake.getIntakeSpeed());
+        telemetry.addData("Intake power (actual)", intake.getActualIntakePower());
     }
 
 }
