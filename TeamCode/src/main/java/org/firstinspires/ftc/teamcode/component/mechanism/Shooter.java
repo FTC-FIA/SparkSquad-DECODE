@@ -18,7 +18,7 @@ public class Shooter {
     }
 
     public void setVelocity(double vel) {
-        double velocity = Math.max(vel, Constants.MAX_SHOOTER_VELOCITY);
+        double velocity = Math.min(vel, Constants.MAX_SHOOTER_VELOCITY);
         shooterMotor.setVelocity(velocity);
     }
 

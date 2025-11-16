@@ -83,5 +83,9 @@ public abstract class Auton_LongShot_I1S1E1 extends AutonBaseOpMode {
             }
         );
     }
+
+    public void loop() {
+        super.loop();
+    }
 }
 

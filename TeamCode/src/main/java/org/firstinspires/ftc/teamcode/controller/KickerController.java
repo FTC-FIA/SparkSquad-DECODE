@@ -19,12 +19,17 @@ public class KickerController {
     }
 
     public void handleInput() {
+        String message = "No input";
         if (operatorGamepad.right_bumper) {
             kicker.forward();
+            message = "Forward";
         } else if (operatorGamepad.left_bumper){
             kicker.reverse();
+            message = "Reverse";
         }
 
+        telemetry.addData("Kicker command", message);
+        telemetry.addData("Kicker forwardPower", kicker.getForwardPower());
         telemetry.addData("Kicker power", kicker.getPower());
     }
 

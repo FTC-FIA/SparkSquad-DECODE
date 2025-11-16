@@ -11,7 +11,7 @@ public class Constants {
 
     public static final double DEFAULT_FEEDER_POWER = 0.5;
     public static final double DEFAULT_INTAKE_POWER = 0.5;
-    public static final double DEFAULT_KICKER_FORWARD_POWER = 0.2;
+    public static final double DEFAULT_KICKER_FORWARD_POWER = 0.3;
     public static final double DEFAULT_KICKER_REVERSE_POWER = -0.25;
 
     public static final double SHOOTER_P = 100.0;
