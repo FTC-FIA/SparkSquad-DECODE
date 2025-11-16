@@ -39,6 +39,7 @@ public abstract class RobotBaseOpMode extends OpMode
     final String KICKER_SERVO_NAME = "trigger"; // TODO: CHANGE TO KICKER
     final String FEEDER_MOTOR_NAME = "feeder";
     final String SHOOTER_LED_NAME = "shooter_led";
+    final String AIMER_LED_NAME = "aimer_led";
 
     final double ODOMETER_X_OFFSET = -82.5;
     final double ODOMETER_Y_OFFSET = 125.0;
@@ -57,6 +58,7 @@ public abstract class RobotBaseOpMode extends OpMode
     protected CRServo kickerCRServo = null;
     protected DcMotorEx feederMotor = null;
     protected Servo shooterLed = null;
+    protected Servo aimerLed = null;
     protected GoBildaPinpointDriver pinpointDriver = null;
 
     // components
@@ -97,6 +99,7 @@ public abstract class RobotBaseOpMode extends OpMode
         intakeMotor = hardwareMap.get(DcMotor.class, INTAKE_MOTOR_NAME);
         pinpointDriver = hardwareMap.get(GoBildaPinpointDriver.class,"odo");
         shooterLed = hardwareMap.get(Servo.class, SHOOTER_LED_NAME);
+        aimerLed = hardwareMap.get(Servo.class, AIMER_LED_NAME);
         // Configure devices
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -207,6 +210,8 @@ public abstract class RobotBaseOpMode extends OpMode
     }
 
     public Servo getShooterLed(){return shooterLed;}
+
+    public Servo getAimerLed(){return aimerLed;}
 
     public Intake getIntake() {
         return intake;

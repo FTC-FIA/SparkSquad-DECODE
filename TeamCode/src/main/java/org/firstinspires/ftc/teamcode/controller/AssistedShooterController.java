@@ -22,10 +22,10 @@ public class AssistedShooterController {
     protected Feeder feeder;
     protected Kicker kicker;
     protected Servo shooterLed;
+    protected Servo aimerLed;
     protected Telemetry telemetry;
 
     protected AllianceColor color;
-
 
     public AssistedShooterController(RobotBaseOpMode robot, AllianceColor color) {
         this.shooter = robot.getShooter();
@@ -34,6 +34,7 @@ public class AssistedShooterController {
         this.kicker = robot.getKicker();
         this.telemetry = robot.getTelemetry();
         this.shooterLed = robot.getShooterLed();
+        this.aimerLed = robot.getAimerLed();
 
         this.color = color;
     }
@@ -56,11 +57,17 @@ public class AssistedShooterController {
         } else {
             shooterLed.setPosition(Constants.LED_ORANGE);
         }
+        double robotHeading = odometer.getHeading(AngleUnit.DEGREES);
+
+        if (targetHeading - robotHeading <= 1.5) {
+            aimerLed.setPosition(Constants.LED_GREEN);
+        }else {
+            aimerLed.setPosition(Constants.LED_ORANGE);
+        }
         shooter.setVelocity(recommendedVelocity);
         telemetry.addData("X", currentX);
         telemetry.addData("Y", currentY);
 
-        double robotHeading = odometer.getHeading(AngleUnit.DEGREES);
         telemetry.addData("Robot Heading", robotHeading);
         telemetry.addData("Target heading", targetHeading);
         telemetry.addData("** HEADING ERROR", targetHeading - robotHeading);
