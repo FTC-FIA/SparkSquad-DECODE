@@ -43,9 +43,11 @@ public class AssistedShooterController {
         odometer.update();
         double currentX = odometer.getX(DistanceUnit.INCH);
         double currentY = odometer.getY(DistanceUnit.INCH);
+
         Pose2D target = Constants.TARGET.forColor(color);
         double targetX = target.getX(DistanceUnit.INCH);
         double targetY = target.getY(DistanceUnit.INCH);
+
         double distance = ShooterUtils.calculateDistance(currentX, currentY, targetX, targetY);
         double recommendedVelocity = ShooterUtils.distance2Velocity(distance);
         double targetHeading = ShooterUtils.headingTowards(currentX, currentY, targetX, targetY);

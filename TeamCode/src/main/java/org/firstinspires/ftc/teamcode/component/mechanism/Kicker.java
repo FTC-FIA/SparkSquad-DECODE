@@ -4,8 +4,6 @@ import com.qualcomm.robotcore.hardware.CRServo;
 
 import org.firstinspires.ftc.teamcode.Constants;
 
-import java.util.prefs.PreferenceChangeEvent;
-
 public class Kicker {
 
     private double forwardPower;
@@ -23,7 +21,6 @@ public class Kicker {
 
     public void setForwardPower(double power) {
         forwardPower = Math.abs(power);
-        crServo.setPower(power);
     }
 
     public double getForwardPower() {
@@ -31,8 +28,15 @@ public class Kicker {
     }
 
     public void setReversePower(double power) {
-        reversePower = Math.abs(power);
-        crServo.setPower(-power);
+        reversePower = -1.0 * Math.abs(power);
+    }
+
+    public double getReversePower() {
+        return reversePower;
+    }
+
+    private void setPower(double power) {
+        crServo.setPower(power);
     }
 
     public double getPower() {
@@ -40,14 +44,14 @@ public class Kicker {
     }
 
     public void forward() {
-        setForwardPower(forwardPower);
+        setPower(forwardPower);
     }
 
     public void reverse() {
-        setReversePower(reversePower);
+        setPower(reversePower);
     }
 
     public void stop() {
-        setForwardPower(0.0);
+        setPower(0.0);
     }
 }
