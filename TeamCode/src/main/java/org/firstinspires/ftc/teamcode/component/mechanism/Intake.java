@@ -1,38 +1,37 @@
 package org.firstinspires.ftc.teamcode.component.mechanism;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.Constants;
 
 public class Intake {
 
-    private static final double DEFAULT_INTAKE_SPEED = 0.5;
-    private double intakeSpeed;
+    private double intakePower;
     private final DcMotor intakeMotor;
 
     public Intake(DcMotor intakeMotor) {
-        this(intakeMotor, DEFAULT_INTAKE_SPEED);
+        this(intakeMotor, Constants.DEFAULT_INTAKE_POWER);
     }
 
-    public Intake(DcMotor intakeMotor, double intakeSpeed) {
+    public Intake(DcMotor intakeMotor, double intakePower) {
         this.intakeMotor = intakeMotor;
-        this.intakeSpeed = intakeSpeed;
+        this.intakePower = intakePower;
     }
 
-    public double getIntakeSpeed() {
-        return intakeSpeed;
+    public double getIntakePower() {
+        return intakePower;
+    }
+
+    public void setIntakePower(double intakePower) {
+        this.intakePower = intakePower;
     }
 
     public double getActualIntakePower() {
         return this.intakeMotor.getPower();
     }
 
-    public void setIntakeSpeed(double intakeSpeed) {
-        this.intakeSpeed = intakeSpeed;
-    }
-
     public void start() {
-        intakeMotor.setPower(intakeSpeed);
+        intakeMotor.setPower(intakePower);
     }
 
     public void stop() {

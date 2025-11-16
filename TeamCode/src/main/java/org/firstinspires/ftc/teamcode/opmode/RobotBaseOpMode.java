@@ -37,10 +37,10 @@ public abstract class RobotBaseOpMode extends OpMode
     final String SHOOTER_MOTOR_NAME = "shooter";
     final String INTAKE_MOTOR_NAME = "intake";
     final String KICKER_SERVO_NAME = "trigger"; // TODO: CHANGE TO KICKER
-    final String FEEDER_MOTOR_NAME = "feeder"; // TODO: CHANGE TO FEEDER
+    final String FEEDER_MOTOR_NAME = "feeder";
     final String SHOOTER_LED_NAME = "shooter_led";
 
-    final double ODOMETER_X_OFFSET = -82.5; // TODO: CHECK THAT THESE ARE CORRED
+    final double ODOMETER_X_OFFSET = -82.5;
     final double ODOMETER_Y_OFFSET = 125.0;
 
     protected final ElapsedTime runtime = new ElapsedTime();
@@ -140,8 +140,6 @@ public abstract class RobotBaseOpMode extends OpMode
         kicker = new Kicker(kickerCRServo);
         feeder = new Feeder(feederMotor);
 
-        //odometer.reset();
-        feeder.setPower(0.0);
         // Initialize controllers
         shooterController = new ShooterController(this);
         kickerController = new KickerController(this);
@@ -149,9 +147,6 @@ public abstract class RobotBaseOpMode extends OpMode
         intakeController = new IntakeController(this);
         fieldRelativeDriveController = new FieldRelativeDriveController(this);
         robotRelativeDriveController = new RobotRelativeDriveController(this);
-
-        feeder.setPower(0.0);
-        feederMotor.setPower(0.0);
 
         // Log status
         telemetry.addData("Status", "Robot Base Initialized");
@@ -229,7 +224,9 @@ public abstract class RobotBaseOpMode extends OpMode
 
     public Gamepad getOperatorGamepad() { return gamepad2; }
 
-    public FieldRelativeDriveController getFieldRelativeDriveController() { return fieldRelativeDriveController; }
+    public FieldRelativeDriveController getFieldRelativeDriveController() {
+        return fieldRelativeDriveController;
+    }
 
     public RobotRelativeDriveController getRobotRelativeDriveController() {
         return robotRelativeDriveController;

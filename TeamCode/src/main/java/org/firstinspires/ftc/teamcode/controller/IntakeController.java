@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.component.mechanism.Intake;
-import org.firstinspires.ftc.teamcode.component.mechanism.Shooter;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
 public class IntakeController {
@@ -34,7 +33,7 @@ public class IntakeController {
             intake.stop();
         }
         telemetry.addData("Intake running?", isRunning);
-        telemetry.addData("Intake power (req)", intake.getIntakeSpeed());
+        telemetry.addData("Intake power (req)", intake.getIntakePower());
         telemetry.addData("Intake power (actual)", intake.getActualIntakePower());
     }
 

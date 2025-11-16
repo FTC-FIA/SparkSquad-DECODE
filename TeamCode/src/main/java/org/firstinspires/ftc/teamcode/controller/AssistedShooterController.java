@@ -26,7 +26,6 @@ public class AssistedShooterController {
 
     protected AllianceColor color;
 
-    private static final double VELOCITY_INCREMENT = 20.0;
 
     public AssistedShooterController(RobotBaseOpMode robot, AllianceColor color) {
         this.shooter = robot.getShooter();
@@ -52,7 +51,7 @@ public class AssistedShooterController {
         double targetHeading = ShooterUtils.headingTowards(currentX, currentY, targetX, targetY);
 
         double actualVelocity = shooter.getShooterVelocity();
-        if ( Math.abs(actualVelocity - recommendedVelocity) <= VELOCITY_INCREMENT ){
+        if ( Math.abs(actualVelocity - recommendedVelocity) <= Constants.SHOOTER_VELOCITY_INCREMENT ){
             shooterLed.setPosition(Constants.LED_GREEN);
         } else {
             shooterLed.setPosition(Constants.LED_ORANGE);

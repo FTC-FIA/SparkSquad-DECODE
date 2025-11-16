@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.task.AutonTaskList;
 import org.firstinspires.ftc.teamcode.task.MoveTo;
 import org.firstinspires.ftc.teamcode.task.StartAt;
@@ -36,28 +37,27 @@ public abstract class Auton_LongShot_I1S1E1 extends AutonBaseOpMode {
     public void init() {
         super.init();
 
-        Pose2D startPose = I1.forColor(color);
-        Pose2D shootPose = S1.forColor(color);
-        Pose2D endPose = E1.forColor(color);
+        Pose2D startPose = Constants.I1.forColor(color);
+        Pose2D shootPose = Constants.S1.forColor(color);
+        Pose2D endPose = Constants.E1.forColor(color);
 
         this.autonTaskList = new AutonTaskList(
             this,
             new Task[]{
                     // Start position
-                    new StopFeeder( this ),
-
                     new StartAt(this, startPose.getX(DU), startPose.getY(DU), startPose.getHeading(AU)),
 
-                    // Helps keep the balls in while moving, also with shooting
-                    //new StartIntake(this),
+                    // Spin up shooter
                     new StartShooterWithVelocity(this, 730),  // start the shooter
 
-                    // move to shooting position using a TaskList
+                    // Move to shooting position
                     new MoveTo( this, shootPose.getX(DU), shootPose.getY(DU) ),
                     new TurnTo( this, shootPose.getHeading(AU)),
 
-                    // Shoot!
+                    // Wait til shooter is ready
                     new Wait( this, 8.0 ),
+
+                    // Shoot!
                     new StartFeeder( this, 0.3 ),    // start the feeder
 
                     // let first 2 balls shoot
@@ -80,7 +80,6 @@ public abstract class Auton_LongShot_I1S1E1 extends AutonBaseOpMode {
                     new StopKicker(this),
                     new StopShooter(this),
                     new StopFeeder(this),
-                    //new StopIntake(this),
             }
         );
     }

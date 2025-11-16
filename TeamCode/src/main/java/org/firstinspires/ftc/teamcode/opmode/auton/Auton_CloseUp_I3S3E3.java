@@ -2,9 +2,11 @@ package org.firstinspires.ftc.teamcode.opmode.auton;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.task.AutonTaskList;
 import org.firstinspires.ftc.teamcode.task.MoveTo;
 import org.firstinspires.ftc.teamcode.task.StartAt;
@@ -36,9 +38,9 @@ public abstract class Auton_CloseUp_I3S3E3 extends AutonBaseOpMode {
     public void init() {
         super.init();
 
-        Pose2D startPose = I3.forColor(color);
-        Pose2D shootPose = S3.forColor(color);
-        Pose2D endPose = E3.forColor(color);
+        Pose2D startPose = Constants.I3.forColor(color);
+        Pose2D shootPose = Constants.S3.forColor(color);
+        Pose2D endPose = Constants.E3.forColor(color);
 
         this.autonTaskList = new AutonTaskList(
             this,
