@@ -62,7 +62,7 @@ public class AssistedShooterController {
         if (targetHeading - robotHeading <= 1.5) {
             aimerLed.setPosition(Constants.LED_GREEN);
         }else {
-            aimerLed.setPosition(Constants.LED_ORANGE);
+            aimerLed.setPosition(0.31);
         }
         shooter.setVelocity(recommendedVelocity);
         telemetry.addData("X", currentX);
@@ -71,7 +71,7 @@ public class AssistedShooterController {
         telemetry.addData("Robot Heading", robotHeading);
         telemetry.addData("Target heading", targetHeading);
         telemetry.addData("** HEADING ERROR", targetHeading - robotHeading);
-
+        telemetry.addData("Led Position", aimerLed.getPosition());
         telemetry.addData("Distance to Target", distance);
 
         double currVelocity = shooter.getShooterVelocity();
