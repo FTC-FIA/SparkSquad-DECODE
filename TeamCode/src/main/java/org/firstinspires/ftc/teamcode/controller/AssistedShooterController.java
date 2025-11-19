@@ -57,14 +57,14 @@ public class AssistedShooterController {
         if ( Math.abs(actualVelocity - recommendedVelocity) <= Constants.SHOOTER_VELOCITY_INCREMENT ){
             shooterLed.setPosition(Constants.LED_GREEN);
         } else {
-            shooterLed.setPosition(Constants.LED_ORANGE);
+            shooterLed.setPosition(Constants.LED_RED);
         }
         double robotHeading = odometer.getHeading(AngleUnit.DEGREES);
 
         if (targetHeading - robotHeading <= 1.5) {
             aimerLed.setPosition(Constants.LED_GREEN);
         }else {
-            aimerLed.setPosition(0.31);
+            aimerLed.setPosition(Constants.LED_RED);
         }
         shooter.setVelocity(recommendedVelocity);
         telemetry.addData("X", currentX);

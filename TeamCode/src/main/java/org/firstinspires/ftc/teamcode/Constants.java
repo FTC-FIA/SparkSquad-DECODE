@@ -4,10 +4,25 @@ import org.firstinspires.ftc.teamcode.util.AllianceColor;
 import org.firstinspires.ftc.teamcode.util.ColorPose2D;
 
 public class Constants {
-    public static double LED_GREEN = 0.5;
-    public static double LED_ORANGE = 0.3;
 
-    public static ColorPose2D TARGET = new ColorPose2D( 72.0, 72.0, 0.0, AllianceColor.BLUE);
+    public static final String FRONT_LEFT_DRIVE_MOTOR_NAME = "front_left";
+    public static final String FRONT_RIGHT_DRIVE_MOTOR_NAME = "front_right";
+    public static final String REAR_LEFT_DRIVE_MOTOR_NAME = "rear_left";
+    public static final String REAR_RIGHT_DRIVE_MOTOR_NAME = "rear_right";
+    public static final String SHOOTER_MOTOR_NAME = "shooter";
+    public static final String INTAKE_MOTOR_NAME = "intake";
+    public static final String KICKER_SERVO_NAME = "trigger";
+    public static final String FEEDER_MOTOR_NAME = "feeder";
+    public static final String SHOOTER_LED_NAME = "shooter_led";
+    public static final String AIMER_LED_NAME = "aimer_led";
+    public static final String ODOMETER_NAME = "odo";
+
+    public static final double ODOMETER_X_OFFSET = -82.5;
+    public static final double ODOMETER_Y_OFFSET = 125.0;
+
+    // TODO: more fun colors!
+    public static double LED_GREEN = 0.5;
+    public static double LED_RED = 0.31;
 
     public static final double DEFAULT_FEEDER_POWER = 0.5;
     public static final double DEFAULT_INTAKE_POWER = 0.5;
@@ -23,6 +38,9 @@ public class Constants {
     public static final double DEFAULT_SHOOTER_REVERSE_VELOCITY = -100;
     public static final double MAX_SHOOTER_VELOCITY = 1600;
     public static final double SHOOTER_VELOCITY_INCREMENT = 20.0;
+
+    // Target positions
+    public static ColorPose2D TARGET = new ColorPose2D( 72.0, 72.0, 0.0, AllianceColor.BLUE);
 
     // Initial positions
     public static ColorPose2D I1 = new ColorPose2D( 18.0, -64.0, 0.0, AllianceColor.BLUE) ;
