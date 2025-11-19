@@ -20,7 +20,7 @@ public class StartIntake implements Task {
     }
 
     public boolean execute() {
-        intake.setIntakeSpeed(intakeSpeed);
+        intake.setIntakePower(intakeSpeed);
         intake.start();
         return false;
     }

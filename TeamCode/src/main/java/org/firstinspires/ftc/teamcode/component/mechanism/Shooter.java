@@ -6,16 +6,20 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.configuration.ConfigurationType;
 
+import org.firstinspires.ftc.teamcode.Constants;
+
 public class Shooter {
 
     private final DcMotorEx shooterMotor;
 
     public Shooter(DcMotorEx shooterMotor) {
         this.shooterMotor = shooterMotor;
+        this.setPIDF(Constants.SHOOTER_P, Constants.SHOOTER_I, Constants.SHOOTER_D, Constants.SHOOTER_F);
     }
 
     public void setVelocity(double vel) {
-        shooterMotor.setVelocity(vel);
+        double velocity = Math.min(vel, Constants.MAX_SHOOTER_VELOCITY);
+        shooterMotor.setVelocity(velocity);
     }
 
     public void setPower(double power) {
@@ -26,8 +30,8 @@ public class Shooter {
         return shooterMotor.getPower();
     }
 
-    public void setPIDF(double kP, double kI, double kD) {
-        PIDFCoefficients newCoefficients = new PIDFCoefficients(kP, kI, kD, 0.0);
+    public void setPIDF(double kP, double kI, double kD, double kF) {
+        PIDFCoefficients newCoefficients = new PIDFCoefficients(kP, kI, kD, kF);
         shooterMotor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, newCoefficients);
     }
 
@@ -41,7 +45,7 @@ public class Shooter {
     }
 
     public double getShooterVelocity() {
-        return ((DcMotorEx)(shooterMotor)).getVelocity();
+        return shooterMotor.getVelocity();
     }
 
 }

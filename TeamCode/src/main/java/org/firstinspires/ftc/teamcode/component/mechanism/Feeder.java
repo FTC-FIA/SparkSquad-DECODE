@@ -1,13 +1,13 @@
 package org.firstinspires.ftc.teamcode.component.mechanism;
 
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+
+import org.firstinspires.ftc.teamcode.Constants;
 
 public class Feeder {
 
     private final DcMotorEx feederMotor;
-    private final double DEFAULT_FEEDER_SPEED = 1.0;
-    private double feederSpeed = DEFAULT_FEEDER_SPEED;
+    private double feederSpeed = Constants.DEFAULT_FEEDER_POWER;
 
     public Feeder(DcMotorEx feeder) {
         this.feederMotor = feeder;

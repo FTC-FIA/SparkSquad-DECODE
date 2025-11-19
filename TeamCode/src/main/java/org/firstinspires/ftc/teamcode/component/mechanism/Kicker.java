@@ -2,23 +2,40 @@ package org.firstinspires.ftc.teamcode.component.mechanism;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 
+import org.firstinspires.ftc.teamcode.Constants;
+
 public class Kicker {
 
-    private final double DEFAULT_KICKER_POWER = 0.4;
-    private double kickerPower = DEFAULT_KICKER_POWER;
+    private double forwardPower;
+    private double reversePower;
+
     private final CRServo crServo;
 
     public Kicker(CRServo kicker) {
         this.crServo = kicker;
+        forwardPower = Constants.DEFAULT_KICKER_FORWARD_POWER;
+        reversePower = Constants.DEFAULT_KICKER_REVERSE_POWER;
+
         stop();
     }
 
-    public double getPosition() {
-        int servoPort = crServo.getPortNumber();
-        return crServo.getController().getServoPosition(servoPort);
+    public void setForwardPower(double power) {
+        forwardPower = Math.abs(power);
     }
 
-    public void setPower(double power) {
+    public double getForwardPower() {
+        return forwardPower;
+    }
+
+    public void setReversePower(double power) {
+        reversePower = -1.0 * Math.abs(power);
+    }
+
+    public double getReversePower() {
+        return reversePower;
+    }
+
+    private void setPower(double power) {
         crServo.setPower(power);
     }
 
@@ -27,11 +44,11 @@ public class Kicker {
     }
 
     public void forward() {
-        setPower(kickerPower);
+        setPower(forwardPower);
     }
 
     public void reverse() {
-        setPower(-kickerPower);
+        setPower(reversePower);
     }
 
     public void stop() {

@@ -3,17 +3,14 @@ package org.firstinspires.ftc.teamcode.controller;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.component.mechanism.Feeder;
-import org.firstinspires.ftc.teamcode.component.mechanism.Kicker;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
 public class FeederController {
 
-    private final double DEFAULT_FORWARD_SPEED = 0.5;
-    private final double DEFAULT_REVERSE_SPEED = -0.5;
-
-    private double forwardSpeed = DEFAULT_FORWARD_SPEED;
-    private double reverseSpeed = DEFAULT_REVERSE_SPEED;
+    private double forwardSpeed = Constants.DEFAULT_FEEDER_POWER;
+    private double reverseSpeed = -forwardSpeed;
 
     private final Feeder feeder;
     private final Gamepad operatorGamepad;

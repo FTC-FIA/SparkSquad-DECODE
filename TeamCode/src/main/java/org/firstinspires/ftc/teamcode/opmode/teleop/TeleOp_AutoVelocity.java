@@ -38,10 +38,10 @@ public abstract class TeleOp_AutoVelocity extends RobotBaseOpMode
     public void loop() {
 
         // let controllers do their thing
-        //shooterController.handleInput();
         kickerController.handleInput();
         feederController.handleInput();
         robotRelativeDriveController.handleInput();
+        //shooterController.handleInput(); // replaced!
         assistedShooterController.handleInput();
         intakeController.handleInput();
 
@@ -49,12 +49,4 @@ public abstract class TeleOp_AutoVelocity extends RobotBaseOpMode
         telemetry.addData("Runtime:", runtime.toString());
         telemetry.update();
     }
-
-    /*
-     * Code to run ONCE after the driver hits STOP
-     */
-    @Override
-    public void stop() {
-    }
-
 }

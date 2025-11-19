@@ -1,14 +1,13 @@
-package org.firstinspires.ftc.teamcode.opmode.test;
+package org.firstinspires.ftc.teamcode.opmode.teleop;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
-@TeleOp(name="TeleOp_Main_FieldRelative", group="Main")
-@Disabled
-public class TeleOp__Main_FieldRelative extends RobotBaseOpMode
+@TeleOp(name="No Autovel", group="Prod")
+public class TeleOp_NoAutoVelocity extends RobotBaseOpMode
 {
+
     @Override
     public void init() {
         super.init();
@@ -17,10 +16,6 @@ public class TeleOp__Main_FieldRelative extends RobotBaseOpMode
     @Override
     public void start() {
         runtime.reset();
-    }
-
-    public double getVelocity() {
-        return shooter.getShooterVelocity();
     }
 
     @Override
@@ -32,11 +27,11 @@ public class TeleOp__Main_FieldRelative extends RobotBaseOpMode
     public void loop() {
 
         // let controllers do their thing
-        shooterController.handleInput();
         kickerController.handleInput();
         feederController.handleInput();
-        fieldRelativeDriveController.handleInput();
+        robotRelativeDriveController.handleInput();
         intakeController.handleInput();
+        shooterController.handleInput();
 
         // Display Telemetry
         telemetry.addData("Runtime:", runtime.toString());
