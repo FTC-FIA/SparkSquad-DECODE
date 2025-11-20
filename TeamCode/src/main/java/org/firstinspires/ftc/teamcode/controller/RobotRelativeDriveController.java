@@ -32,6 +32,12 @@ public class RobotRelativeDriveController {
     private double strafeScale = FAST_STRAFE_SCALE;
     private double rotateScale = FAST_ROTATE_SCALE;
 
+    private double currentRotate = 0.0;
+
+    private double strafeTarget = 0.0;
+
+    private double strafeAcceleration = 1.0;
+
     public RobotRelativeDriveController(RobotBaseOpMode robot) {
         drive = robot.getMecanumDrive();
         odometer = robot.getOdometer();
