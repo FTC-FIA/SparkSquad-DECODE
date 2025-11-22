@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.component.drive.FieldRelativeDrive;
 import org.firstinspires.ftc.teamcode.component.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.component.mechanism.Feeder;
@@ -40,9 +41,6 @@ public abstract class RobotBaseOpMode extends OpMode
     final String FEEDER_MOTOR_NAME = "feeder";
     final String SHOOTER_LED_NAME = "shooter_led";
     final String AIMER_LED_NAME = "aimer_led";
-
-    final double ODOMETER_X_OFFSET = -0.1875;
-    final double ODOMETER_Y_OFFSET = -6.625;
 
     protected final ElapsedTime runtime = new ElapsedTime();
 
@@ -120,7 +118,11 @@ public abstract class RobotBaseOpMode extends OpMode
         kickerCRServo.setDirection(DcMotorSimple.Direction.FORWARD);
         feederMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        pinpointDriver.setOffsets(ODOMETER_X_OFFSET, ODOMETER_Y_OFFSET, DistanceUnit.INCH); // TODO: check if signs are correct +/-
+        pinpointDriver.setOffsets(
+                Constants.ODOMETER_X_OFFSET,
+                Constants.ODOMETER_Y_OFFSET,
+                DistanceUnit.INCH
+        );
         pinpointDriver.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
         pinpointDriver.setEncoderDirections(
                 GoBildaPinpointDriver.EncoderDirection.REVERSED, // X
