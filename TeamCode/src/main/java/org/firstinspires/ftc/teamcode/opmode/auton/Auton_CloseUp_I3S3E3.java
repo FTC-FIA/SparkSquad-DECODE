@@ -37,7 +37,6 @@ public abstract class Auton_CloseUp_I3S3E3 extends AutonBaseOpMode {
 
     public void init() {
         super.init();
-
         Pose2D startPose = Constants.I3.forColor(color);
         Pose2D shootPose = Constants.S3.forColor(color);
         Pose2D endPose = Constants.E3.forColor(color);

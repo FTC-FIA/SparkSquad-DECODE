@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.controller;
 
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -7,16 +8,24 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Constants;
+import org.firstinspires.ftc.teamcode.component.drive.TankDrive;
 import org.firstinspires.ftc.teamcode.component.mechanism.Feeder;
 import org.firstinspires.ftc.teamcode.component.mechanism.Kicker;
 import org.firstinspires.ftc.teamcode.component.mechanism.Shooter;
 import org.firstinspires.ftc.teamcode.component.sensor.Odometer;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
+import org.firstinspires.ftc.teamcode.task.AutonTaskList;
+import org.firstinspires.ftc.teamcode.task.Task;
+import org.firstinspires.ftc.teamcode.task.TaskList;
+import org.firstinspires.ftc.teamcode.task.Wait;
 import org.firstinspires.ftc.teamcode.util.AllianceColor;
 import org.firstinspires.ftc.teamcode.util.ShooterUtils;
 
 public class AssistedShooterController {
 
+
+    protected RobotBaseOpMode robot;
+    protected Gamepad operatorGamepad;
     protected Shooter shooter;
     protected Odometer odometer;
     protected Feeder feeder;
@@ -27,7 +36,12 @@ public class AssistedShooterController {
 
     protected AllianceColor color;
 
+    private TaskList taskList;
+
+    private boolean taskRunning = false;
+
     public AssistedShooterController(RobotBaseOpMode robot, AllianceColor color) {
+        this.robot = robot;
         this.shooter = robot.getShooter();
         this.odometer = robot.getOdometer();
         this.feeder = robot.getFeeder();
@@ -35,8 +49,16 @@ public class AssistedShooterController {
         this.telemetry = robot.getTelemetry();
         this.shooterLed = robot.getShooterLed();
         this.aimerLed = robot.getAimerLed();
-
         this.color = color;
+    }
+
+    private void initTaskList() {
+        taskList = new AutonTaskList(
+                robot,
+                new Task[]{
+                    new Wait(robot, 2.0)
+                }
+            );
     }
 
     public void handleInput() {
@@ -53,20 +75,33 @@ public class AssistedShooterController {
         double recommendedVelocity = ShooterUtils.distance2Velocity(distance);
         double targetHeading = ShooterUtils.headingTowards(currentX, currentY, targetX, targetY);
 
+        // display velocity accuracy
         double actualVelocity = shooter.getShooterVelocity();
         if ( Math.abs(actualVelocity - recommendedVelocity) <= Constants.SHOOTER_VELOCITY_INCREMENT ){
             shooterLed.setPosition(Constants.LED_GREEN);
         } else {
             shooterLed.setPosition(Constants.LED_RED);
         }
-        double robotHeading = odometer.getHeading(AngleUnit.DEGREES);
 
+        // display heading accuracy
+        double robotHeading = odometer.getHeading(AngleUnit.DEGREES);
         if (targetHeading - robotHeading <= 1.5) {
             aimerLed.setPosition(Constants.LED_GREEN);
         }else {
             aimerLed.setPosition(Constants.LED_RED);
         }
+
+        // update velocity based on distance
         shooter.setVelocity(recommendedVelocity);
+
+        if (operatorGamepad.bWasPressed()) {
+            taskRunning = !taskRunning;
+        }
+        if (taskRunning) {
+            boolean result = execute();
+            taskRunning = result;
+        }
+
         telemetry.addData("X", currentX);
         telemetry.addData("Y", currentY);
 
@@ -80,5 +115,9 @@ public class AssistedShooterController {
         telemetry.addData("Target velocity", recommendedVelocity);
         telemetry.addData("Current Velocity", currVelocity);
         telemetry.addData("** VELOCITY ERROR", recommendedVelocity - currVelocity);
+    }
+
+    public boolean execute() {
+        return false; //TODO
     }
 }
