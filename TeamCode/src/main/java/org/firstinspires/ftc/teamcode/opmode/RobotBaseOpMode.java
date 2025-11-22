@@ -41,8 +41,8 @@ public abstract class RobotBaseOpMode extends OpMode
     final String SHOOTER_LED_NAME = "shooter_led";
     final String AIMER_LED_NAME = "aimer_led";
 
-    final double ODOMETER_X_OFFSET = -82.5;
-    final double ODOMETER_Y_OFFSET = 125.0;
+    final double ODOMETER_X_OFFSET = -0.1875;
+    final double ODOMETER_Y_OFFSET = -6.625;
 
     protected final ElapsedTime runtime = new ElapsedTime();
 
@@ -105,7 +105,7 @@ public abstract class RobotBaseOpMode extends OpMode
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rearLeftMotor.setDirection(DcMotor.Direction.FORWARD);
+        rearLeftMotor.setDirection(DcMotor.Direction.REVERSE);
         rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearRightMotor.setDirection(DcMotor.Direction.REVERSE);
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -117,10 +117,10 @@ public abstract class RobotBaseOpMode extends OpMode
         intakeMotor.setDirection(DcMotor.Direction.FORWARD);
         intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
-        kickerCRServo.setDirection(DcMotorSimple.Direction.REVERSE);
-        feederMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        kickerCRServo.setDirection(DcMotorSimple.Direction.FORWARD);
+        feederMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        pinpointDriver.setOffsets(ODOMETER_X_OFFSET, ODOMETER_Y_OFFSET, DistanceUnit.MM); // TODO: check if signs are correct +/-
+        pinpointDriver.setOffsets(ODOMETER_X_OFFSET, ODOMETER_Y_OFFSET, DistanceUnit.INCH); // TODO: check if signs are correct +/-
         pinpointDriver.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
         pinpointDriver.setEncoderDirections(
                 GoBildaPinpointDriver.EncoderDirection.REVERSED, // X
