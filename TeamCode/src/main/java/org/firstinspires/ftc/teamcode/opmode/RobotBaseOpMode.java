@@ -31,6 +31,17 @@ import org.firstinspires.ftc.teamcode.util.SparkLogger;
 
 public abstract class RobotBaseOpMode extends OpMode
 {
+    final String FRONT_LEFT_DRIVE_MOTOR_NAME = "front_left";
+    final String FRONT_RIGHT_DRIVE_MOTOR_NAME = "front_right";
+    final String REAR_LEFT_DRIVE_MOTOR_NAME = "rear_left";
+    final String REAR_RIGHT_DRIVE_MOTOR_NAME = "rear_right";
+    final String SHOOTER_MOTOR_NAME = "shooter";
+    final String INTAKE_MOTOR_NAME = "intake";
+    final String KICKER_SERVO_NAME = "trigger"; // TODO: CHANGE TO KICKER
+    final String FEEDER_MOTOR_NAME = "feeder";
+    final String SHOOTER_LED_NAME = "shooter_led";
+    final String AIMER_LED_NAME = "aimer_led";
+
     protected final ElapsedTime runtime = new ElapsedTime();
 
     // raw devices
@@ -76,24 +87,23 @@ public abstract class RobotBaseOpMode extends OpMode
     public void init() {
 
         // Initialize devices
-        frontLeftMotor  = hardwareMap.get(DcMotor.class, Constants.FRONT_LEFT_DRIVE_MOTOR_NAME);
-        frontRightMotor = hardwareMap.get(DcMotor.class, Constants.FRONT_RIGHT_DRIVE_MOTOR_NAME);
-        rearLeftMotor  = hardwareMap.get(DcMotor.class, Constants.REAR_LEFT_DRIVE_MOTOR_NAME);
-        rearRightMotor = hardwareMap.get(DcMotor.class, Constants.REAR_RIGHT_DRIVE_MOTOR_NAME);
-        shooterMotor = hardwareMap.get(DcMotorEx.class, Constants.SHOOTER_MOTOR_NAME);
-        kickerCRServo = hardwareMap.get(CRServo.class, Constants.KICKER_SERVO_NAME);
-        feederMotor = hardwareMap.get(DcMotorEx.class, Constants.FEEDER_MOTOR_NAME);
-        intakeMotor = hardwareMap.get(DcMotor.class, Constants.INTAKE_MOTOR_NAME);
-        pinpointDriver = hardwareMap.get(GoBildaPinpointDriver.class, Constants.ODOMETER_NAME);
-        shooterLed = hardwareMap.get(Servo.class, Constants.SHOOTER_LED_NAME);
-        aimerLed = hardwareMap.get(Servo.class, Constants.AIMER_LED_NAME);
-
+        frontLeftMotor  = hardwareMap.get(DcMotor.class, FRONT_LEFT_DRIVE_MOTOR_NAME);
+        frontRightMotor = hardwareMap.get(DcMotor.class, FRONT_RIGHT_DRIVE_MOTOR_NAME);
+        rearLeftMotor  = hardwareMap.get(DcMotor.class, REAR_LEFT_DRIVE_MOTOR_NAME);
+        rearRightMotor = hardwareMap.get(DcMotor.class, REAR_RIGHT_DRIVE_MOTOR_NAME);
+        shooterMotor = hardwareMap.get(DcMotorEx.class, SHOOTER_MOTOR_NAME);
+        kickerCRServo = hardwareMap.get(CRServo.class, KICKER_SERVO_NAME);
+        feederMotor = hardwareMap.get(DcMotorEx.class, FEEDER_MOTOR_NAME);
+        intakeMotor = hardwareMap.get(DcMotor.class, INTAKE_MOTOR_NAME);
+        pinpointDriver = hardwareMap.get(GoBildaPinpointDriver.class,"odo");
+        shooterLed = hardwareMap.get(Servo.class, SHOOTER_LED_NAME);
+        aimerLed = hardwareMap.get(Servo.class, AIMER_LED_NAME);
         // Configure devices
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rearLeftMotor.setDirection(DcMotor.Direction.FORWARD);
+        rearLeftMotor.setDirection(DcMotor.Direction.REVERSE);
         rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearRightMotor.setDirection(DcMotor.Direction.REVERSE);
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -105,14 +115,14 @@ public abstract class RobotBaseOpMode extends OpMode
         intakeMotor.setDirection(DcMotor.Direction.FORWARD);
         intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
-        kickerCRServo.setDirection(DcMotorSimple.Direction.REVERSE);
-        feederMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        kickerCRServo.setDirection(DcMotorSimple.Direction.FORWARD);
+        feederMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         pinpointDriver.setOffsets(
                 Constants.ODOMETER_X_OFFSET,
                 Constants.ODOMETER_Y_OFFSET,
-                DistanceUnit.MM
-        ); // TODO: check if signs are correct +/-
+                DistanceUnit.INCH
+        );
         pinpointDriver.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
         pinpointDriver.setEncoderDirections(
                 GoBildaPinpointDriver.EncoderDirection.REVERSED, // X

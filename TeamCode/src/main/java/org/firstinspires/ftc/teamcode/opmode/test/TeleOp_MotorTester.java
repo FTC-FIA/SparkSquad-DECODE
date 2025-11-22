@@ -6,7 +6,6 @@ import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
 
 @TeleOp(name="Test_TeleOp_MotorTester", group="Iterative OpMode")
-@Disabled
 public class TeleOp_MotorTester extends RobotBaseOpMode
 {
 

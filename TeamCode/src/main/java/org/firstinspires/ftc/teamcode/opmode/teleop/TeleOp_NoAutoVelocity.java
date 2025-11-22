@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 @TeleOp(name="No Autovel", group="Prod")
 public class TeleOp_NoAutoVelocity extends RobotBaseOpMode
 {
-
     @Override
     public void init() {
         super.init();

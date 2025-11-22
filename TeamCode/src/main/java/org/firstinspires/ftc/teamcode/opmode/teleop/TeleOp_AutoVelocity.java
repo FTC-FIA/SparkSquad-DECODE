@@ -38,12 +38,12 @@ public abstract class TeleOp_AutoVelocity extends RobotBaseOpMode
     public void loop() {
 
         // let controllers do their thing
-        kickerController.handleInput();
-        feederController.handleInput();
+        //kickerController.handleInput();
+        //feederController.handleInput();
         robotRelativeDriveController.handleInput();
         //shooterController.handleInput(); // replaced!
-        assistedShooterController.handleInput();
-        intakeController.handleInput();
+        //assistedShooterController.handleInput();
+        //intakeController.handleInput();
 
         // Display Telemetry
         telemetry.addData("Runtime:", runtime.toString());
