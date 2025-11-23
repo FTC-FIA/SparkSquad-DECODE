@@ -29,6 +29,7 @@ public class AssistedShooterController {
 
     protected RobotBaseOpMode robot;
     protected Gamepad operatorGamepad;
+    protected Gamepad driverGamepad;
     protected Shooter shooter;
     protected Odometer odometer;
     protected Feeder feeder;
@@ -45,6 +46,9 @@ public class AssistedShooterController {
 
     private boolean taskRunning = false;
 
+    private double velocityAdjustment = 0.0;
+    private double aimerAdjustment = 0.0;
+
     public AssistedShooterController(RobotBaseOpMode robot, AllianceColor color) {
         this.robot = robot;
         this.shooter = robot.getShooter();
@@ -56,10 +60,10 @@ public class AssistedShooterController {
         this.aimerLed = robot.getAimerLed();
         this.mecanumDrive = robot.getMecanumDrive();
         this.operatorGamepad = robot.getOperatorGamepad();
+        this.driverGamepad = robot.getDriverGamepad();
         this.color = color;
         this.targetPose = Constants.TARGET.forColor(color);
         this.initTaskList();
-
     }
 
     private void initTaskList() {
@@ -83,16 +87,30 @@ public class AssistedShooterController {
 
         double distance = ShooterUtils.calculateDistance(currentX, currentY, targetX, targetY);
         double recommendedVelocity = ShooterUtils.distance2Velocity(distance);
-        double targetHeading = ShooterUtils.headingTowards(currentX, currentY, targetX, targetY);
+        double recommendedHeading = ShooterUtils.headingTowards(currentX, currentY, targetX, targetY);
 
+        if (operatorGamepad.bWasPressed()) {
+            velocityAdjustment += Constants.SHOOTER_VELOCITY_INCREMENT;
+        } else if (operatorGamepad.xWasPressed()) {
+            velocityAdjustment -= Constants.SHOOTER_VELOCITY_INCREMENT;
+        }
+
+        if (driverGamepad.dpadRightWasPressed()) {
+            aimerAdjustment += 1.0;
+        } else if (driverGamepad.dpadLeftWasPressed()) {
+            aimerAdjustment -= 1.0;
+        }
+
+        double targetVelocity = recommendedVelocity + velocityAdjustment;
         // display velocity accuracy
         double actualVelocity = shooter.getShooterVelocity();
-        if ( Math.abs(actualVelocity - recommendedVelocity) <= Constants.SHOOTER_VELOCITY_INCREMENT ){
+        if ( Math.abs(actualVelocity - targetVelocity) <= Constants.SHOOTER_VELOCITY_INCREMENT ){
             shooterLed.setPosition(Constants.LED_GREEN);
         } else {
             shooterLed.setPosition(Constants.LED_RED);
         }
 
+        double targetHeading = recommendedHeading + aimerAdjustment;
         // display heading accuracy
         double robotHeading = odometer.getHeading(AngleUnit.DEGREES);
         if (Math.abs(targetHeading - robotHeading) <= Constants.AIM_TOLERANCE) {
@@ -102,35 +120,37 @@ public class AssistedShooterController {
         }
 
         // update velocity based on distance
-        shooter.setVelocity(recommendedVelocity);
+        shooter.setVelocity(targetVelocity);
 
         // run the task if button is held down
-        taskRunning = operatorGamepad.b;
-
-        // run the task, but stop when it's done
-        if (taskRunning) {
-            boolean result = execute();
-            taskRunning = result;
-        }
+//        taskRunning = operatorGamepad.b;
+//
+//        // run the task, but stop when it's done
+//        if (taskRunning) {
+//            boolean result = execute();
+//            taskRunning = result;
+//        }
 
         // Reset task list when button is released
-        if (operatorGamepad.bWasReleased()) {
-            initTaskList();
-        }
+//        if (operatorGamepad.bWasReleased()) {
+//            initTaskList();
+//        }
 
         telemetry.addData("X", currentX);
         telemetry.addData("Y", currentY);
 
         telemetry.addData("Robot Heading", robotHeading);
-        telemetry.addData("Target heading", targetHeading);
+        telemetry.addData("Rec'd heading", recommendedHeading);
+        telemetry.addData("Aimer adjustment", aimerAdjustment);
         telemetry.addData("** HEADING ERROR", targetHeading - robotHeading);
-        telemetry.addData("Led Position", aimerLed.getPosition());
+
         telemetry.addData("Distance to Target", distance);
 
         double currVelocity = shooter.getShooterVelocity();
-        telemetry.addData("Target velocity", recommendedVelocity);
+        telemetry.addData("Rec'd velocity", recommendedVelocity);
+        telemetry.addData("Velocity adjustment", velocityAdjustment);
         telemetry.addData("Current Velocity", currVelocity);
-        telemetry.addData("** VELOCITY ERROR", recommendedVelocity - currVelocity);
+        telemetry.addData("** VELOCITY ERROR", targetVelocity - currVelocity);
     }
 
     public boolean execute() {
