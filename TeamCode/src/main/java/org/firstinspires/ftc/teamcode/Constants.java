@@ -40,9 +40,13 @@ public class Constants {
 
     // Intake start positions
     public static ColorPose2D IS1 = new ColorPose2D(24.0, 12.0, 180.0, AllianceColor.BLUE);
+    public static ColorPose2D IS2 = new ColorPose2D(24.0, -12.0, 180.0, AllianceColor.BLUE);
+    public static ColorPose2D IS3 = new ColorPose2D(24.0, -36.0, 180.0, AllianceColor.BLUE);
 
     // Intake end positions
     public static ColorPose2D IE1 = new ColorPose2D(54.0, 12.0, 180.0, AllianceColor.BLUE);
+    public static ColorPose2D IE2 = new ColorPose2D(54.0, -12.0, 180.0, AllianceColor.BLUE);
+    public static ColorPose2D IE3 = new ColorPose2D(54.0, -36.0, 180.0, AllianceColor.BLUE);
 
     // Ending positions
     public static ColorPose2D E1 = new ColorPose2D(20.0, -36.0,  0.0, AllianceColor.BLUE);
