@@ -58,7 +58,7 @@ public class ShooterController {
         if ( Math.abs(actualVelocity - requestedVelocity) <= Constants.SHOOTER_VELOCITY_INCREMENT ){
             shooterLed.setPosition(Constants.LED_GREEN);
         } else {
-            shooterLed.setPosition(Constants.LED_ORANGE);
+            shooterLed.setPosition(Constants.LED_RED);
         }
 
         telemetry.addData("Shooter Velocity (req)", requestedVelocity);

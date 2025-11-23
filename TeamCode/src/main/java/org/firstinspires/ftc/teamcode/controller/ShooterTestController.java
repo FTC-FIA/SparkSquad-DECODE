@@ -84,7 +84,7 @@ public class ShooterTestController {
         if ( Math.abs(actualVelocity - requestedVelocity) <= VELOCITY_INCREMENT ){
             shooterLed.setPosition(Constants.LED_GREEN);
         } else {
-            shooterLed.setPosition(Constants.LED_ORANGE);
+            shooterLed.setPosition(Constants.LED_RED);
         }
         PIDFCoefficients pidf = shooterMotor.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
         telemetry.addData("P",pidf.p);
