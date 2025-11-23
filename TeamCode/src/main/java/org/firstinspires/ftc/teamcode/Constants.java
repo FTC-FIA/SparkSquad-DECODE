@@ -23,7 +23,7 @@ public class Constants {
     public static final double DEFAULT_SHOOTER_REVERSE_VELOCITY = -100;
     public static final double MAX_SHOOTER_VELOCITY = 1600;
     public static final double SHOOTER_VELOCITY_INCREMENT = 20.0;
-
+    public static final double AIM_TOLERANCE = 20.0;
     public static final double ODOMETER_X_OFFSET = -0.1875;
     public static final double ODOMETER_Y_OFFSET = -6.625;
 
@@ -44,9 +44,9 @@ public class Constants {
     public static ColorPose2D IS3 = new ColorPose2D(24.0, -36.0, 180.0, AllianceColor.BLUE);
 
     // Intake end positions
-    public static ColorPose2D IE1 = new ColorPose2D(54.0, 12.0, 180.0, AllianceColor.BLUE);
-    public static ColorPose2D IE2 = new ColorPose2D(54.0, -12.0, 180.0, AllianceColor.BLUE);
-    public static ColorPose2D IE3 = new ColorPose2D(54.0, -36.0, 180.0, AllianceColor.BLUE);
+    public static ColorPose2D IE1 = new ColorPose2D(48.0, 12.0, 180.0, AllianceColor.BLUE);
+    public static ColorPose2D IE2 = new ColorPose2D(48.0, -12.0, 180.0, AllianceColor.BLUE);
+    public static ColorPose2D IE3 = new ColorPose2D(48.0, -36.0, 180.0, AllianceColor.BLUE);
 
     // Ending positions
     public static ColorPose2D E1 = new ColorPose2D(20.0, -36.0,  0.0, AllianceColor.BLUE);

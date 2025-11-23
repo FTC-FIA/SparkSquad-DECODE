@@ -55,8 +55,11 @@ public class AssistedShooterController {
         this.shooterLed = robot.getShooterLed();
         this.aimerLed = robot.getAimerLed();
         this.mecanumDrive = robot.getMecanumDrive();
+        this.operatorGamepad = robot.getOperatorGamepad();
         this.color = color;
         this.targetPose = Constants.TARGET.forColor(color);
+        this.initTaskList();
+
     }
 
     private void initTaskList() {
@@ -92,7 +95,7 @@ public class AssistedShooterController {
 
         // display heading accuracy
         double robotHeading = odometer.getHeading(AngleUnit.DEGREES);
-        if (targetHeading - robotHeading <= 1.5) {
+        if (Math.abs(targetHeading - robotHeading) <= Constants.AIM_TOLERANCE) {
             aimerLed.setPosition(Constants.LED_GREEN);
         } else {
             aimerLed.setPosition(Constants.LED_RED);
