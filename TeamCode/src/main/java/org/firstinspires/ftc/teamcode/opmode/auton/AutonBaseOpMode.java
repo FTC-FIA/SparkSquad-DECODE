@@ -14,8 +14,6 @@ public abstract class AutonBaseOpMode extends RobotBaseOpMode {
     private final ElapsedTime elapsedTime = new ElapsedTime();
     protected AutonTaskList autonTaskList;
 
-
-
     public void loop() {
         telemetry.addData("Elapsed time (ms)", elapsedTime.seconds());
 

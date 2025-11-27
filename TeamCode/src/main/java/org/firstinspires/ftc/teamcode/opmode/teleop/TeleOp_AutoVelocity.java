@@ -1,6 +1,11 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
 
+import com.qualcomm.hardware.limelightvision.LLResult;
+import com.qualcomm.hardware.limelightvision.Limelight3A;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.controller.AssistedShooterController;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import org.firstinspires.ftc.teamcode.util.AllianceColor;
@@ -8,6 +13,7 @@ import org.firstinspires.ftc.teamcode.util.AllianceColor;
 public abstract class TeleOp_AutoVelocity extends RobotBaseOpMode
 {
     protected AssistedShooterController assistedShooterController;
+    protected Limelight3A limelight;
     protected AllianceColor color;
 
     protected void setColor(AllianceColor color) {
@@ -18,6 +24,7 @@ public abstract class TeleOp_AutoVelocity extends RobotBaseOpMode
     public void init() {
         super.init();
         assistedShooterController = new AssistedShooterController(this, color);
+        limelight = hardwareMap.get(Limelight3A.class, "limelight");
     }
 
     @Override
@@ -38,12 +45,22 @@ public abstract class TeleOp_AutoVelocity extends RobotBaseOpMode
     public void loop() {
 
         // let controllers do their thing
-        //kickerController.handleInput();
-        //feederController.handleInput();
+        feederController.handleInput();
         robotRelativeDriveController.handleInput();
-        //shooterController.handleInput(); // replaced!
-        //assistedShooterController.handleInput();
-        //intakeController.handleInput();
+        assistedShooterController.handleInput();
+        intakeController.handleInput();
+        kickerController.handleInput();
+
+        LLResult result = limelight.getLatestResult();
+        if (result.isValid()) {
+            Pose3D botPose = result.getBotpose();
+            telemetry.addData("LL X", botPose.getPosition().x);
+            telemetry.addData("LL Y", botPose.getPosition().y);
+            telemetry.addData("LL Z", botPose.getPosition().z);
+            telemetry.addData("LL X", botPose.getOrientation().getYaw(AngleUnit.DEGREES));
+        } else {
+            telemetry.addData("LL Result", "Invalid");
+        }
 
         // Display Telemetry
         telemetry.addData("Runtime:", runtime.toString());

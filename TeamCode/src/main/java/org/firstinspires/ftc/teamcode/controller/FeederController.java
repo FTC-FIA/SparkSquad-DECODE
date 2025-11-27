@@ -7,6 +7,8 @@ import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.component.mechanism.Feeder;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
+import java.util.Locale;
+
 public class FeederController {
 
     private double forwardSpeed = Constants.DEFAULT_FEEDER_POWER;
@@ -46,5 +48,7 @@ public class FeederController {
             fPower = reverseSpeed;
         }
         feeder.setPower(fPower);
+
+        telemetry.addData("Feeder speed", String.format(Locale.US, "%.1f", forwardSpeed));
     }
 }

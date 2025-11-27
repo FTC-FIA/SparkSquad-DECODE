@@ -5,7 +5,7 @@ import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
 public class StartIntake implements Task {
 
-    private static final double DEFAULT_INTAKE_SPEED = 1.0;
+    private static final double DEFAULT_INTAKE_SPEED = 0.5;
 
     private final double intakeSpeed;
     private final Intake intake;

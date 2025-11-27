@@ -28,7 +28,7 @@ public class ShooterTestController {
     private double forwardVelocity = DEFAULT_FORWARD_VELOCITY;
     private double requestedVelocity = forwardVelocity;
 
-    private double kP = 100.0;
+    private double kP = 300.0;
     private double kI = 40.0;
     private double kD = 25.0;
 
@@ -38,6 +38,7 @@ public class ShooterTestController {
         this.telemetry = robot.getTelemetry();
         this.shooterLed = robot.getShooterLed();
         this.shooterMotor = robot.getShooterMotor();
+        this.updatePID();
     }
 
     private void updatePID() {
@@ -48,27 +49,27 @@ public class ShooterTestController {
     public void handleInput() {
 
         if (operatorGamepad.bWasPressed()) {
-            kP += 5.0;
+            kP += 50.0;
             updatePID();
         }
         if (operatorGamepad.xWasPressed()) {
-            kP = Math.max(kP - 5.0, 0.0);
+            kP = Math.max(kP - 50.0, 0.0);
             updatePID();
         }
         if (operatorGamepad.dpadUpWasPressed()) {
-            kD += 1.0;
+            kD += 5.0;
             updatePID();
         }
         if (operatorGamepad.dpadDownWasPressed()) {
-            kD = Math.max(kD - 1.0, 0.0);
+            kD = Math.max(kD - 5.0, 0.0);
             updatePID();
         }
         if (operatorGamepad.dpadRightWasPressed()) {
-            kI += 1.0;
+            kI += 5.0;
             updatePID();
         }
         if (operatorGamepad.dpadLeftWasPressed()) {
-            kI = Math.max(kI - 1.0, 0.0);
+            kI = Math.max(kI - 5.0, 0.0);
             updatePID();
         }
 
@@ -84,7 +85,7 @@ public class ShooterTestController {
         if ( Math.abs(actualVelocity - requestedVelocity) <= VELOCITY_INCREMENT ){
             shooterLed.setPosition(Constants.LED_GREEN);
         } else {
-            shooterLed.setPosition(Constants.LED_ORANGE);
+            shooterLed.setPosition(Constants.LED_RED);
         }
         PIDFCoefficients pidf = shooterMotor.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
         telemetry.addData("P",pidf.p);

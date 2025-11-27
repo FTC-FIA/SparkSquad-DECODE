@@ -23,7 +23,7 @@ import org.firstinspires.ftc.teamcode.task.TurnTo;
 import org.firstinspires.ftc.teamcode.task.Wait;
 import org.firstinspires.ftc.teamcode.util.AllianceColor;
 
-public abstract class Auton_CloseUp_I3S3E3 extends AutonBaseOpMode {
+public abstract class Auton_LongShot_Intake3 extends AutonBaseOpMode {
 
     private final ElapsedTime elapsedTime = new ElapsedTime();
     private AllianceColor color;
@@ -37,53 +37,78 @@ public abstract class Auton_CloseUp_I3S3E3 extends AutonBaseOpMode {
 
     public void init() {
         super.init();
-        Pose2D startPose = Constants.I3.forColor(color);
-        Pose2D shootPose = Constants.S3.forColor(color);
-        Pose2D endPose = Constants.E3.forColor(color);
+
+        Pose2D startPose = Constants.I1.forColor(color);
+        Pose2D shootPose = Constants.S1.forColor(color);
+        Pose2D endPose = Constants.E1.forColor(color);
+        Pose2D intake3StartPose = Constants.IS3.forColor(color);
+        Pose2D intake3EndPose = Constants.IE3.forColor(color);
 
         this.autonTaskList = new AutonTaskList(
             this,
             new Task[]{
-                    // Start position
                     new StartAt(this, startPose.getX(DU), startPose.getY(DU), startPose.getHeading(AU)),
 
-                    // Helps keep the balls in while moving, also with shooting
-                    //new StartIntake(this),
-
                     // spin up shooter
-                    new StartShooterWithVelocity(this, 560),  // start the shooter
+                    new StartShooterWithVelocity(this, 600),  // start the shooter
 
                     // move to shooting position using a TaskList
                     new MoveTo( this, shootPose.getX(DU), shootPose.getY(DU) ),
                     new TurnTo( this, shootPose.getHeading(AU))  ,
 
+                    // ======== START SHOOTING =========== //
                     // Shoot 2 balls!
-                    new Wait( this, 8.0 ),                      // wait for shooter to hit target velocity
+                    new Wait( this, 1.0 ),                      // wait for shooter to hit target velocity
                     new StartFeeder( this, 0.3),                // start the feeder
 
                     // Shoot more!
-                    new Wait(this, 5.0),
+                    new Wait(this, 2.0),
                     new StartKicker(this, 0.1),
-                    new Wait ( this, 0.5 ),
-                    new StopKicker( this ),
 
                     // make sure they're all gone!
-                    new Wait ( this, 3.0 ),
+                    new Wait (this, 3.0),
+                    new StopKicker(this),
+                    // ======== END SHOOTING =========== //
+
+                    // move to intake position
+                    new StartIntake(this),
+                    new TurnTo(this, intake3StartPose.getHeading(AU)),
+                    new MoveTo(this, intake3StartPose.getX(DU), intake3StartPose.getY(DU)),
+
+                    // drive over the balls
+                    new TurnTo(this, intake3EndPose.getHeading(AU)),
+                    new MoveTo(this, intake3EndPose.getX(DU), intake3EndPose.getY(DU)),
+
+                    // return to shoot position
+                    new MoveTo(this, shootPose.getX(DU), shootPose.getY(DU)),
+                    new TurnTo(this, shootPose.getHeading(AU)),
+                    new StopIntake(this),
+
+                    // ======== START SHOOTING =========== //
+                    // Shoot 2 balls!
+                    new Wait( this, 1.0 ),                      // wait for shooter to hit target velocity
+                    new StartFeeder( this, 0.3),                // start the feeder
+
+                    // Shoot more!
+                    new Wait(this, 2.0),
                     new StartKicker(this, 0.1),
 
-                    new Wait ( this, 5.0 ),
-
-                    // move to end position
-                    new TurnTo( this, 0.0 ),
-                    new MoveTo( this, endPose.getX(DU), endPose.getY(DU) ),
-
-                    // shut it down
+                    // make sure they're all gone!
+                    new Wait (this, 3.0),
                     new StopKicker(this),
+                    // ======== END SHOOTING =========== //
+
+                    // get to end position
+                    new MoveTo(this, endPose.getX(DU), endPose.getY(DU) ),
+                    // shut it down
                     new StopShooter(this),
-                    new StopFeeder(this),
-                    //new StopIntake(this),
+                    new StopFeeder(this)
             }
         );
+    }
+
+    public void loop() {
+        super.loop();
     }
 }
 

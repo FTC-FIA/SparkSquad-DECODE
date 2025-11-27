@@ -1,12 +1,10 @@
 package org.firstinspires.ftc.teamcode.component.drive;
 
-import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.component.sensor.Odometer;
 import org.firstinspires.ftc.teamcode.util.SparkLogger;
 
@@ -47,6 +45,11 @@ public class FieldRelativeDrive extends MecanumDrive {
         double forwardAdjusted = forward * Math.cos(hInRadians) - strafe * Math.sin(hInRadians);
         double strafeAdjusted = forward * Math.sin(hInRadians) + strafe * Math.cos(hInRadians);
 
+        /*
+
+        vx_robot =  vx_field * cos(θ) + vy_field * sin(θ)
+        vy_robot = -vx_field * sin(θ) + vy_field * cos(θ)
+         */
         super.drive(forwardAdjusted, strafeAdjusted, rotate, speed);
 
         String pose = "x " + x + " y " + y + " heading " + hInDegrees;
@@ -56,6 +59,10 @@ public class FieldRelativeDrive extends MecanumDrive {
         logger.log(pose);
         logger.log(commands);
         logger.log(adjCommands);
+
+        telemetry.addData("Fwd", String.format(Locale.US, "%.1f", forward));
+        telemetry.addData("Strafe", String.format(Locale.US, "%.1f", strafe));
+        telemetry.addData("Rotate", String.format(Locale.US, "%.1f", rotate));
 
         telemetry.addData("X", String.format(Locale.US, "%.1f", x));
         telemetry.addData("Y", String.format(Locale.US, "%.1f", y));
