@@ -100,12 +100,19 @@ public abstract class RobotBaseOpMode extends OpMode
         aimerLed = hardwareMap.get(Servo.class, AIMER_LED_NAME);
         // Configure devices
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         rearLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         rearRightMotor.setDirection(DcMotor.Direction.REVERSE);
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         shooterMotor.setDirection(DcMotor.Direction.FORWARD);

@@ -11,9 +11,11 @@ import org.firstinspires.ftc.teamcode.component.sensor.Odometer;
 import org.firstinspires.ftc.teamcode.util.SparkLogger;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
+import java.util.Locale;
+
 public class TurnTo implements Task {
 
-    private final double DEFAULT_ROTATE_POWER = 0.2;
+    private final double DEFAULT_ROTATE_POWER = 0.5;
     private final double DEFAULT_TOLERANCE_H = 10.0; // in deg
 
     private double rotatePower = DEFAULT_ROTATE_POWER;
@@ -66,7 +68,10 @@ public class TurnTo implements Task {
         // Actuate - execute robot functions
         drive.drive(0.0, 0.0, rotate);
 
-        telemetry.addData("Task", "TurnTo");
+        telemetry.addData("Task", String.format(
+                Locale.US,
+                "TurnTo %.1f",
+                targetPose.getHeading(AngleUnit.DEGREES)));
         telemetry.addData("H", currentH);
         telemetry.addData("Error", errorH);
 

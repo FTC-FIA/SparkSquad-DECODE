@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.controller;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.RobotTeleopMecanumFieldRelativeDrive;
@@ -20,9 +22,15 @@ public class RobotRelativeDriveController {
     private final Gamepad driverGamepad;
     private final Telemetry telemetry;
 
-    private static double FAST_FORWARD_SCALE = 0.8;
+    private final DcMotor frontLeftMotor;
+    private final DcMotor frontRightMotor;
+    private final DcMotor rearLeftMotor;
+    private final DcMotor rearRightMotor;
+
+    private static double FAST_FORWARD_SCALE = 1.0;
     private static double FAST_STRAFE_SCALE = 1.0;
-    private static double FAST_ROTATE_SCALE = 0.6;
+    private static double FAST_ROTATE_SCALE = 1.0;
+    //private static double FAST_ROTATE_SCALE = 0.6;
 
     private static double SLOW_FORWARD_SCALE = 0.4;
     private static double SLOW_STRAFE_SCALE = 0.5;
@@ -36,6 +44,12 @@ public class RobotRelativeDriveController {
         drive = robot.getMecanumDrive();
         odometer = robot.getOdometer();
         driverGamepad = robot.getDriverGamepad();
+
+        frontLeftMotor = robot.getFrontLeftMotor();
+        frontRightMotor = robot.getFrontRightMotor();
+        rearLeftMotor = robot.getRearLeftMotor();
+        rearRightMotor = robot.getRearRightMotor();
+
         telemetry = robot.getTelemetry();
     }
 
@@ -46,7 +60,7 @@ public class RobotRelativeDriveController {
 
         if (driverGamepad.backWasPressed()) {
             odometer.update();
-            odometer.setHeading(0.0, AngleUnit.DEGREES);
+            odometer.reset();
         } else if (driverGamepad.bWasPressed()) {
             forwardScale = SLOW_FORWARD_SCALE;
             strafeScale = SLOW_STRAFE_SCALE;
@@ -64,9 +78,14 @@ public class RobotRelativeDriveController {
         drive.drive(forward, strafe, rotate);
 
         odometer.update();
+        telemetry.addData("Speed scale", forwardScale);
+
         telemetry.addData("X", odometer.getX(DistanceUnit.INCH));
         telemetry.addData("Y", odometer.getY(DistanceUnit.INCH));
         telemetry.addData("H", odometer.getHeading(AngleUnit.DEGREES));
-        telemetry.addData("Speed scale", forwardScale);
+        telemetry.addData("FL power", frontLeftMotor.getPower());
+        telemetry.addData("FR power", frontRightMotor.getPower());
+        telemetry.addData("RL power", rearLeftMotor.getPower());
+        telemetry.addData("RR power", rearRightMotor.getPower());
     }
 }

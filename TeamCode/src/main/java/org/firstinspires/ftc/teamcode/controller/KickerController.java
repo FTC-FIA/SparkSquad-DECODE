@@ -26,10 +26,10 @@ public class KickerController {
         } else if (operatorGamepad.left_bumper){
             kicker.reverse();
             message = "Reverse";
+        } else {
+            kicker.stop();
         }
 
-        telemetry.addData("Kicker command", message);
-        telemetry.addData("Kicker forwardPower", kicker.getForwardPower());
         telemetry.addData("Kicker power", kicker.getPower());
     }
 

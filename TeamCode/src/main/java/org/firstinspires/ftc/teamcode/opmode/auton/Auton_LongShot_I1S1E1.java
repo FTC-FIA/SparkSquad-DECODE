@@ -48,7 +48,7 @@ public abstract class Auton_LongShot_I1S1E1 extends AutonBaseOpMode {
                     new StartAt(this, startPose.getX(DU), startPose.getY(DU), startPose.getHeading(AU)),
 
                     // Spin up shooter
-                    new StartShooterWithVelocity(this, 730),  // start the shooter
+                    new StartShooterWithVelocity(this, 670),  // start the shooter
 
                     // Move to shooting position
                     new MoveTo( this, shootPose.getX(DU), shootPose.getY(DU) ),

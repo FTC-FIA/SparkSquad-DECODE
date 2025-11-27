@@ -8,8 +8,6 @@ import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
 public class IntakeController {
 
-    private final double DEFAULT_INTAKE_POWER = 1.0;
-
     private final Intake intake;
     private final Gamepad driverGamepad;
     private final Telemetry telemetry;
@@ -32,9 +30,7 @@ public class IntakeController {
         } else {
             intake.stop();
         }
-        telemetry.addData("Intake running?", isRunning);
-        telemetry.addData("Intake power (req)", intake.getIntakePower());
-        telemetry.addData("Intake power (actual)", intake.getActualIntakePower());
+        telemetry.addData("Intake speed", intake.getIntakePower());
     }
 
 }

@@ -51,7 +51,7 @@ public abstract class Auton_CloseUp_I3S3E3 extends AutonBaseOpMode {
                     //new StartIntake(this),
 
                     // spin up shooter
-                    new StartShooterWithVelocity(this, 600),  // start the shooter
+                    new StartShooterWithVelocity(this, 560),  // start the shooter
 
                     // move to shooting position using a TaskList
                     new MoveTo( this, shootPose.getX(DU), shootPose.getY(DU) ),

@@ -42,12 +42,8 @@ public class AssistedShooterController {
 
     protected AllianceColor color;
 
-    private TaskList taskList;
-
-    private boolean taskRunning = false;
-
-    private double velocityAdjustment = 0.0;
-    private double aimerAdjustment = 0.0;
+    private double velocityAdjustment = -40.0;
+    private double aimerAdjustment = 2.0;
 
     public AssistedShooterController(RobotBaseOpMode robot, AllianceColor color) {
         this.robot = robot;
@@ -63,17 +59,8 @@ public class AssistedShooterController {
         this.driverGamepad = robot.getDriverGamepad();
         this.color = color;
         this.targetPose = Constants.TARGET.forColor(color);
-        this.initTaskList();
     }
 
-    private void initTaskList() {
-        taskList = new AutonTaskList(
-                robot,
-                new Task[]{
-                    new AimAt(robot, targetPose)
-                }
-            );
-    }
 
     public void handleInput() {
         // always set shooter velocity based on distance
@@ -101,6 +88,7 @@ public class AssistedShooterController {
             aimerAdjustment -= 1.0;
         }
 
+
         double targetVelocity = recommendedVelocity + velocityAdjustment;
         // display velocity accuracy
         double actualVelocity = shooter.getShooterVelocity();
@@ -119,41 +107,37 @@ public class AssistedShooterController {
             aimerLed.setPosition(Constants.LED_RED);
         }
 
+
         // update velocity based on distance
         shooter.setVelocity(targetVelocity);
 
-        // run the task if button is held down
-//        taskRunning = operatorGamepad.b;
-//
-//        // run the task, but stop when it's done
-//        if (taskRunning) {
-//            boolean result = execute();
-//            taskRunning = result;
-//        }
-
-        // Reset task list when button is released
-//        if (operatorGamepad.bWasReleased()) {
-//            initTaskList();
-//        }
-
-        telemetry.addData("X", currentX);
-        telemetry.addData("Y", currentY);
+        // auto aim
+        double rotateSpeed = 0.0;
+        double headingError = targetHeading - robotHeading;
+        if (driverGamepad.y) {
+            if (headingError > Constants.AIM_TOLERANCE) {
+                rotateSpeed = Constants.AIMER_ROTATE_SPEED;
+            }
+            if (headingError < -Constants.AIM_TOLERANCE) {
+                rotateSpeed = -Constants.AIMER_ROTATE_SPEED;
+            }
+        }
+        mecanumDrive.drive(0.0, 0.0, rotateSpeed);
+        telemetry.addData("Aimer adjustment", aimerAdjustment);
+        telemetry.addData("Velocity adjustment", velocityAdjustment);
 
         telemetry.addData("Robot Heading", robotHeading);
         telemetry.addData("Rec'd heading", recommendedHeading);
-        telemetry.addData("Aimer adjustment", aimerAdjustment);
+        telemetry.addData("Target heading", targetHeading);
         telemetry.addData("** HEADING ERROR", targetHeading - robotHeading);
 
         telemetry.addData("Distance to Target", distance);
 
         double currVelocity = shooter.getShooterVelocity();
         telemetry.addData("Rec'd velocity", recommendedVelocity);
-        telemetry.addData("Velocity adjustment", velocityAdjustment);
+        telemetry.addData("Target velocity", targetVelocity);
         telemetry.addData("Current Velocity", currVelocity);
         telemetry.addData("** VELOCITY ERROR", targetVelocity - currVelocity);
     }
 
-    public boolean execute() {
-        return taskList.execute();
-    }
 }
