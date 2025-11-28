@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.controller.ShooterTestController;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
-@TeleOp(name="TeleOp_ShooterTest", group="Main")
-public class Teleop_ShooterTest extends RobotBaseOpMode {
+@TeleOp(name="Shooter PID Tester", group="Test")
+public class Teleop_ShooterPIDTester extends RobotBaseOpMode {
     private ShooterTestController shooterTestController;
     public void init(){
         super.init();

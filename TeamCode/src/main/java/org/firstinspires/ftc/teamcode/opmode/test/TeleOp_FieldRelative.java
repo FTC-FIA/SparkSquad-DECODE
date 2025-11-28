@@ -1,18 +1,19 @@
 package org.firstinspires.ftc.teamcode.opmode.test;
 
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.controller.AssistedShooterController;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
-import org.firstinspires.ftc.teamcode.util.AllianceColor;
+import org.firstinspires.ftc.teamcode.util.Alliance;
 
 @TeleOp(name="Test - Field Relative", group="Dev")
+@Disabled
 public class TeleOp_FieldRelative extends RobotBaseOpMode
 {
-    protected AllianceColor color;
+    protected Alliance color;
 
-    protected void setColor(AllianceColor color) {
+    protected void setColor(Alliance color) {
         this.color = color;
     }
 
@@ -37,11 +38,8 @@ public class TeleOp_FieldRelative extends RobotBaseOpMode
 
     @Override
     public void loop() {
-
         // let controllers do their thing
-
         fieldRelativeDriveController.handleInput();
-
 
         // Display Telemetry
         telemetry.addData("Runtime:", runtime.toString());

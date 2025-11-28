@@ -3,29 +3,21 @@ package org.firstinspires.ftc.teamcode.controller;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.component.drive.MecanumDrive;
-import org.firstinspires.ftc.teamcode.component.drive.TankDrive;
 import org.firstinspires.ftc.teamcode.component.mechanism.Feeder;
 import org.firstinspires.ftc.teamcode.component.mechanism.Kicker;
 import org.firstinspires.ftc.teamcode.component.mechanism.Shooter;
 import org.firstinspires.ftc.teamcode.component.sensor.Odometer;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
-import org.firstinspires.ftc.teamcode.task.AimAt;
-import org.firstinspires.ftc.teamcode.task.AutonTaskList;
-import org.firstinspires.ftc.teamcode.task.Task;
-import org.firstinspires.ftc.teamcode.task.TaskList;
-import org.firstinspires.ftc.teamcode.task.Wait;
-import org.firstinspires.ftc.teamcode.util.AllianceColor;
+import org.firstinspires.ftc.teamcode.util.Alliance;
 import org.firstinspires.ftc.teamcode.util.ShooterUtils;
 
 public class AssistedShooterController {
-
 
     protected RobotBaseOpMode robot;
     protected Gamepad operatorGamepad;
@@ -40,12 +32,12 @@ public class AssistedShooterController {
     protected Telemetry telemetry;
     protected Pose2D targetPose;
 
-    protected AllianceColor color;
+    protected Alliance color;
 
     private double velocityAdjustment = -40.0;
     private double aimerAdjustment = 2.0;
 
-    public AssistedShooterController(RobotBaseOpMode robot, AllianceColor color) {
+    public AssistedShooterController(RobotBaseOpMode robot, Alliance color) {
         this.robot = robot;
         this.shooter = robot.getShooter();
         this.odometer = robot.getOdometer();
@@ -58,9 +50,8 @@ public class AssistedShooterController {
         this.operatorGamepad = robot.getOperatorGamepad();
         this.driverGamepad = robot.getDriverGamepad();
         this.color = color;
-        this.targetPose = Constants.TARGET.forColor(color);
+        this.targetPose = Constants.TARGET.forAlliance(color);
     }
-
 
     public void handleInput() {
         // always set shooter velocity based on distance
@@ -68,7 +59,7 @@ public class AssistedShooterController {
         double currentX = odometer.getX(DistanceUnit.INCH);
         double currentY = odometer.getY(DistanceUnit.INCH);
 
-        Pose2D target = Constants.TARGET.forColor(color);
+        Pose2D target = Constants.TARGET.forAlliance(color);
         double targetX = target.getX(DistanceUnit.INCH);
         double targetY = target.getY(DistanceUnit.INCH);
 

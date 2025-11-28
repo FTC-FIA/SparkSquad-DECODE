@@ -42,19 +42,24 @@ public class FieldRelativeDrive extends MecanumDrive {
         double y = odometer.getY(DistanceUnit.INCH);
 
         // from https://www.ctrlaltftc.com/practical-examples/drivetrain-control
-        double forwardAdjusted = forward * Math.cos(hInRadians) - strafe * Math.sin(hInRadians);
-        double strafeAdjusted = forward * Math.sin(hInRadians) + strafe * Math.cos(hInRadians);
+        //double robotForward = forward * Math.cos(hInRadians) - strafe * Math.sin(hInRadians);
+        //double robotStrafe = forward * Math.sin(hInRadians) + strafe * Math.cos(hInRadians);
 
         /*
-
+        Updated version after realizing the problem (strange Pinpoint coordinate system)
+        This is the same as above if you switch robotForward and robotStrafe
+        
         vx_robot =  vx_field * cos(θ) + vy_field * sin(θ)
         vy_robot = -vx_field * sin(θ) + vy_field * cos(θ)
          */
-        super.drive(forwardAdjusted, strafeAdjusted, rotate, speed);
+        double robotForward = forward * Math.cos(hInRadians) + strafe * Math.sin(hInRadians);
+        double robotStrafe = -forward * Math.sin(hInRadians) + strafe * Math.cos(hInRadians);
+
+        super.drive(robotForward, robotStrafe, rotate, speed);
 
         String pose = "x " + x + " y " + y + " heading " + hInDegrees;
         String commands = "forward " + forward + " strafe " + strafe + " rotate " + rotate;
-        String adjCommands = "forwardAdjusted " + forwardAdjusted + " strafeAdjusted " + strafeAdjusted;
+        String adjCommands = "robotForward " + robotForward + " robotStrafe " + robotStrafe;
 
         logger.log(pose);
         logger.log(commands);

@@ -1,6 +1,7 @@
-package org.firstinspires.ftc.teamcode.opmode.auton;
+package org.firstinspires.ftc.teamcode.opmode.auton.base;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
@@ -18,6 +19,7 @@ import org.firstinspires.ftc.teamcode.task.Task;
 import org.firstinspires.ftc.teamcode.task.Wait;
 
 @Autonomous(name="Auton_Mechanum_1", group="Test")
+@Disabled
 public class Auton_Mechanum_1 extends RobotBaseOpMode {
 
     private final ElapsedTime elapsedTime = new ElapsedTime();

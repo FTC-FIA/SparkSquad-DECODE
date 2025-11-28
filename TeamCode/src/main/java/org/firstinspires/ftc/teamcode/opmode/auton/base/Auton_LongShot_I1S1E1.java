@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auton;
+package org.firstinspires.ftc.teamcode.opmode.auton.base;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -6,40 +6,39 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Constants;
+import org.firstinspires.ftc.teamcode.opmode.auton.AutonBaseOpMode;
 import org.firstinspires.ftc.teamcode.task.AutonTaskList;
 import org.firstinspires.ftc.teamcode.task.MoveTo;
 import org.firstinspires.ftc.teamcode.task.StartAt;
 import org.firstinspires.ftc.teamcode.task.StartFeeder;
-import org.firstinspires.ftc.teamcode.task.StartIntake;
 import org.firstinspires.ftc.teamcode.task.StartKicker;
 import org.firstinspires.ftc.teamcode.task.StartShooterWithVelocity;
 import org.firstinspires.ftc.teamcode.task.StopFeeder;
-import org.firstinspires.ftc.teamcode.task.StopIntake;
 import org.firstinspires.ftc.teamcode.task.StopKicker;
 import org.firstinspires.ftc.teamcode.task.StopShooter;
 import org.firstinspires.ftc.teamcode.task.Task;
 import org.firstinspires.ftc.teamcode.task.TurnTo;
 import org.firstinspires.ftc.teamcode.task.Wait;
-import org.firstinspires.ftc.teamcode.util.AllianceColor;
+import org.firstinspires.ftc.teamcode.util.Alliance;
 
 public abstract class Auton_LongShot_I1S1E1 extends AutonBaseOpMode {
 
     private final ElapsedTime elapsedTime = new ElapsedTime();
-    private AllianceColor color;
+    private Alliance color;
 
     private static DistanceUnit DU = DistanceUnit.INCH;
     private static AngleUnit AU = AngleUnit.DEGREES;
 
-    protected void setColor( AllianceColor color ) {
+    protected void setColor( Alliance color ) {
         this.color = color;
     }
 
     public void init() {
         super.init();
 
-        Pose2D startPose = Constants.I1.forColor(color);
-        Pose2D shootPose = Constants.S1.forColor(color);
-        Pose2D endPose = Constants.E1.forColor(color);
+        Pose2D startPose = Constants.I1.forAlliance(color);
+        Pose2D shootPose = Constants.S1.forAlliance(color);
+        Pose2D endPose = Constants.E1.forAlliance(color);
 
         this.autonTaskList = new AutonTaskList(
             this,

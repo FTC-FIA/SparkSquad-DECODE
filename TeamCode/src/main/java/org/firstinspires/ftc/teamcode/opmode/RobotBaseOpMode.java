@@ -21,6 +21,7 @@ import org.firstinspires.ftc.teamcode.component.mechanism.Intake;
 import org.firstinspires.ftc.teamcode.component.mechanism.Shooter;
 import org.firstinspires.ftc.teamcode.component.mechanism.Kicker;
 import org.firstinspires.ftc.teamcode.component.sensor.Odometer;
+import org.firstinspires.ftc.teamcode.controller.AssistedShooterController;
 import org.firstinspires.ftc.teamcode.controller.FieldRelativeDriveController;
 import org.firstinspires.ftc.teamcode.controller.FeederController;
 import org.firstinspires.ftc.teamcode.controller.IntakeController;
@@ -70,6 +71,7 @@ public abstract class RobotBaseOpMode extends OpMode
 
     // controllers
     protected ShooterController shooterController = null;
+    protected AssistedShooterController assistedShooterController = null;
     protected KickerController kickerController = null;
     protected FeederController feederController = null;
     protected IntakeController intakeController = null;
@@ -98,6 +100,7 @@ public abstract class RobotBaseOpMode extends OpMode
         pinpointDriver = hardwareMap.get(GoBildaPinpointDriver.class,"odo");
         shooterLed = hardwareMap.get(Servo.class, SHOOTER_LED_NAME);
         aimerLed = hardwareMap.get(Servo.class, AIMER_LED_NAME);
+
         // Configure devices
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
         frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -138,7 +141,6 @@ public abstract class RobotBaseOpMode extends OpMode
 
         // Initialize components
         odometer = new Odometer(pinpointDriver);
-
         mecanumDrive = new MecanumDrive(frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor);
         fieldRelativeDrive = new FieldRelativeDrive(
                 frontLeftMotor,
