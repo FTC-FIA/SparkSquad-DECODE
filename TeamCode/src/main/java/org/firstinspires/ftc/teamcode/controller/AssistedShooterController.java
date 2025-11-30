@@ -32,12 +32,14 @@ public class AssistedShooterController {
     protected Telemetry telemetry;
     protected Pose2D targetPose;
 
-    protected Alliance color;
+    protected Alliance alliance;
 
-    private double velocityAdjustment = -40.0;
-    private double aimerAdjustment = 2.0;
+    private double velocityAdjustment = 0.0;
+    private double aimerAdjustment = 0.0;
 
-    public AssistedShooterController(RobotBaseOpMode robot, Alliance color) {
+    private boolean isRunning = true;
+
+    public AssistedShooterController(RobotBaseOpMode robot, Alliance alliance) {
         this.robot = robot;
         this.shooter = robot.getShooter();
         this.odometer = robot.getOdometer();
@@ -49,8 +51,9 @@ public class AssistedShooterController {
         this.mecanumDrive = robot.getMecanumDrive();
         this.operatorGamepad = robot.getOperatorGamepad();
         this.driverGamepad = robot.getDriverGamepad();
-        this.color = color;
-        this.targetPose = Constants.TARGET.forAlliance(color);
+
+        this.alliance = alliance;
+        this.targetPose = Constants.TARGET.forAlliance(alliance);
     }
 
     public void handleInput() {
@@ -59,13 +62,17 @@ public class AssistedShooterController {
         double currentX = odometer.getX(DistanceUnit.INCH);
         double currentY = odometer.getY(DistanceUnit.INCH);
 
-        Pose2D target = Constants.TARGET.forAlliance(color);
+        Pose2D target = Constants.TARGET.forAlliance(alliance);
         double targetX = target.getX(DistanceUnit.INCH);
         double targetY = target.getY(DistanceUnit.INCH);
 
         double distance = ShooterUtils.calculateDistance(currentX, currentY, targetX, targetY);
         double recommendedVelocity = ShooterUtils.distance2Velocity(distance);
         double recommendedHeading = ShooterUtils.headingTowards(currentX, currentY, targetX, targetY);
+
+        if (operatorGamepad.yWasPressed()) {
+            isRunning = !isRunning;
+        }
 
         if (operatorGamepad.bWasPressed()) {
             velocityAdjustment += Constants.SHOOTER_VELOCITY_INCREMENT;
@@ -78,7 +85,6 @@ public class AssistedShooterController {
         } else if (driverGamepad.dpadLeftWasPressed()) {
             aimerAdjustment -= 1.0;
         }
-
 
         double targetVelocity = recommendedVelocity + velocityAdjustment;
         // display velocity accuracy
@@ -100,7 +106,11 @@ public class AssistedShooterController {
 
 
         // update velocity based on distance
-        shooter.setVelocity(targetVelocity);
+        if (isRunning) {
+            shooter.setVelocity(targetVelocity);
+        } else {
+            shooter.setVelocity(0.0);
+        }
 
         // auto aim
         double rotateSpeed = 0.0;

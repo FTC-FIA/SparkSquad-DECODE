@@ -41,8 +41,8 @@ public abstract class Auton_CloseUp_Intake1 extends AutonBaseOpMode {
 
         Pose2D startPose = Constants.I3.forAlliance(color);
         Pose2D shootPose = Constants.S3.forAlliance(color);
-        Pose2D intake1StartPose = Constants.IS1.forAlliance(color);
-        Pose2D intake1EndPose = Constants.IE1.forAlliance(color);
+        Pose2D intake1StartPose = Constants.IS3.forAlliance(color);
+        Pose2D intake1EndPose = Constants.IE3.forAlliance(color);
         Pose2D endPose = Constants.E3.forAlliance(color);
 
         this.autonTaskList = new AutonTaskList(

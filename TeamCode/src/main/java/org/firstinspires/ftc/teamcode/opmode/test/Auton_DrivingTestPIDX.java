@@ -7,16 +7,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.opmode.auton.AutonBaseOpMode;
 import org.firstinspires.ftc.teamcode.task.AutonTaskList;
-import org.firstinspires.ftc.teamcode.task.MoveTo;
 import org.firstinspires.ftc.teamcode.task.MoveToPose;
 import org.firstinspires.ftc.teamcode.task.MoveWithPIDTo;
 import org.firstinspires.ftc.teamcode.task.StartAt;
 import org.firstinspires.ftc.teamcode.task.Task;
-import org.firstinspires.ftc.teamcode.task.TurnTo;
 import org.firstinspires.ftc.teamcode.task.Wait;
 
-@Autonomous(name="Auton Driving Test - Integrated Turns (no PID)", group="Test")
-public class Auton_DrivingTestDrift extends AutonBaseOpMode {
+@Autonomous(name="Auton Driving Test - PIDX", group="Test")
+public class Auton_DrivingTestPIDX extends AutonBaseOpMode {
 
     private final ElapsedTime elapsedTime = new ElapsedTime();
 
@@ -30,13 +28,9 @@ public class Auton_DrivingTestDrift extends AutonBaseOpMode {
             this,
             new Task[]{
                     new StartAt(this, 0.0, 0.0, 0.0),
-                    new MoveToPose(this, 12.0, 12.0, 45.0),
+                    new MoveWithPIDTo(this, 12.0, 0.0),
                     new Wait(this, 1.0),
-                    new MoveToPose(this, 0.0, 12.0, 90.0),
-                    new Wait(this, 1.0),
-                    new MoveToPose(this, 0.0, 0.0, 180.0),
-                    new Wait(this, 1.0),
-                    new MoveToPose(this, 0.0, 0.0, 0.0)
+                    new MoveWithPIDTo(this, 0.0, 0.0),
             }
         );
     }

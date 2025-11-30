@@ -9,13 +9,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.component.drive.FieldRelativeDrive;
+import org.firstinspires.ftc.teamcode.component.sensor.Odometer;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import org.firstinspires.ftc.teamcode.util.PIDController;
 import org.firstinspires.ftc.teamcode.util.SparkLogger;
 
 import java.util.Locale;
 
-public class MoveWithPIDTo implements Task {
+public class TurnWithPIDTo implements Task {
 
     private final double MIN_POWER = 0.2;
     private final double MAX_POWER = 0.3;
@@ -41,10 +42,9 @@ public class MoveWithPIDTo implements Task {
 
     private final Pose2D targetPose;
 
-    public MoveWithPIDTo(
+    public TurnWithPIDTo(
             RobotBaseOpMode robot,
-            double targetXInches,
-            double targetYInches
+            double targetHDegrees
     ) {
         this.drive = robot.getFieldRelativeDrive();;
         this.odometer = robot.getPinpointDriver();
@@ -52,13 +52,12 @@ public class MoveWithPIDTo implements Task {
         this.dashboard = robot.getDashboard();
 
         odometer.update();
-        double heading = odometer.getHeading(AngleUnit.DEGREES);
         this.targetPose = new Pose2D(
                 DistanceUnit.INCH,
-                targetXInches,
-                targetYInches,
+                odometer.getPosX(DistanceUnit.INCH),
+                odometer.getPosY(DistanceUnit.INCH),
                 AngleUnit.DEGREES,
-                heading
+                targetHDegrees
         );
     }
 
@@ -115,7 +114,7 @@ public class MoveWithPIDTo implements Task {
         }
 
         // Actuate - execute robot functions
-        drive.drive(forward, strafe, 0.0);
+        drive.drive(0.0, 0.0, rotate);
 
         telemetry.addData("Task",
                 String.format(Locale.US,
@@ -143,8 +142,7 @@ public class MoveWithPIDTo implements Task {
 
         // if any errors are > tolerance, keep going
         return (
-                Math.abs(errorX) > toleranceX
-                || Math.abs(errorY) > toleranceY
+                Math.abs(errorH) > toleranceH
         );
     }
 }

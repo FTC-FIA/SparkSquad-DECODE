@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.opmode.auton.base.Auton_LongShot_Intake3;
 import org.firstinspires.ftc.teamcode.util.Alliance;
 
 @Autonomous(name="Red Long 6 Ball GPP", group="Main")
-@Disabled
 public class Auton_LongShot_Intake3_Red extends Auton_LongShot_Intake3 {
 
     public void init() {

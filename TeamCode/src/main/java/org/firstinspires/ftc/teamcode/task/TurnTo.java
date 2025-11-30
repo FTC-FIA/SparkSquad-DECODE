@@ -16,7 +16,7 @@ import java.util.Locale;
 public class TurnTo implements Task {
 
     private final double DEFAULT_ROTATE_POWER = 0.5;
-    private final double DEFAULT_TOLERANCE_H = 10.0; // in deg
+    private final double DEFAULT_TOLERANCE_H = 2.0; // in deg
 
     private double rotatePower = DEFAULT_ROTATE_POWER;
     private double toleranceH = DEFAULT_TOLERANCE_H;

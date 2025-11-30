@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.opmode.auton.base.Auton_CloseUp_Intake1;
 import org.firstinspires.ftc.teamcode.util.Alliance;
 
 @Autonomous(name="Red Close 6 Ball PPG", group="Main")
-@Disabled
 public class Auton_CloseUp_Intake1_Red extends Auton_CloseUp_Intake1 {
 
     public void init() {

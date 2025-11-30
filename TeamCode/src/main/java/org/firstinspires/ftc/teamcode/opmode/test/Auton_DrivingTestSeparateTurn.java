@@ -12,8 +12,8 @@ import org.firstinspires.ftc.teamcode.task.StartAt;
 import org.firstinspires.ftc.teamcode.task.Task;
 import org.firstinspires.ftc.teamcode.task.TurnTo;
 
-@Autonomous(name="Auton Driving Test", group="Test")
-public abstract class Auton_DrivingTest extends AutonBaseOpMode {
+@Autonomous(name="Auton Driving Test - Separate Turns", group="Test")
+public class Auton_DrivingTestSeparateTurn extends AutonBaseOpMode {
 
     private final ElapsedTime elapsedTime = new ElapsedTime();
 
@@ -21,26 +21,29 @@ public abstract class Auton_DrivingTest extends AutonBaseOpMode {
     private static final AngleUnit AU = AngleUnit.DEGREES;
 
     public void init() {
+        telemetry.addData("init", "started");
+        telemetry.update();
         super.init();
-
+        telemetry.addData("init", "after super");
+        telemetry.update();
         this.autonTaskList = new AutonTaskList(
             this,
             new Task[]{
                     // Heading = 0
                     new StartAt(this, 0.0, 0.0, 0.0),
-                    new MoveTo(this, 12.0, 12.0),
-                    new MoveTo(this, 0.0, 0.0),
-                    new MoveTo(this, -12.0, -12.0),
-                    new MoveTo(this, 12.0, -12.0),
-                    new MoveTo(this, 0.0, 0.0),
+//                    new MoveTo(this, 12.0, 12.0),
+//                    new MoveTo(this, 0.0, 0.0),
+//                    new MoveTo(this, -12.0, -12.0),
+//                    new MoveTo(this, 12.0, -12.0),
+//                    new MoveTo(this, 0.0, 0.0),
 
-                    // Heading = 90
-                    new TurnTo(this, 90.0),
-                    new MoveTo(this, 12.0, 12.0),
-                    new MoveTo(this, 0.0, 0.0),
-                    new MoveTo(this, -12.0, -12.0),
-                    new MoveTo(this, 12.0, -12.0),
-                    new MoveTo(this, 0.0, 0.0),
+//                    // Heading = 90
+//                    new TurnTo(this, 90.0),
+//                    new MoveTo(this, 12.0, 12.0),
+//                    new MoveTo(this, 0.0, 0.0),
+//                    new MoveTo(this, -12.0, -12.0),
+//                    new MoveTo(this, 12.0, -12.0),
+//                    new MoveTo(this, 0.0, 0.0),
 
                     // Heading = 180
                     new TurnTo(this, 180.0),
@@ -51,18 +54,19 @@ public abstract class Auton_DrivingTest extends AutonBaseOpMode {
                     new MoveTo(this, 0.0, 0.0),
 
                     // Heading = -90
-                    new TurnTo(this, -90.0),
-                    new MoveTo(this, 12.0, 12.0),
-                    new MoveTo(this, 0.0, 0.0),
-                    new MoveTo(this, -12.0, -12.0),
-                    new MoveTo(this, 12.0, -12.0),
-                    new MoveTo(this, 0.0, 0.0),
+//                    new TurnTo(this, -90.0),
+//                    new MoveTo(this, 12.0, 12.0),
+//                    new MoveTo(this, 0.0, 0.0),
+//                    new MoveTo(this, -12.0, -12.0),
+//                    new MoveTo(this, 12.0, -12.0),
+//                    new MoveTo(this, 0.0, 0.0),
 
                     // reset
                     new TurnTo(this, 0.0)
-
             }
         );
+        telemetry.addData("init is", "finished");
+        telemetry.update();
     }
 }
 

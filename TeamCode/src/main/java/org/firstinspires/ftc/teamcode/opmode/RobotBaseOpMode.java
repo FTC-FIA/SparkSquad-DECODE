@@ -82,9 +82,6 @@ public abstract class RobotBaseOpMode extends OpMode
     protected SparkLogger logger = SparkLogger.getLogger();
     protected FtcDashboard dashboard = FtcDashboard.getInstance();
 
-    /*
-     * Code to run ONCE when the driver hits INIT
-     */
     @Override
     public void init() {
 

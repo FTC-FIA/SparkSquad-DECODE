@@ -13,24 +13,20 @@ import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import org.firstinspires.ftc.teamcode.util.PIDController;
 import org.firstinspires.ftc.teamcode.util.SparkLogger;
 
+import java.util.ConcurrentModificationException;
 import java.util.Locale;
 
-public class MoveWithPIDTo implements Task {
+public class MoveToXYWithPID implements Task {
 
-    private final double MIN_POWER = 0.2;
-    private final double MAX_POWER = 0.3;
-
-    private final double kP = 0.5;
-    private final double kI = 0.0;
-    private final double kD = 0.0;
+    private final double MIN_POWER = 0.25;
 
     private double toleranceX = Constants.DEFAULT_AUTON_X_TOLERANCE;
     private double toleranceY = Constants.DEFAULT_AUTON_Y_TOLERANCE;
     private double toleranceH = Constants.DEFAULT_AUTON_H_TOLERANCE;
 
-    private PIDController forwardPID = new PIDController(kP, kI, kD);
-    private PIDController strafePID = new PIDController(kP, kI, kD);
-    private PIDController rotatePID = new PIDController(kP, kI, kD);
+    private PIDController forwardPID = new PIDController();
+    private PIDController strafePID = new PIDController();
+    private PIDController rotatePID = new PIDController();
 
     private final Telemetry telemetry;
     private final FtcDashboard dashboard;
@@ -41,7 +37,7 @@ public class MoveWithPIDTo implements Task {
 
     private final Pose2D targetPose;
 
-    public MoveWithPIDTo(
+    public MoveToXYWithPID(
             RobotBaseOpMode robot,
             double targetXInches,
             double targetYInches
@@ -63,16 +59,13 @@ public class MoveWithPIDTo implements Task {
     }
 
     /**
-     * Keep motor power within min max range
+     * If power to motors gets too low they won't move at all
      * @param power the requested power
-     * @return the clamped power
+     * @return power if > MIN_POWER else MIN_POWER
      */
-    private double clampPower(double power) {
-        double clampedPower = Math.min(MIN_POWER, Math.abs(power));
-        clampedPower = Math.max(MAX_POWER, Math.abs(power));
-        clampedPower *= power > 0.0 ? 1.0 : -1.0;
-        return clampedPower;
-
+    private double boostLowPower(double power) {
+        return Math.min(MIN_POWER, Math.abs(power)) *
+                power > 0.0 ? 1.0 : -1.0;
     }
 
     public boolean execute() {
@@ -81,7 +74,7 @@ public class MoveWithPIDTo implements Task {
 
         double forward;
         double strafe;
-        double rotate;
+        double rotate = 0.0;
 
         Pose2D pos = odometer.getPosition();
         double currentX = pos.getX(DistanceUnit.INCH);
@@ -92,45 +85,39 @@ public class MoveWithPIDTo implements Task {
         double errorY = targetPose.getY(DistanceUnit.INCH) - currentY;
         double errorH = targetPose.getHeading(AngleUnit.DEGREES) - currentH;
 
-        double pidForwardResult = forwardPID.calculate(errorX / 72.0);
-        double pidStrafeResult = strafePID.calculate(errorY / 72.0);
-        double pidRotateResult = rotatePID.calculate(errorH / 180.0);
-
         if (Math.abs(errorX) < toleranceX) {
             forward = 0.0;
         } else {
-            forward = clampPower(pidForwardResult);
+            forward = boostLowPower(forwardPID.calculate(errorX));
         }
 
         if (Math.abs(errorY) < toleranceY) {
             strafe = 0.0;
         } else {
-            strafe = clampPower(pidStrafeResult);
+            strafe = boostLowPower(strafePID.calculate(errorY));
         }
 
         if (Math.abs(errorH) < toleranceH) {
             rotate = 0.0;
         } else {
-            rotate = clampPower(pidRotateResult);
+            rotate = boostLowPower(rotatePID.calculate(errorH));
+        }
+
+        if (Math.abs(errorH) > 180.0) {
+            rotate = -rotate;
         }
 
         // Actuate - execute robot functions
-        drive.drive(forward, strafe, 0.0);
+        drive.drive(forward, strafe, rotate);
 
         telemetry.addData("Task",
                 String.format(Locale.US,
                         "MoveWithPIDTo %.2f, %.2f",
                         targetPose.getX(DistanceUnit.INCH),
                         targetPose.getY(DistanceUnit.INCH)));
-        telemetry.addData("pidFwd", String.format(Locale.US, "%.2f", pidForwardResult));
-        telemetry.addData("pidStrafe", String.format(Locale.US, "%.2f", pidStrafeResult));
-        telemetry.addData("pidRotate", String.format(Locale.US, "%.2f", pidRotateResult));
-        System.out.printf(Locale.US, "%.4f, %.4f, %.4f%n", pidForwardResult, pidStrafeResult, pidRotateResult);
-
         telemetry.addData("fwdPower", String.format(Locale.US, "%.2f", forward));
         telemetry.addData("stfPower", String.format(Locale.US, "%.2f", strafe));
         telemetry.addData("rotPower", String.format(Locale.US, "%.2f", rotate));
-
         telemetry.addData("errorX", String.format(Locale.US, "%.2f", errorX));
         telemetry.addData("errorY", String.format(Locale.US, "%.2f", errorY));
         telemetry.addData("errorH", String.format(Locale.US, "%.2f", errorH));
@@ -140,11 +127,11 @@ public class MoveWithPIDTo implements Task {
         dashboard.getTelemetry().addData("errorH", String.format(Locale.US, "%.2f", errorH));
 
         logger.log(String.format(Locale.US, "errorX %.2f, errorY %.2f, errorH %.2f", errorX, errorY, errorH));
-
         // if any errors are > tolerance, keep going
         return (
                 Math.abs(errorX) > toleranceX
                 || Math.abs(errorY) > toleranceY
+                || Math.abs(errorH) > toleranceH
         );
     }
 }
