@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
-
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 
@@ -8,15 +7,15 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.controller.AssistedShooterController;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
-import org.firstinspires.ftc.teamcode.util.AllianceColor;
+import org.firstinspires.ftc.teamcode.util.Alliance;
 
 public abstract class TeleOp_AutoVelocity extends RobotBaseOpMode
 {
     protected AssistedShooterController assistedShooterController;
     protected Limelight3A limelight;
-    protected AllianceColor color;
+    protected Alliance color;
 
-    protected void setColor(AllianceColor color) {
+    protected void setColor(Alliance color) {
         this.color = color;
     }
 

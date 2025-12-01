@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
 
-@TeleOp(name="Test_TeleOp_MotorTester", group="Iterative OpMode")
+@TeleOp(name="Motor Tester", group="Test")
 public class TeleOp_MotorTester extends RobotBaseOpMode
 {
 

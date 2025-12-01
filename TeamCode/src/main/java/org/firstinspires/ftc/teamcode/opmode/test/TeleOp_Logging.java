@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.util.SparkLogger;
 
-@TeleOp(name="TeleOp_Logging", group="Test")
+@TeleOp(name="Logging Test", group="Test")
 @Disabled
 public class TeleOp_Logging extends OpMode {
 

@@ -3,29 +3,21 @@ package org.firstinspires.ftc.teamcode.controller;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.component.drive.MecanumDrive;
-import org.firstinspires.ftc.teamcode.component.drive.TankDrive;
 import org.firstinspires.ftc.teamcode.component.mechanism.Feeder;
 import org.firstinspires.ftc.teamcode.component.mechanism.Kicker;
 import org.firstinspires.ftc.teamcode.component.mechanism.Shooter;
 import org.firstinspires.ftc.teamcode.component.sensor.Odometer;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
-import org.firstinspires.ftc.teamcode.task.AimAt;
-import org.firstinspires.ftc.teamcode.task.AutonTaskList;
-import org.firstinspires.ftc.teamcode.task.Task;
-import org.firstinspires.ftc.teamcode.task.TaskList;
-import org.firstinspires.ftc.teamcode.task.Wait;
-import org.firstinspires.ftc.teamcode.util.AllianceColor;
+import org.firstinspires.ftc.teamcode.util.Alliance;
 import org.firstinspires.ftc.teamcode.util.ShooterUtils;
 
 public class AssistedShooterController {
-
 
     protected RobotBaseOpMode robot;
     protected Gamepad operatorGamepad;
@@ -40,12 +32,16 @@ public class AssistedShooterController {
     protected Telemetry telemetry;
     protected Pose2D targetPose;
 
-    protected AllianceColor color;
+    protected Alliance alliance;
 
-    private double velocityAdjustment = -40.0;
-    private double aimerAdjustment = 2.0;
+    private double velocityAdjustment = 0.0;
+    private double aimerAdjustment = 0.0;
 
-    public AssistedShooterController(RobotBaseOpMode robot, AllianceColor color) {
+    private double previousVelocity = 0.0;
+
+    private boolean isRunning = true;
+
+    public AssistedShooterController(RobotBaseOpMode robot, Alliance alliance) {
         this.robot = robot;
         this.shooter = robot.getShooter();
         this.odometer = robot.getOdometer();
@@ -57,10 +53,10 @@ public class AssistedShooterController {
         this.mecanumDrive = robot.getMecanumDrive();
         this.operatorGamepad = robot.getOperatorGamepad();
         this.driverGamepad = robot.getDriverGamepad();
-        this.color = color;
-        this.targetPose = Constants.TARGET.forColor(color);
-    }
 
+        this.alliance = alliance;
+        this.targetPose = Constants.TARGET.forAlliance(alliance);
+    }
 
     public void handleInput() {
         // always set shooter velocity based on distance
@@ -68,13 +64,17 @@ public class AssistedShooterController {
         double currentX = odometer.getX(DistanceUnit.INCH);
         double currentY = odometer.getY(DistanceUnit.INCH);
 
-        Pose2D target = Constants.TARGET.forColor(color);
+        Pose2D target = Constants.TARGET.forAlliance(alliance);
         double targetX = target.getX(DistanceUnit.INCH);
         double targetY = target.getY(DistanceUnit.INCH);
 
         double distance = ShooterUtils.calculateDistance(currentX, currentY, targetX, targetY);
         double recommendedVelocity = ShooterUtils.distance2Velocity(distance);
         double recommendedHeading = ShooterUtils.headingTowards(currentX, currentY, targetX, targetY);
+
+        if (operatorGamepad.yWasPressed()) {
+            isRunning = !isRunning;
+        }
 
         if (operatorGamepad.bWasPressed()) {
             velocityAdjustment += Constants.SHOOTER_VELOCITY_INCREMENT;
@@ -87,7 +87,6 @@ public class AssistedShooterController {
         } else if (driverGamepad.dpadLeftWasPressed()) {
             aimerAdjustment -= 1.0;
         }
-
 
         double targetVelocity = recommendedVelocity + velocityAdjustment;
         // display velocity accuracy
@@ -107,9 +106,15 @@ public class AssistedShooterController {
             aimerLed.setPosition(Constants.LED_RED);
         }
 
-
         // update velocity based on distance
-        shooter.setVelocity(targetVelocity);
+        if (isRunning) {
+            if (Math.abs(targetVelocity - previousVelocity) < Constants.SHOOTER_VELOCITY_INCREMENT) {
+                shooter.setVelocity(targetVelocity);
+                previousVelocity = targetVelocity;
+            }
+        } else {
+            shooter.setVelocity(0.0);
+        }
 
         // auto aim
         double rotateSpeed = 0.0;
@@ -121,8 +126,8 @@ public class AssistedShooterController {
             if (headingError < -Constants.AIM_TOLERANCE) {
                 rotateSpeed = -Constants.AIMER_ROTATE_SPEED;
             }
+            mecanumDrive.drive(0.0, 0.0, rotateSpeed);
         }
-        mecanumDrive.drive(0.0, 0.0, rotateSpeed);
         telemetry.addData("Aimer adjustment", aimerAdjustment);
         telemetry.addData("Velocity adjustment", velocityAdjustment);
 

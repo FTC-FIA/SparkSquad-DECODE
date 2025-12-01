@@ -1,12 +1,12 @@
-package org.firstinspires.ftc.teamcode.opmode.auton;
+package org.firstinspires.ftc.teamcode.opmode.auton.base;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Constants;
+import org.firstinspires.ftc.teamcode.opmode.auton.AutonBaseOpMode;
 import org.firstinspires.ftc.teamcode.task.AutonTaskList;
 import org.firstinspires.ftc.teamcode.task.MoveTo;
 import org.firstinspires.ftc.teamcode.task.StartAt;
@@ -21,28 +21,28 @@ import org.firstinspires.ftc.teamcode.task.StopShooter;
 import org.firstinspires.ftc.teamcode.task.Task;
 import org.firstinspires.ftc.teamcode.task.TurnTo;
 import org.firstinspires.ftc.teamcode.task.Wait;
-import org.firstinspires.ftc.teamcode.util.AllianceColor;
+import org.firstinspires.ftc.teamcode.util.Alliance;
 
 public abstract class Auton_LongShot_Intake3 extends AutonBaseOpMode {
 
     private final ElapsedTime elapsedTime = new ElapsedTime();
-    private AllianceColor color;
+    private Alliance color;
 
     private static DistanceUnit DU = DistanceUnit.INCH;
     private static AngleUnit AU = AngleUnit.DEGREES;
 
-    protected void setColor( AllianceColor color ) {
+    protected void setColor( Alliance color ) {
         this.color = color;
     }
 
     public void init() {
         super.init();
 
-        Pose2D startPose = Constants.I1.forColor(color);
-        Pose2D shootPose = Constants.S1.forColor(color);
-        Pose2D endPose = Constants.E1.forColor(color);
-        Pose2D intake3StartPose = Constants.IS3.forColor(color);
-        Pose2D intake3EndPose = Constants.IE3.forColor(color);
+        Pose2D startPose = Constants.I1.forAlliance(color);
+        Pose2D shootPose = Constants.S1.forAlliance(color);
+        Pose2D endPose = Constants.E1.forAlliance(color);
+        Pose2D intake3StartPose = Constants.IS3.forAlliance(color);
+        Pose2D intake3EndPose = Constants.IE3.forAlliance(color);
 
         this.autonTaskList = new AutonTaskList(
             this,
@@ -50,7 +50,7 @@ public abstract class Auton_LongShot_Intake3 extends AutonBaseOpMode {
                     new StartAt(this, startPose.getX(DU), startPose.getY(DU), startPose.getHeading(AU)),
 
                     // spin up shooter
-                    new StartShooterWithVelocity(this, 600),  // start the shooter
+                    new StartShooterWithVelocity(this, Constants.LONGSHOT_SHOOTER_VELOCITY),  // start the shooter
 
                     // move to shooting position using a TaskList
                     new MoveTo( this, shootPose.getX(DU), shootPose.getY(DU) ),
@@ -71,13 +71,18 @@ public abstract class Auton_LongShot_Intake3 extends AutonBaseOpMode {
                     // ======== END SHOOTING =========== //
 
                     // move to intake position
-                    new StartIntake(this),
+                    new StartIntake(this, 0.7),
                     new TurnTo(this, intake3StartPose.getHeading(AU)),
                     new MoveTo(this, intake3StartPose.getX(DU), intake3StartPose.getY(DU)),
 
+                    new StartFeeder(this, 0.5),
+
                     // drive over the balls
-                    new TurnTo(this, intake3EndPose.getHeading(AU)),
-                    new MoveTo(this, intake3EndPose.getX(DU), intake3EndPose.getY(DU)),
+                    new TurnTo(this, intake3EndPose.getHeading(AU), 0.5), // minor correctiom, slow is ok
+                    new MoveTo(this, intake3EndPose.getX(DU), intake3EndPose.getY(DU), 0.5), // go slow
+
+                    new Wait(this, 1.0), // make sure balls are captured
+                    new StopFeeder(this),
 
                     // return to shoot position
                     new MoveTo(this, shootPose.getX(DU), shootPose.getY(DU)),
