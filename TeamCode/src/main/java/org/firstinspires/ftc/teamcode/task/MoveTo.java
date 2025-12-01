@@ -6,6 +6,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.component.drive.FieldRelativeDrive;
 import org.firstinspires.ftc.teamcode.component.sensor.Odometer;
 import org.firstinspires.ftc.teamcode.util.SparkLogger;
@@ -15,12 +16,12 @@ import java.util.Locale;
 
 public class MoveTo implements Task {
 
-    private final double DEFAULT_FORWARD_POWER = 0.2;
-    private final double DEFAULT_STRAFE_POWER = 0.2;
-    private final double DEFAULT_TOLERANCE_X = 0.5; // in inches
-    private final double DEFAULT_TOLERANCE_Y = 0.5; // in inches
-    private double forwardPower = DEFAULT_FORWARD_POWER;
-    private double strafePower = DEFAULT_STRAFE_POWER;
+    private static final double DEFAULT_TOLERANCE_X = 0.5; // in inches
+    private static final double DEFAULT_TOLERANCE_Y = 0.5; // in inches
+    private static final double DEFAULT_SPEED_FACTOR = 1.0;
+
+    private double forwardPower = Constants.DEFAULT_AUTON_FORWARD_POWER;
+    private double strafePower = Constants.DEFAULT_AUTON_STRAFE_POWER;
     private double toleranceX = DEFAULT_TOLERANCE_X;
     private double toleranceY = DEFAULT_TOLERANCE_Y;
 
@@ -31,16 +32,18 @@ public class MoveTo implements Task {
     private final SparkLogger logger = SparkLogger.getLogger();
 
     private final Pose2D targetPose;
+    private double speedFactor;
 
     public MoveTo(
             RobotBaseOpMode robot,
             double targetXInches,
-            double targetYInches
+            double targetYInches,
+            double speedFactor
     ) {
         this.drive = robot.getFieldRelativeDrive();;
         this.odometer = robot.getOdometer();
         this.telemetry = robot.getTelemetry();
-
+        this.speedFactor = speedFactor;
         odometer.update();
         double heading = odometer.getHeading(AngleUnit.DEGREES);
         this.targetPose = new Pose2D(
@@ -52,8 +55,12 @@ public class MoveTo implements Task {
         );
     }
 
-    public void setForwardPower(double forwardPower) {
-        this.forwardPower = forwardPower;
+    public MoveTo(
+            RobotBaseOpMode robot,
+            double targetXInches,
+            double targetYInches
+    ) {
+        this(robot, targetXInches, targetYInches, DEFAULT_SPEED_FACTOR);
     }
 
     public boolean execute() {
@@ -88,6 +95,10 @@ public class MoveTo implements Task {
 
         // Actuate - execute robot functions
         rotate = 0.0;
+
+        forward *= speedFactor;
+        strafe *= speedFactor;
+
         drive.drive(forward, strafe, rotate);
 
         telemetry.addData("Task", String.format(

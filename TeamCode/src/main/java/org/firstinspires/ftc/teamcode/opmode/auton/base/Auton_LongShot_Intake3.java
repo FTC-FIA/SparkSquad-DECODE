@@ -50,7 +50,7 @@ public abstract class Auton_LongShot_Intake3 extends AutonBaseOpMode {
                     new StartAt(this, startPose.getX(DU), startPose.getY(DU), startPose.getHeading(AU)),
 
                     // spin up shooter
-                    new StartShooterWithVelocity(this, 600),  // start the shooter
+                    new StartShooterWithVelocity(this, Constants.LONGSHOT_SHOOTER_VELOCITY),  // start the shooter
 
                     // move to shooting position using a TaskList
                     new MoveTo( this, shootPose.getX(DU), shootPose.getY(DU) ),
@@ -71,13 +71,18 @@ public abstract class Auton_LongShot_Intake3 extends AutonBaseOpMode {
                     // ======== END SHOOTING =========== //
 
                     // move to intake position
-                    new StartIntake(this),
+                    new StartIntake(this, 0.7),
                     new TurnTo(this, intake3StartPose.getHeading(AU)),
                     new MoveTo(this, intake3StartPose.getX(DU), intake3StartPose.getY(DU)),
 
+                    new StartFeeder(this, 0.5),
+
                     // drive over the balls
-                    new TurnTo(this, intake3EndPose.getHeading(AU)),
-                    new MoveTo(this, intake3EndPose.getX(DU), intake3EndPose.getY(DU)),
+                    new TurnTo(this, intake3EndPose.getHeading(AU), 0.5), // minor correctiom, slow is ok
+                    new MoveTo(this, intake3EndPose.getX(DU), intake3EndPose.getY(DU), 0.5), // go slow
+
+                    new Wait(this, 1.0), // make sure balls are captured
+                    new StopFeeder(this),
 
                     // return to shoot position
                     new MoveTo(this, shootPose.getX(DU), shootPose.getY(DU)),

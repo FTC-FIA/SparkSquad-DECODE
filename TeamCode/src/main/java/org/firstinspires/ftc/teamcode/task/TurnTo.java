@@ -15,8 +15,11 @@ import java.util.Locale;
 
 public class TurnTo implements Task {
 
-    private final double DEFAULT_ROTATE_POWER = 0.5;
-    private final double DEFAULT_TOLERANCE_H = 2.0; // in deg
+    public static final double DEFAULT_ROTATE_POWER = 0.5;
+    public static final double DEFAULT_TOLERANCE_H = 0.5; // in deg]
+    public static final double DEFAULT_SPEED_FACTOR = 1.0;
+
+    private double speedFactor;
 
     private double rotatePower = DEFAULT_ROTATE_POWER;
     private double toleranceH = DEFAULT_TOLERANCE_H;
@@ -30,11 +33,13 @@ public class TurnTo implements Task {
 
     public TurnTo(
             RobotBaseOpMode robot,
-            double headingDegrees
+            double headingDegrees,
+            double speedFactor
     ) {
         this.drive = robot.getFieldRelativeDrive();;
         this.odometer = robot.getOdometer();
         this.telemetry = robot.getTelemetry();
+        this.speedFactor = speedFactor;
 
         odometer.update();
         double currentX = odometer.getX(DistanceUnit.INCH);
@@ -46,6 +51,14 @@ public class TurnTo implements Task {
                 AngleUnit.DEGREES,
                 headingDegrees
         );
+    }
+
+
+    public TurnTo(
+            RobotBaseOpMode robot,
+            double headingDegrees
+    ) {
+        this(robot, headingDegrees, DEFAULT_SPEED_FACTOR);
     }
 
     public boolean execute() {

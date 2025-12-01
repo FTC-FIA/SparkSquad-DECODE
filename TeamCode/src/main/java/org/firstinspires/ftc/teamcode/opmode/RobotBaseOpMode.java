@@ -94,7 +94,7 @@ public abstract class RobotBaseOpMode extends OpMode
         kickerCRServo = hardwareMap.get(CRServo.class, KICKER_SERVO_NAME);
         feederMotor = hardwareMap.get(DcMotorEx.class, FEEDER_MOTOR_NAME);
         intakeMotor = hardwareMap.get(DcMotor.class, INTAKE_MOTOR_NAME);
-        pinpointDriver = hardwareMap.get(GoBildaPinpointDriver.class,"odo");
+        pinpointDriver = hardwareMap.get(GoBildaPinpointDriver.class, "odo");
         shooterLed = hardwareMap.get(Servo.class, SHOOTER_LED_NAME);
         aimerLed = hardwareMap.get(Servo.class, AIMER_LED_NAME);
 

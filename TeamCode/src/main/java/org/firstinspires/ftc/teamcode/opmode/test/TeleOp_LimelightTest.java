@@ -51,18 +51,24 @@ public class TeleOp_LimelightTest extends RobotBaseOpMode {
     @Override
     public void loop() {
         robotRelativeDriveController.handleInput();
-
-        limelight.updateRobotOrientation(odometer.getHeading(AngleUnit.RADIANS));
+        odometer.update();
+        limelight.updateRobotOrientation(odometer.getHeading(AngleUnit.DEGREES));
 
         // get info from limelight
         LLResult result = limelight.getLatestResult();
-        //Pose3D botPose = result.getBotpose();
+        Pose3D botPose = result.getBotpose();
         Pose3D botPoseMT = result.getBotpose_MT2();
         dashTelemetry.addData("result is valid?", result.isValid());
-        dashTelemetry.addData("BotPose X", botPoseMT.getPosition().x);
-        dashTelemetry.addData("BotPose Y", botPoseMT.getPosition().y);
-        dashTelemetry.addData("BotPose Z", botPoseMT.getPosition().z);
-        dashTelemetry.addData("BotPose Yaw", botPoseMT.getOrientation().getYaw(AngleUnit.DEGREES));
+        dashTelemetry.addData("BotPoseMT X", botPoseMT.getPosition().x);
+        dashTelemetry.addData("BotPoseMT Y", botPoseMT.getPosition().y);
+        dashTelemetry.addData("BotPoseMT Z", botPoseMT.getPosition().z);
+
+        dashTelemetry.addData("BotPose X", botPose.getPosition().x);
+        dashTelemetry.addData("BotPose Y", botPose.getPosition().y);
+        dashTelemetry.addData("BotPose Z", botPose.getPosition().z);
+        dashTelemetry.addData("BotPose Yaw", botPose.getOrientation().getYaw(AngleUnit.DEGREES));
+
+
         dashTelemetry.addData("-------", "----------");
         dashTelemetry.addData("Odo X", odometer.getX(DistanceUnit.INCH));
         dashTelemetry.addData("Odo Y", odometer.getY(DistanceUnit.INCH));
@@ -73,7 +79,7 @@ public class TeleOp_LimelightTest extends RobotBaseOpMode {
         dashTelemetry.addData("Tx", result.getTx());
         dashTelemetry.addData("Ty", result.getTy());
         dashTelemetry.addData("Distance", result.getBotposeAvgDist());
-        dashTelemetry.addData("Full result", result.toString());
+        //dashTelemetry.addData("Full result", result.toString());
 
         dashTelemetry.update();
     }

@@ -37,6 +37,8 @@ public class AssistedShooterController {
     private double velocityAdjustment = 0.0;
     private double aimerAdjustment = 0.0;
 
+    private double previousVelocity = 0.0;
+
     private boolean isRunning = true;
 
     public AssistedShooterController(RobotBaseOpMode robot, Alliance alliance) {
@@ -104,10 +106,12 @@ public class AssistedShooterController {
             aimerLed.setPosition(Constants.LED_RED);
         }
 
-
         // update velocity based on distance
         if (isRunning) {
-            shooter.setVelocity(targetVelocity);
+            if (Math.abs(targetVelocity - previousVelocity) < Constants.SHOOTER_VELOCITY_INCREMENT) {
+                shooter.setVelocity(targetVelocity);
+                previousVelocity = targetVelocity;
+            }
         } else {
             shooter.setVelocity(0.0);
         }
@@ -122,8 +126,8 @@ public class AssistedShooterController {
             if (headingError < -Constants.AIM_TOLERANCE) {
                 rotateSpeed = -Constants.AIMER_ROTATE_SPEED;
             }
+            mecanumDrive.drive(0.0, 0.0, rotateSpeed);
         }
-        mecanumDrive.drive(0.0, 0.0, rotateSpeed);
         telemetry.addData("Aimer adjustment", aimerAdjustment);
         telemetry.addData("Velocity adjustment", velocityAdjustment);
 

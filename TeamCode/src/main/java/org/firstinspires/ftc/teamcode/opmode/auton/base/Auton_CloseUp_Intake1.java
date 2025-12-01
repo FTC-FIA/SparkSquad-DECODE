@@ -61,29 +61,32 @@ public abstract class Auton_CloseUp_Intake1 extends AutonBaseOpMode {
                     // ======== START SHOOTING =========== //
                     // Shoot 2 balls!
                     // new Wait(this, 1.0),                        // wait for shooter to hit target velocity
-                    new StartFeeder(this, 0.5),                 // start the feeder
+                    new StartFeeder(this, 0.5),                    // start the feeder
 
                     // Shoot more!
                     new Wait(this, 3.0),
                     new StartKicker(this, 0.1),
 
                     // make sure they're all gone!
-                    new Wait (this, 5.0),
+                    new Wait(this, 6.0),
                     new StopKicker(this),
-                    new StopFeeder( this),
+                    new StopFeeder(this),
                     // ======== END SHOOTING =========== //
 
                     // move to intake start position
-                    new StartIntake(this),
+                    new StartIntake(this, 0.7),
                     new TurnTo(this, intake1StartPose.getHeading(AU)),
                     new Wait(this, 1.0), // for debugging
+                    new StartFeeder(this),
                     new MoveTo(this, intake1StartPose.getX(DU), intake1StartPose.getY(DU)),
+                    new TurnTo(this, intake1StartPose.getHeading(AU), 0.5),
                     new Wait(this, 1.0), // for debugging
 
                     // drive over the balls to pick them up
                     new Wait(this, 1.0), // for debugging
-                    new MoveTo(this, intake1EndPose.getX(DU), intake1EndPose.getY(DU)),
+                    new MoveTo(this, intake1EndPose.getX(DU), intake1EndPose.getY(DU), 0.5), // slow it down
                     new Wait(this, 1.0), // for debugging
+                    new StopFeeder(this),
                     new StopIntake(this),
 
                     // return to shoot position
