@@ -41,8 +41,8 @@ public abstract class Auton_LongShot_Intake3 extends AutonBaseOpMode {
         Pose2D startPose = Constants.I1.forAlliance(color);
         Pose2D shootPose = Constants.S1.forAlliance(color);
         Pose2D endPose = Constants.E1.forAlliance(color);
-        Pose2D intake3StartPose = Constants.IS3.forAlliance(color);
-        Pose2D intake3EndPose = Constants.IE3.forAlliance(color);
+        Pose2D intake3StartPose = Constants.IS1.forAlliance(color);
+        Pose2D intake3EndPose = Constants.IE1.forAlliance(color);
 
         this.autonTaskList = new AutonTaskList(
             this,
@@ -71,7 +71,7 @@ public abstract class Auton_LongShot_Intake3 extends AutonBaseOpMode {
                     // ======== END SHOOTING =========== //
 
                     // move to intake position
-                    new StartIntake(this, 0.7),
+                    new StartIntake(this, 1.0)  ,
                     new TurnTo(this, intake3StartPose.getHeading(AU)),
                     new MoveTo(this, intake3StartPose.getX(DU), intake3StartPose.getY(DU)),
 
@@ -87,7 +87,6 @@ public abstract class Auton_LongShot_Intake3 extends AutonBaseOpMode {
                     // return to shoot position
                     new MoveTo(this, shootPose.getX(DU), shootPose.getY(DU)),
                     new TurnTo(this, shootPose.getHeading(AU)),
-                    new StopIntake(this),
 
                     // ======== START SHOOTING =========== //
                     // Shoot 2 balls!
@@ -96,10 +95,12 @@ public abstract class Auton_LongShot_Intake3 extends AutonBaseOpMode {
 
                     // Shoot more!
                     new Wait(this, 2.0),
-                    new StartKicker(this, 0.1),
+                    new StartKicker(this, 0.3),
 
                     // make sure they're all gone!
                     new Wait (this, 3.0),
+                    new StopIntake(this),
+
                     new StopKicker(this),
                     // ======== END SHOOTING =========== //
 

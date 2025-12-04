@@ -108,7 +108,7 @@ public class AssistedShooterController {
 
         // update velocity based on distance
         if (isRunning) {
-            if (Math.abs(targetVelocity - previousVelocity) < Constants.SHOOTER_VELOCITY_INCREMENT) {
+            if (Math.abs(targetVelocity - previousVelocity) > Constants.SHOOTER_VELOCITY_INCREMENT) {
                 shooter.setVelocity(targetVelocity);
                 previousVelocity = targetVelocity;
             }
@@ -138,11 +138,13 @@ public class AssistedShooterController {
 
         telemetry.addData("Distance to Target", distance);
 
-        double currVelocity = shooter.getShooterVelocity();
+        //double currVelocity = shooter.getShooterVelocity();
         telemetry.addData("Rec'd velocity", recommendedVelocity);
         telemetry.addData("Target velocity", targetVelocity);
-        telemetry.addData("Current Velocity", currVelocity);
-        telemetry.addData("** VELOCITY ERROR", targetVelocity - currVelocity);
+        telemetry.addData("Previous Velocity", previousVelocity);
+        telemetry.addData("Current Velocity", actualVelocity);
+        telemetry.addData("Is Running", isRunning);
+        telemetry.addData("** VELOCITY ERROR", targetVelocity - actualVelocity);
     }
 
 }

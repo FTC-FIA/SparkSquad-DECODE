@@ -12,7 +12,7 @@ public class Shoot3 extends TaskList {
                 new Wait(robot, 3.0),
 
                 // Shoot the last one
-                new StartKicker(robot, 0.1),
+                new StartKicker(robot, 0.3),
                 new Wait (robot, 5.0),
 
                 // Stop
