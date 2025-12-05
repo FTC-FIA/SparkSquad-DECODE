@@ -133,7 +133,7 @@ public abstract class RobotBaseOpMode extends OpMode
         pinpointDriver.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
         pinpointDriver.setEncoderDirections(
                 GoBildaPinpointDriver.EncoderDirection.REVERSED, // X
-                GoBildaPinpointDriver.EncoderDirection.REVERSED // Y
+                GoBildaPinpointDriver.EncoderDirection.REVERSED  // Y
         );
 
         // Initialize components

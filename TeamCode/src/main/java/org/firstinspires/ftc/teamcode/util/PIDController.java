@@ -30,14 +30,15 @@ public class PIDController {
         this.kD = kD;
     }
 
-    //TODO: figure out if we should normalize error for auton driving (e.g. error/MAX_ERROR)
     public double calculate(double error) {
-        double p = kP * error;
-        integralSum += error * interval.seconds();
+        double sign = error > 0.0 ? 1.0 : -1.0;
+        double absError = Math.abs(error);
+        double p = kP * absError;
+        integralSum += absError * interval.seconds();
         double i = kI * integralSum;
-        double d = kD * (error - previousError) / (interval.seconds());
-        previousError = error;
+        double d = kD * Math.abs(absError - previousError) / interval.seconds();
+        previousError = absError;
         interval.reset();
-        return p + i + d;
+        return (p + i + d) * sign;
     }
 }

@@ -15,6 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.component.sensor.Odometer;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import org.firstinspires.ftc.teamcode.util.SparkLogger;
+import org.firstinspires.ftc.teamcode.util.Units;
 
 @TeleOp(name="Limelight Test", group="Test")
 public class TeleOp_LimelightTest extends RobotBaseOpMode {
@@ -44,8 +45,8 @@ public class TeleOp_LimelightTest extends RobotBaseOpMode {
     }
 
     public void start() {
-        limelight.start();
         limelight.pipelineSwitch(BLUE_TAG_PIPELINE);
+        limelight.start();
     }
 
     @Override
@@ -58,28 +59,38 @@ public class TeleOp_LimelightTest extends RobotBaseOpMode {
         LLResult result = limelight.getLatestResult();
         Pose3D botPose = result.getBotpose();
         Pose3D botPoseMT = result.getBotpose_MT2();
+        //Pose3D botPoseMT = botPose;
         dashTelemetry.addData("result is valid?", result.isValid());
-        dashTelemetry.addData("BotPoseMT X", botPoseMT.getPosition().x);
-        dashTelemetry.addData("BotPoseMT Y", botPoseMT.getPosition().y);
-        dashTelemetry.addData("BotPoseMT Z", botPoseMT.getPosition().z);
 
-        dashTelemetry.addData("BotPose X", botPose.getPosition().x);
-        dashTelemetry.addData("BotPose Y", botPose.getPosition().y);
-        dashTelemetry.addData("BotPose Z", botPose.getPosition().z);
-        dashTelemetry.addData("BotPose Yaw", botPose.getOrientation().getYaw(AngleUnit.DEGREES));
+        double llXInches = Units.meters2Inches(botPoseMT.getPosition().x);
+        double llYInches = Units.meters2Inches(botPoseMT.getPosition().y);
+        double odoXInches = odometer.getX(DistanceUnit.INCH);
+        double odoYInches = odometer.getY(DistanceUnit.INCH);
+        double llHeading = botPoseMT.getOrientation().getYaw(AngleUnit.DEGREES);
+        double odoHeading = odometer.getHeading(AngleUnit.DEGREES);
 
+        dashTelemetry.addData("BotPose X", llXInches);
+        dashTelemetry.addData("BotPose Y", llYInches);
 
         dashTelemetry.addData("-------", "----------");
-        dashTelemetry.addData("Odo X", odometer.getX(DistanceUnit.INCH));
-        dashTelemetry.addData("Odo Y", odometer.getY(DistanceUnit.INCH));
-        dashTelemetry.addData("Odo H", odometer.getHeading(AngleUnit.DEGREES));
+        dashTelemetry.addData("Odo X", odoXInches);
+        dashTelemetry.addData("Odo Y", odoYInches);
+
         dashTelemetry.addData("-------", "----------");
-        //telemetry.addData("IMU YAW", imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
+        dashTelemetry.addData("BotPose Yaw", llHeading);
+        dashTelemetry.addData("Odo H",odoHeading );
+
+        dashTelemetry.addData("-------", "----------");
+
+        dashTelemetry.addData("X diff", llXInches - odoXInches);
+        dashTelemetry.addData("Y diff", llYInches - odoYInches);
+        dashTelemetry.addData("H diff", llHeading - odoHeading);
+
+
         dashTelemetry.addData("-------", "----------");
         dashTelemetry.addData("Tx", result.getTx());
         dashTelemetry.addData("Ty", result.getTy());
         dashTelemetry.addData("Distance", result.getBotposeAvgDist());
-        //dashTelemetry.addData("Full result", result.toString());
 
         dashTelemetry.update();
     }

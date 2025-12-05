@@ -28,9 +28,9 @@ public class Auton_DrivingTestPIDX extends AutonBaseOpMode {
             this,
             new Task[]{
                     new StartAt(this, 0.0, 0.0, 0.0),
-                    new MoveWithPIDTo(this, 12.0, 0.0),
+                    new MoveWithPIDTo(this, 12.0, 0.0, 0.0),
                     new Wait(this, 1.0),
-                    new MoveWithPIDTo(this, 0.0, 0.0),
+                    new MoveWithPIDTo(this, 0.0, 0.0, 0.0),
             }
         );
     }
