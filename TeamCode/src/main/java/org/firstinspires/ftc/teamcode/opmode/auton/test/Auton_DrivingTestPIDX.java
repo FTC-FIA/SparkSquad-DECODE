@@ -1,6 +1,7 @@
-package org.firstinspires.ftc.teamcode.opmode.test;
+package org.firstinspires.ftc.teamcode.opmode.auton.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -12,8 +13,9 @@ import org.firstinspires.ftc.teamcode.task.StartAt;
 import org.firstinspires.ftc.teamcode.task.Task;
 import org.firstinspires.ftc.teamcode.task.Wait;
 
-@Autonomous(name="Auton Driving Test - PIDY", group="Test")
-public class Auton_DrivingTestPIDY extends AutonBaseOpMode {
+@Autonomous(name="Auton Driving Test - PIDX", group="Test")
+@Disabled
+public class Auton_DrivingTestPIDX extends AutonBaseOpMode {
 
     private final ElapsedTime elapsedTime = new ElapsedTime();
 
@@ -27,7 +29,7 @@ public class Auton_DrivingTestPIDY extends AutonBaseOpMode {
             this,
             new Task[]{
                     new StartAt(this, 0.0, 0.0, 0.0),
-                    new MoveWithPIDTo(this, 0.0, 24.0, 0.0),
+                    new MoveWithPIDTo(this, 12.0, 0.0, 0.0),
                     new Wait(this, 1.0),
                     new MoveWithPIDTo(this, 0.0, 0.0, 0.0),
             }

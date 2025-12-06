@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.task;
+package org.firstinspires.ftc.teamcode.task.attic;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.component.mechanism.Shooter;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
+import org.firstinspires.ftc.teamcode.task.Task;
 
 public class StartShooter implements Task {
 

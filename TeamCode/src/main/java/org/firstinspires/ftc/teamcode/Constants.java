@@ -31,7 +31,7 @@ public class Constants {
     public static final double MAX_SHOOTER_VELOCITY = 1600;
     public static final double SHOOTER_VELOCITY_INCREMENT = 20.0;
 
-    public static final double CLOSEUP_SHOOTER_VELOCITY = 580.0;
+    public static final double CLOSEUP_SHOOTER_VELOCITY = 570.0;
     public static final double LONGSHOT_SHOOTER_VELOCITY = 680.0;
 
     public static final double AIM_TOLERANCE = 1.0;
@@ -47,16 +47,16 @@ public class Constants {
 
     // Shooting positions
     public static AlliancePose2D S1 = new AlliancePose2D(16.125, -60.0, 66.0, Alliance.BLUE); // long
-    public static AlliancePose2D S3 = new AlliancePose2D(20.0, 20.0, 40.0, Alliance.BLUE); // close
+    public static AlliancePose2D S3 = new AlliancePose2D(18.0, 18.0, 42.0, Alliance.BLUE); // close
 
     // Intake start positions
     public static AlliancePose2D IS1 = new AlliancePose2D(24.0, -38.0, 180.0, Alliance.BLUE); // GGP (farthest from goal)
-    public static AlliancePose2D IS2 = new AlliancePose2D(24.0, -8.0, 180.0, Alliance.BLUE);
+    public static AlliancePose2D IS2 = new AlliancePose2D(24.0, -10.0, 180.0, Alliance.BLUE);
     public static AlliancePose2D IS3 = new AlliancePose2D(20.0, 14.0, 180.0, Alliance.BLUE); // PPG (closest 2 goal)
 
     // Intake end positions
     public static AlliancePose2D IE1 = new AlliancePose2D(61.5, -38.0, 180.0, Alliance.BLUE); // GGP (farthest from goal)
-    public static AlliancePose2D IE2 = new AlliancePose2D(61.5, -8.0, 180.0, Alliance.BLUE);
+    public static AlliancePose2D IE2 = new AlliancePose2D(62.5, -10.0, 180.0, Alliance.BLUE);
     public static AlliancePose2D IE3 = new AlliancePose2D(55.5, 14.0, 180.0, Alliance.BLUE); // PPG (closest 2 goal)
 
     // Ending positions

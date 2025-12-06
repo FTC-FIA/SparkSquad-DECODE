@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.test;
+package org.firstinspires.ftc.teamcode.opmode.teleop.test;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.hardware.limelightvision.LLResult;

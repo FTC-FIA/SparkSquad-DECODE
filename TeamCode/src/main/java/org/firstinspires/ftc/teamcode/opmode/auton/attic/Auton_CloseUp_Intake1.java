@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auton.base;
+package org.firstinspires.ftc.teamcode.opmode.auton.attic;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.opmode.auton.AutonBaseOpMode;
 import org.firstinspires.ftc.teamcode.task.AutonTaskList;
-import org.firstinspires.ftc.teamcode.task.MoveTo;
+import org.firstinspires.ftc.teamcode.task.attic.MoveTo;
 import org.firstinspires.ftc.teamcode.task.Shoot3;
 import org.firstinspires.ftc.teamcode.task.StartAt;
 import org.firstinspires.ftc.teamcode.task.StartFeeder;
@@ -20,7 +20,7 @@ import org.firstinspires.ftc.teamcode.task.StopIntake;
 import org.firstinspires.ftc.teamcode.task.StopKicker;
 import org.firstinspires.ftc.teamcode.task.StopShooter;
 import org.firstinspires.ftc.teamcode.task.Task;
-import org.firstinspires.ftc.teamcode.task.TurnTo;
+import org.firstinspires.ftc.teamcode.task.attic.TurnTo;
 import org.firstinspires.ftc.teamcode.task.Wait;
 import org.firstinspires.ftc.teamcode.util.Alliance;
 

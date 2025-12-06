@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auton.base;
+package org.firstinspires.ftc.teamcode.opmode.auton.attic;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.opmode.auton.AutonBaseOpMode;
 import org.firstinspires.ftc.teamcode.task.AutonTaskList;
-import org.firstinspires.ftc.teamcode.task.MoveTo;
+import org.firstinspires.ftc.teamcode.task.attic.MoveTo;
 import org.firstinspires.ftc.teamcode.task.StartAt;
 import org.firstinspires.ftc.teamcode.task.StartFeeder;
 import org.firstinspires.ftc.teamcode.task.StartKicker;
@@ -17,11 +17,11 @@ import org.firstinspires.ftc.teamcode.task.StopFeeder;
 import org.firstinspires.ftc.teamcode.task.StopKicker;
 import org.firstinspires.ftc.teamcode.task.StopShooter;
 import org.firstinspires.ftc.teamcode.task.Task;
-import org.firstinspires.ftc.teamcode.task.TurnTo;
+import org.firstinspires.ftc.teamcode.task.attic.TurnTo;
 import org.firstinspires.ftc.teamcode.task.Wait;
 import org.firstinspires.ftc.teamcode.util.Alliance;
 
-public abstract class Auton_LongShot_I1S1E1 extends AutonBaseOpMode {
+public abstract class Auton_CloseUp_I3S3E3 extends AutonBaseOpMode {
 
     private final ElapsedTime elapsedTime = new ElapsedTime();
     private Alliance color;
@@ -35,10 +35,9 @@ public abstract class Auton_LongShot_I1S1E1 extends AutonBaseOpMode {
 
     public void init() {
         super.init();
-
-        Pose2D startPose = Constants.I1.forAlliance(color);
-        Pose2D shootPose = Constants.S1.forAlliance(color);
-        Pose2D endPose = Constants.E1.forAlliance(color);
+        Pose2D startPose = Constants.I3.forAlliance(color);
+        Pose2D shootPose = Constants.S3.forAlliance(color);
+        Pose2D endPose = Constants.E3.forAlliance(color);
 
         this.autonTaskList = new AutonTaskList(
             this,
@@ -46,45 +45,43 @@ public abstract class Auton_LongShot_I1S1E1 extends AutonBaseOpMode {
                     // Start position
                     new StartAt(this, startPose.getX(DU), startPose.getY(DU), startPose.getHeading(AU)),
 
-                    // Spin up shooter
-                    new StartShooterWithVelocity(this, 670),  // start the shooter
+                    // Helps keep the balls in while moving, also with shooting
+                    //new StartIntake(this),
 
-                    // Move to shooting position
+                    // spin up shooter
+                    new StartShooterWithVelocity(this, 560),  // start the shooter
+
+                    // move to shooting position using a TaskList
                     new MoveTo( this, shootPose.getX(DU), shootPose.getY(DU) ),
-                    new TurnTo( this, shootPose.getHeading(AU)),
+                    new TurnTo( this, shootPose.getHeading(AU))  ,
 
-                    // Wait til shooter is ready
-                    new Wait( this, 8.0 ),
+                    // Shoot 2 balls!
+                    new Wait( this, 8.0 ),                      // wait for shooter to hit target velocity
+                    new StartFeeder( this, 0.3),                // start the feeder
 
-                    // Shoot!
-                    new StartFeeder( this, 0.3 ),    // start the feeder
+                    // Shoot more!
+                    new Wait(this, 5.0),
+                    new StartKicker(this, 0.1),
+                    new Wait ( this, 0.5 ),
+                    new StopKicker( this ),
 
-                    // let first 2 balls shoot
-                    new Wait( this, 5.0 ),        // wait for feeder to shoot 2 balls
+                    // make sure they're all gone!
+                    new Wait ( this, 3.0 ),
+                    new StartKicker(this, 0.1),
 
-                    // Shoot the last one
-                    new StartKicker( this, 0.1 ), // Kick the last ball out
-                    new Wait ( this, 0.5 ),     // kick, kick!
-                    new StopKicker( this ),     // no more kicking
-
-                    new Wait ( this, 3.0 ),     // doing a double-kick, prolly not needed
-                    new StartKicker(this, 0.1), // (kick?)
-
-                    new Wait ( this, 5.0 ),     // Keep kicking.
+                    new Wait ( this, 5.0 ),
 
                     // move to end position
-                    new TurnTo( this, 0.0 ),    // still kicking!
+                    new TurnTo( this, 0.0 ),
                     new MoveTo( this, endPose.getX(DU), endPose.getY(DU) ),
 
+                    // shut it down
                     new StopKicker(this),
                     new StopShooter(this),
                     new StopFeeder(this),
+                    //new StopIntake(this),
             }
         );
-    }
-
-    public void loop() {
-        super.loop();
     }
 }
 

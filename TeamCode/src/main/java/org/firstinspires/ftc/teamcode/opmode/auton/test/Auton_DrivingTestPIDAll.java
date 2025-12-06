@@ -1,19 +1,20 @@
-package org.firstinspires.ftc.teamcode.opmode.test;
+package org.firstinspires.ftc.teamcode.opmode.auton.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.opmode.auton.AutonBaseOpMode;
 import org.firstinspires.ftc.teamcode.task.AutonTaskList;
-import org.firstinspires.ftc.teamcode.task.MoveToPose;
 import org.firstinspires.ftc.teamcode.task.MoveWithPIDTo;
 import org.firstinspires.ftc.teamcode.task.StartAt;
 import org.firstinspires.ftc.teamcode.task.Task;
 import org.firstinspires.ftc.teamcode.task.Wait;
 
 @Autonomous(name="Auton Driving Test - All w/ PID", group="Test")
+@Disabled
 public class Auton_DrivingTestPIDAll extends AutonBaseOpMode {
 
     private final ElapsedTime elapsedTime = new ElapsedTime();

@@ -77,9 +77,9 @@ public class AssistedShooterController {
         }
 
         if (operatorGamepad.bWasPressed()) {
-            velocityAdjustment += Constants.SHOOTER_VELOCITY_INCREMENT;
+            velocityAdjustment += Constants.SHOOTER_VELOCITY_INCREMENT / 2.0;
         } else if (operatorGamepad.xWasPressed()) {
-            velocityAdjustment -= Constants.SHOOTER_VELOCITY_INCREMENT;
+            velocityAdjustment -= Constants.SHOOTER_VELOCITY_INCREMENT / 2.0;
         }
 
         if (driverGamepad.dpadRightWasPressed()) {
@@ -137,6 +137,8 @@ public class AssistedShooterController {
         telemetry.addData("** HEADING ERROR", targetHeading - robotHeading);
 
         telemetry.addData("Distance to Target", distance);
+        telemetry.addData("Target X", targetX);
+        telemetry.addData("Target Y", targetY);
 
         //double currVelocity = shooter.getShooterVelocity();
         telemetry.addData("Rec'd velocity", recommendedVelocity);

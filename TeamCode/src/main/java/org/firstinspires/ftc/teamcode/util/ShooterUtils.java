@@ -19,6 +19,9 @@ public class ShooterUtils {
 
     public static double headingTowards(double x, double y, double targetX, double targetY) {
         double idealHeading = Math.toDegrees(Math.atan((targetY - y) / (targetX - x)));
-        return 66.67893 + (11.8287 - 66.67893)/(1 + Math.pow((idealHeading/42.95288),7.509604));
+        double sign = idealHeading > 0.0 ? 1.0 : -1.0;
+        idealHeading = Math.abs(idealHeading);
+        double absCorrectedHeading = 66.67893 + (11.8287 - 66.67893)/(1 + Math.pow((idealHeading/42.95288),7.509604));
+        return absCorrectedHeading * sign;
     }
 }
