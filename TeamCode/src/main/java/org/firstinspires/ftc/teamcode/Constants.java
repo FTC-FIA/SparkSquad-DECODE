@@ -4,8 +4,22 @@ import org.firstinspires.ftc.teamcode.util.Alliance;
 import org.firstinspires.ftc.teamcode.util.AlliancePose2D;
 
 public class Constants {
-    public static double LED_GREEN = 0.5;
+
+    public static final String FRONT_LEFT_DRIVE_MOTOR_NAME = "front_left";
+    public static final String FRONT_RIGHT_DRIVE_MOTOR_NAME = "front_right";
+    public static final String REAR_LEFT_DRIVE_MOTOR_NAME = "rear_left";
+    public static final String REAR_RIGHT_DRIVE_MOTOR_NAME = "rear_right";
+    public static final String SHOOTER_MOTOR_NAME = "shooter";
+    public static final String INTAKE_MOTOR_NAME = "intake";
+    public static final String KICKER_SERVO_NAME = "trigger"; // TODO: CHANGE TO KICKER
+    public static final String FEEDER_MOTOR_NAME = "feeder";
+    public static final String SHOOTER_LED_NAME = "shooter_led";
+    public static final String AIMER_LED_NAME = "aimer_led";
+
+    public static double LED_BLACK = 0.0;
     public static double LED_RED = 0.31;
+    public static double LED_GREEN = 0.5;
+    public static double LED_BLUE = 0.6; // no idea if this is right
 
     public static AlliancePose2D TARGET = new AlliancePose2D( 72.0, 72.0, 0.0, Alliance.BLUE);
 
@@ -41,26 +55,29 @@ public class Constants {
     public static final double ODOMETER_Y_OFFSET = 6.375; // in inches
 
     // Initial positions
-    public static AlliancePose2D I1 = new AlliancePose2D(16.125, -63.5, 90.0, Alliance.BLUE) ; // long
-    public static AlliancePose2D I3 = new AlliancePose2D(53.5, 51.5, 37.6, Alliance.BLUE); // close, at angle
-    //public static AlliancePose2D I3 = new AlliancePose2D(39.0, 63.25, 0.0, Alliance.BLUE); // close, square
+    public static AlliancePose2D LONG_START = new AlliancePose2D(16.125, -63.5, 90.0, Alliance.BLUE);
+    public static AlliancePose2D CLOSE_START = new AlliancePose2D(53.5, 51.5, 37.6, Alliance.BLUE);
 
-    // Shooting positions
-    public static AlliancePose2D S1 = new AlliancePose2D(16.125, -60.0, 66.0, Alliance.BLUE); // long
-    public static AlliancePose2D S3 = new AlliancePose2D(18.0, 18.0, 42.0, Alliance.BLUE); // close
+    // 6 ball shooting positions
+    public static AlliancePose2D LONG_SHOT = new AlliancePose2D(16.125, -60.0, 66.0, Alliance.BLUE);
+    public static AlliancePose2D CLOSE_SHOT = new AlliancePose2D(20.0, 20.0, 42.0, Alliance.BLUE);
+
+    // 9 ball shooting positions
+    public static AlliancePose2D CLOSE_SHOT_1 = new AlliancePose2D(24.0, 24.0, 42.0, Alliance.BLUE);
+    public static AlliancePose2D CLOSE_SHOT_2 = new AlliancePose2D(20.0, 20.0, 42.0, Alliance.BLUE);
+    public static AlliancePose2D CLOSE_SHOT_3 = new AlliancePose2D(16.0, 36.0, 29.6, Alliance.BLUE);
 
     // Intake start positions
-    public static AlliancePose2D IS1 = new AlliancePose2D(24.0, -38.0, 180.0, Alliance.BLUE); // GGP (farthest from goal)
-    public static AlliancePose2D IS2 = new AlliancePose2D(24.0, -10.0, 180.0, Alliance.BLUE);
-    public static AlliancePose2D IS3 = new AlliancePose2D(20.0, 14.0, 180.0, Alliance.BLUE); // PPG (closest 2 goal)
+    public static AlliancePose2D INTAKE_FAR_START = new AlliancePose2D(24.0, -38.0, 180.0, Alliance.BLUE); // GPP
+    public static AlliancePose2D INTAKE_MIDDLE_START = new AlliancePose2D(24.0, -8.0, 180.0, Alliance.BLUE); // PGP
+    public static AlliancePose2D INTAKE_CLOSE_START = new AlliancePose2D(20.0, 16.0, 180.0, Alliance.BLUE); // PPG
 
     // Intake end positions
-    public static AlliancePose2D IE1 = new AlliancePose2D(61.5, -38.0, 180.0, Alliance.BLUE); // GGP (farthest from goal)
-    public static AlliancePose2D IE2 = new AlliancePose2D(62.5, -10.0, 180.0, Alliance.BLUE);
-    public static AlliancePose2D IE3 = new AlliancePose2D(55.5, 14.0, 180.0, Alliance.BLUE); // PPG (closest 2 goal)
+    public static AlliancePose2D INTAKE_FAR_END = new AlliancePose2D(61.5, -38.0, 180.0, Alliance.BLUE); // GPP
+    public static AlliancePose2D INTAKE_MIDDLE_END = new AlliancePose2D(61.0, -8.0, 180.0, Alliance.BLUE); // PGP
+    public static AlliancePose2D INTAKE_CLOSE_END = new AlliancePose2D(54.0, 16.0, 180.0, Alliance.BLUE); // PPG
 
     // Ending positions
-    public static AlliancePose2D E1 = new AlliancePose2D(20.0, -36.0,  0.0, Alliance.BLUE); // long
-    public static AlliancePose2D E2 = new AlliancePose2D(12.0, -12.0, 0.0, Alliance.BLUE);
-    public static AlliancePose2D E3 = new AlliancePose2D(54.0, 30.0, 0.0, Alliance.BLUE); // close
+    public static AlliancePose2D LONG_PARK = new AlliancePose2D(20.0, -36.0,  0.0, Alliance.BLUE);
+    public static AlliancePose2D CLOSE_PARK = new AlliancePose2D(54.0, 30.0, 0.0, Alliance.BLUE);
 }

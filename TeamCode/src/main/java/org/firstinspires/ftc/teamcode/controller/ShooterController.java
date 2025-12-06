@@ -1,18 +1,12 @@
 package org.firstinspires.ftc.teamcode.controller;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.component.mechanism.Shooter;
-import org.firstinspires.ftc.teamcode.component.mechanism.Kicker;
-import org.firstinspires.ftc.teamcode.component.sensor.Odometer;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
-
-import javax.sql.ConnectionEventListener;
 
 public class ShooterController {
 
@@ -30,7 +24,7 @@ public class ShooterController {
         this.shooter = robot.getShooter();
         this.operatorGamepad = robot.getOperatorGamepad();
         this.telemetry = robot.getTelemetry();
-        this.shooterLed = robot.getShooterLed();
+        this.shooterLed = robot.getShooterLedServo();
     }
 
     public void handleInput() {

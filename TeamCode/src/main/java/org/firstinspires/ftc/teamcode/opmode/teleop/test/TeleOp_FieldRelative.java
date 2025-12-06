@@ -13,9 +13,9 @@ public class TeleOp_FieldRelative extends RobotBaseOpMode
 {
     protected Alliance color;
 
-    protected void setColor(Alliance color) {
-        this.color = color;
-    }
+//    protected void setColor(Alliance color) {
+//        this.color = color;
+//    }
 
     @Override
     public void init() {

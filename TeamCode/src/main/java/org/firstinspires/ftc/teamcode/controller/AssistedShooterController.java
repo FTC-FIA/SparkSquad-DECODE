@@ -48,8 +48,8 @@ public class AssistedShooterController {
         this.feeder = robot.getFeeder();
         this.kicker = robot.getKicker();
         this.telemetry = robot.getTelemetry();
-        this.shooterLed = robot.getShooterLed();
-        this.aimerLed = robot.getAimerLed();
+        this.shooterLed = robot.getShooterLedServo();
+        this.aimerLed = robot.getAimerLedServo();
         this.mecanumDrive = robot.getMecanumDrive();
         this.operatorGamepad = robot.getOperatorGamepad();
         this.driverGamepad = robot.getDriverGamepad();
@@ -92,7 +92,7 @@ public class AssistedShooterController {
         // display velocity accuracy
         double actualVelocity = shooter.getShooterVelocity();
         if ( Math.abs(actualVelocity - targetVelocity) <= Constants.SHOOTER_VELOCITY_INCREMENT ){
-            shooterLed.setPosition(Constants.LED_GREEN);
+            shooterLed.setPosition(Constants.LED_GREEN); // TODO: use LED component instead
         } else {
             shooterLed.setPosition(Constants.LED_RED);
         }
@@ -101,7 +101,7 @@ public class AssistedShooterController {
         // display heading accuracy
         double robotHeading = odometer.getHeading(AngleUnit.DEGREES);
         if (Math.abs(targetHeading - robotHeading) <= Constants.AIM_TOLERANCE) {
-            aimerLed.setPosition(Constants.LED_GREEN);
+            aimerLed.setPosition(Constants.LED_GREEN); // TODO: use LED component instead
         } else {
             aimerLed.setPosition(Constants.LED_RED);
         }

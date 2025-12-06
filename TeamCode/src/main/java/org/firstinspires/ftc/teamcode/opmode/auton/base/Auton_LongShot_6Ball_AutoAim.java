@@ -7,6 +7,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.opmode.auton.AutonBaseOpMode;
+import org.firstinspires.ftc.teamcode.task.Aim;
 import org.firstinspires.ftc.teamcode.task.AutonTaskList;
 import org.firstinspires.ftc.teamcode.task.MoveWithPIDTo;
 import org.firstinspires.ftc.teamcode.task.Shoot3;
@@ -21,7 +22,7 @@ import org.firstinspires.ftc.teamcode.task.Task;
 import org.firstinspires.ftc.teamcode.task.Wait;
 import org.firstinspires.ftc.teamcode.util.Alliance;
 
-public abstract class Auton_LongShot_6Ball extends AutonBaseOpMode {
+public abstract class Auton_LongShot_6Ball_AutoAim extends AutonBaseOpMode {
 
     private final ElapsedTime elapsedTime = new ElapsedTime();
     private Alliance color;
@@ -54,17 +55,20 @@ public abstract class Auton_LongShot_6Ball extends AutonBaseOpMode {
                     // move to shooting position
                     new MoveWithPIDTo(this, shootPose.getX(DU), shootPose.getY(DU), shootPose.getHeading(AU)),
 
-                    // wait for shooter to reach velocity
-                    new Wait(this, 2.0),
-
                     // shoot
+                    new Aim(this, 3.0, 0.0),
                     new Shoot3(this),
 
                     // start intake and keep it running
                     new StartIntake(this, 1.0),
 
                     // move to intake start position
-                    new MoveWithPIDTo(this, intake3StartPose.getX(DU), intake3StartPose.getY(DU), intake3StartPose.getHeading(AU)),
+                    new MoveWithPIDTo(
+                            this,
+                            intake3StartPose.getX(DU),
+                            intake3StartPose.getY(DU),
+                            intake3StartPose.getHeading(AU)
+                    ),
 
                     // start feeder to help with intake
                     new StartFeeder(this),
@@ -77,16 +81,20 @@ public abstract class Auton_LongShot_6Ball extends AutonBaseOpMode {
                             0.5
                     ),
 
-
-
-
                     // stop feeder so we don't shoot to early
+                    new Wait(this, 0.5),
                     new StopFeeder(this),
 
                     // return to shoot position
-                    new MoveWithPIDTo(this, shootPose.getX(DU), shootPose.getY(DU), shootPose.getHeading(AU)),
+                    new MoveWithPIDTo(
+                            this,
+                            shootPose.getX(DU),
+                            shootPose.getY(DU),
+                            shootPose.getHeading(AU)
+                    ),
 
                     // shoot
+                    new Aim(this, 3.0, 0.0),
                     new Shoot3(this),
 
                     // get to end position

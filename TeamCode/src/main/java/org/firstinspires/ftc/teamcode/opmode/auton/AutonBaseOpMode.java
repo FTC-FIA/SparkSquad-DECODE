@@ -20,6 +20,7 @@ public abstract class AutonBaseOpMode extends RobotBaseOpMode {
         telemetry.addData("X", odometer.getX(DistanceUnit.INCH));
         telemetry.addData("Y", odometer.getY(DistanceUnit.INCH));
         telemetry.addData("H", odometer.getHeading(AngleUnit.DEGREES));
+        telemetry.addData("Alliance", alliance);
         telemetry.update();
     }
 }

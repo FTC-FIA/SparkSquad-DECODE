@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.controller;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -36,7 +35,7 @@ public class ShooterTestController {
         this.shooter = robot.getShooter();
         this.operatorGamepad = robot.getOperatorGamepad();
         this.telemetry = robot.getTelemetry();
-        this.shooterLed = robot.getShooterLed();
+        this.shooterLed = robot.getShooterLedServo();
         this.shooterMotor = robot.getShooterMotor();
         this.updatePID();
     }

@@ -15,9 +15,9 @@ public abstract class TeleOp_AutoVelocity extends RobotBaseOpMode
     protected Limelight3A limelight;
     protected Alliance color;
 
-    protected void setColor(Alliance color) {
-        this.color = color;
-    }
+//    protected void setColor(Alliance color) {
+//        this.color = color;
+//    }
 
     @Override
     public void init() {

@@ -31,18 +31,18 @@ public abstract class Auton_LongShot_Intake3 extends AutonBaseOpMode {
     private static DistanceUnit DU = DistanceUnit.INCH;
     private static AngleUnit AU = AngleUnit.DEGREES;
 
-    protected void setColor( Alliance color ) {
-        this.color = color;
-    }
+//    protected void setColor( Alliance color ) {
+//        this.color = color;
+//    }
 
     public void init() {
         super.init();
 
-        Pose2D startPose = Constants.I1.forAlliance(color);
-        Pose2D shootPose = Constants.S1.forAlliance(color);
-        Pose2D endPose = Constants.E1.forAlliance(color);
-        Pose2D intake3StartPose = Constants.IS1.forAlliance(color);
-        Pose2D intake3EndPose = Constants.IE1.forAlliance(color);
+        Pose2D startPose = Constants.LONG_START.forAlliance(color);
+        Pose2D shootPose = Constants.LONG_SHOT.forAlliance(color);
+        Pose2D endPose = Constants.LONG_PARK.forAlliance(color);
+        Pose2D intake3StartPose = Constants.INTAKE_FAR_START.forAlliance(color);
+        Pose2D intake3EndPose = Constants.INTAKE_FAR_END.forAlliance(color);
 
         this.autonTaskList = new AutonTaskList(
             this,

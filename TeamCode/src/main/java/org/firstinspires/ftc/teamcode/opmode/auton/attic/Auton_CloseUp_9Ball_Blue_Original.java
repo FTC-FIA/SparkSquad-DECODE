@@ -1,14 +1,13 @@
-package org.firstinspires.ftc.teamcode.opmode.auton.blue;
+package org.firstinspires.ftc.teamcode.opmode.auton.attic;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.teamcode.opmode.auton.attic.Auton_CloseUp_I3S3E3;
 import org.firstinspires.ftc.teamcode.util.Alliance;
 
-@Autonomous(name="Blue Close 3 Ball", group="Main")
+@Autonomous(name="Blue Close 9Ball", group="Main")
 @Disabled
-public class Auton_CloseUp_I3S3E3_Blue extends Auton_CloseUp_I3S3E3 {
+public class Auton_CloseUp_9Ball_Blue_Original extends Auton_CloseUp_9Ball_Original {
 
     public void init() {
         setColor(Alliance.BLUE);

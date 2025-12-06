@@ -1,9 +1,8 @@
-package org.firstinspires.ftc.teamcode.opmode.auton.red;
+package org.firstinspires.ftc.teamcode.opmode.auton.attic;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.teamcode.opmode.auton.attic.Auton_LongShot_I1S1E1;
 import org.firstinspires.ftc.teamcode.util.Alliance;
 
 @Autonomous(name="Red Long 3 Ball", group="Main")

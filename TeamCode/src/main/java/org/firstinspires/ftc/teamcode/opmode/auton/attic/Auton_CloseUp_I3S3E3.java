@@ -29,15 +29,15 @@ public abstract class Auton_CloseUp_I3S3E3 extends AutonBaseOpMode {
     private static DistanceUnit DU = DistanceUnit.INCH;
     private static AngleUnit AU = AngleUnit.DEGREES;
 
-    protected void setColor( Alliance color ) {
-        this.color = color;
-    }
+//    protected void setColor( Alliance color ) {
+//        this.color = color;
+//    }
 
     public void init() {
         super.init();
-        Pose2D startPose = Constants.I3.forAlliance(color);
-        Pose2D shootPose = Constants.S3.forAlliance(color);
-        Pose2D endPose = Constants.E3.forAlliance(color);
+        Pose2D startPose = Constants.CLOSE_START.forAlliance(color);
+        Pose2D shootPose = Constants.CLOSE_SHOT.forAlliance(color);
+        Pose2D endPose = Constants.CLOSE_PARK.forAlliance(color);
 
         this.autonTaskList = new AutonTaskList(
             this,
