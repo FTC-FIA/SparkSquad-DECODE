@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
+import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -21,12 +22,14 @@ import org.firstinspires.ftc.teamcode.component.mechanism.Intake;
 import org.firstinspires.ftc.teamcode.component.mechanism.LED;
 import org.firstinspires.ftc.teamcode.component.mechanism.Shooter;
 import org.firstinspires.ftc.teamcode.component.mechanism.Kicker;
+import org.firstinspires.ftc.teamcode.component.sensor.Limelight;
 import org.firstinspires.ftc.teamcode.component.sensor.Odometer;
 import org.firstinspires.ftc.teamcode.controller.AssistedShooterController;
 import org.firstinspires.ftc.teamcode.controller.FieldRelativeDriveController;
 import org.firstinspires.ftc.teamcode.controller.FeederController;
 import org.firstinspires.ftc.teamcode.controller.IntakeController;
 import org.firstinspires.ftc.teamcode.controller.KickerController;
+import org.firstinspires.ftc.teamcode.controller.LimelightOdometerController;
 import org.firstinspires.ftc.teamcode.controller.RobotRelativeDriveController;
 import org.firstinspires.ftc.teamcode.controller.ShooterController;
 import org.firstinspires.ftc.teamcode.util.Alliance;
@@ -49,9 +52,12 @@ public abstract class RobotBaseOpMode extends OpMode
 
     protected CRServo kickerCRServo = null;
     protected DcMotorEx feederMotor = null;
+
+    protected GoBildaPinpointDriver pinpointDriver = null;
+    protected Limelight3A limelight3A = null;
+
     protected Servo shooterLedServo = null;
     protected Servo aimerLedServo = null;
-    protected GoBildaPinpointDriver pinpointDriver = null;
 
     // components
     protected MecanumDrive mecanumDrive = null;
@@ -61,6 +67,7 @@ public abstract class RobotBaseOpMode extends OpMode
     protected Kicker kicker = null;
     protected Feeder feeder = null;
     protected Odometer odometer = null;
+    protected Limelight limelight = null;
     protected LED shooterLed = null;
     protected LED aimerLed = null;
 
@@ -72,6 +79,7 @@ public abstract class RobotBaseOpMode extends OpMode
     protected IntakeController intakeController = null;
     protected FieldRelativeDriveController fieldRelativeDriveController = null;
     protected RobotRelativeDriveController robotRelativeDriveController = null;
+    protected LimelightOdometerController limelightOdometerController = null;
 
     // util
     protected SparkLogger logger = SparkLogger.getLogger();
@@ -90,6 +98,7 @@ public abstract class RobotBaseOpMode extends OpMode
         feederMotor = hardwareMap.get(DcMotorEx.class, Constants.FEEDER_MOTOR_NAME);
         intakeMotor = hardwareMap.get(DcMotor.class, Constants.INTAKE_MOTOR_NAME);
         pinpointDriver = hardwareMap.get(GoBildaPinpointDriver.class, "odo");
+        limelight3A = hardwareMap.get(Limelight3A.class, "limelight");
         shooterLedServo = hardwareMap.get(Servo.class, Constants.SHOOTER_LED_NAME);
         aimerLedServo = hardwareMap.get(Servo.class, Constants.AIMER_LED_NAME);
 
@@ -133,6 +142,7 @@ public abstract class RobotBaseOpMode extends OpMode
 
         // Initialize components
         odometer = new Odometer(pinpointDriver);
+        limelight = new Limelight(limelight3A, alliance);
         mecanumDrive = new MecanumDrive(frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor);
         fieldRelativeDrive = new FieldRelativeDrive(
                 frontLeftMotor,
@@ -155,6 +165,7 @@ public abstract class RobotBaseOpMode extends OpMode
         intakeController = new IntakeController(this);
         fieldRelativeDriveController = new FieldRelativeDriveController(this);
         robotRelativeDriveController = new RobotRelativeDriveController(this);
+
 
         // Log status
         telemetry.addData("Status", "Robot Base Initialized");
@@ -210,6 +221,10 @@ public abstract class RobotBaseOpMode extends OpMode
         return pinpointDriver;
     }
 
+    public Limelight3A getLimelight3A() { return limelight3A; }
+
+    public Limelight getLimelight() { return limelight; }
+
     public Odometer getOdometer() {
         return odometer;
     }
@@ -259,6 +274,10 @@ public abstract class RobotBaseOpMode extends OpMode
     }
 
     public ShooterController getShooterController() { return shooterController; }
+
+    public LimelightOdometerController getLimelightOdometerController() {
+        return limelightOdometerController;
+    }
 
     public Telemetry getTelemetry() {
         return telemetry;

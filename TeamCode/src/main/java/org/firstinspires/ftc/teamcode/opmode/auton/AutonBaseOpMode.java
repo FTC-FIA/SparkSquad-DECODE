@@ -15,6 +15,7 @@ public abstract class AutonBaseOpMode extends RobotBaseOpMode {
     public void loop() {
         telemetry.addData("Elapsed time (ms)", elapsedTime.seconds());
 
+        limelightOdometerController.handleInput(); //TODO: rethink this pattern
         autonTaskList.execute();
 
         telemetry.addData("X", odometer.getX(DistanceUnit.INCH));

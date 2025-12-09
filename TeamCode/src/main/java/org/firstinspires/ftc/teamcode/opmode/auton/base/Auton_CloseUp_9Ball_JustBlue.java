@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.auton.base;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -20,8 +21,10 @@ import org.firstinspires.ftc.teamcode.task.StopIntake;
 import org.firstinspires.ftc.teamcode.task.StopShooter;
 import org.firstinspires.ftc.teamcode.task.Task;
 import org.firstinspires.ftc.teamcode.task.Wait;
+import org.firstinspires.ftc.teamcode.util.Alliance;
 
-public abstract class Auton_CloseUp_9Ball_AutoAim extends AutonBaseOpMode {
+@Autonomous(name="Blue Close (JustBlue)", group="Main")
+public class Auton_CloseUp_9Ball_JustBlue extends AutonBaseOpMode {
 
     private final ElapsedTime elapsedTime = new ElapsedTime();
 
@@ -30,6 +33,7 @@ public abstract class Auton_CloseUp_9Ball_AutoAim extends AutonBaseOpMode {
 
     @Override
     public void init() {
+        setAlliance(Alliance.BLUE);
         super.init();
 
         Pose2D startPose = Constants.CLOSE_START_BLUE.forAlliance(alliance);
@@ -42,8 +46,6 @@ public abstract class Auton_CloseUp_9Ball_AutoAim extends AutonBaseOpMode {
         Pose2D intake1EndPose = Constants.INTAKE_CLOSE_END_BLUE.forAlliance(alliance);
         Pose2D intake2StartPose = Constants.INTAKE_MIDDLE_START_BLUE.forAlliance(alliance);
         Pose2D intake2EndPose = Constants.INTAKE_MIDDLE_END_BLUE.forAlliance(alliance);
-
-        Pose2D endPose = Constants.CLOSE_PARK_BLUE.forAlliance(alliance);
 
         this.autonTaskList = new AutonTaskList(
             this,
@@ -69,7 +71,7 @@ public abstract class Auton_CloseUp_9Ball_AutoAim extends AutonBaseOpMode {
                     ),
 
                     // shoot #1
-                    new Aim(this, 4.0, -30.0),
+                    new Aim(this, 1.0, -30.0),
                     new Shoot3(this),
 
                     // start intake and keep it running
@@ -130,7 +132,7 @@ public abstract class Auton_CloseUp_9Ball_AutoAim extends AutonBaseOpMode {
                             intake2EndPose.getX(DU),
                             intake2EndPose.getY(DU),
                             intake2EndPose.getHeading(AU),
-                            0.4
+                            0.45
                     ),
 
                     // pause to inhale last ball, stop feeder so we don't shoot to early

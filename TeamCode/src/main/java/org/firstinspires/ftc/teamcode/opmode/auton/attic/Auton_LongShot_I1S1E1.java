@@ -36,9 +36,9 @@ public abstract class Auton_LongShot_I1S1E1 extends AutonBaseOpMode {
     public void init() {
         super.init();
 
-        Pose2D startPose = Constants.LONG_START.forAlliance(color);
-        Pose2D shootPose = Constants.LONG_SHOT.forAlliance(color);
-        Pose2D endPose = Constants.LONG_PARK.forAlliance(color);
+        Pose2D startPose = Constants.LONG_START_BLUE.forAlliance(color);
+        Pose2D shootPose = Constants.LONG_SHOT_BLUE.forAlliance(color);
+        Pose2D endPose = Constants.LONG_PARK_BLUE.forAlliance(color);
 
         this.autonTaskList = new AutonTaskList(
             this,

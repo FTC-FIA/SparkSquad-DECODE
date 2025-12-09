@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.auton.base;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -20,19 +21,18 @@ import org.firstinspires.ftc.teamcode.task.StopIntake;
 import org.firstinspires.ftc.teamcode.task.StopShooter;
 import org.firstinspires.ftc.teamcode.task.Task;
 import org.firstinspires.ftc.teamcode.task.Wait;
+import org.firstinspires.ftc.teamcode.util.Alliance;
 
-public abstract class Auton_LongShot_6Ball_AutoAim extends AutonBaseOpMode {
+@Autonomous(name="Red Long (JustRed)", group="Main")
+public class Auton_LongShot_6Ball_JustRed extends AutonBaseOpMode {
 
     private final ElapsedTime elapsedTime = new ElapsedTime();
 
     private static DistanceUnit DU = DistanceUnit.INCH;
     private static AngleUnit AU = AngleUnit.DEGREES;
 
-//    protected void setColor( Alliance color ) {
-//        this.color = color;
-//    }
-
     public void init() {
+        setAlliance(Alliance.RED);
         super.init();
 
         Pose2D startPose = Constants.LONG_START_RED.forAlliance(alliance);
@@ -100,7 +100,7 @@ public abstract class Auton_LongShot_6Ball_AutoAim extends AutonBaseOpMode {
                     ),
 
                     // shoot
-                    new Aim(this, 5.0, 10.0),
+                    new Aim(this, 0.0, 10.0),
                     new Shoot3(this),
 
                     // get to end position
