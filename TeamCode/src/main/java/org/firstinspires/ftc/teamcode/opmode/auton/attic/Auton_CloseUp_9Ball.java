@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auton.base;
+package org.firstinspires.ftc.teamcode.opmode.auton.attic;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -7,7 +7,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.opmode.auton.AutonBaseOpMode;
-import org.firstinspires.ftc.teamcode.task.Aim;
 import org.firstinspires.ftc.teamcode.task.AutonTaskList;
 import org.firstinspires.ftc.teamcode.task.MoveWithPIDTo;
 import org.firstinspires.ftc.teamcode.task.Shoot3;
@@ -20,31 +19,33 @@ import org.firstinspires.ftc.teamcode.task.StopIntake;
 import org.firstinspires.ftc.teamcode.task.StopShooter;
 import org.firstinspires.ftc.teamcode.task.Task;
 import org.firstinspires.ftc.teamcode.task.Wait;
-import org.firstinspires.ftc.teamcode.util.Alliance;
 
-public abstract class Auton_CloseUp_9Ball_AutoAim extends AutonBaseOpMode {
+public abstract class Auton_CloseUp_9Ball extends AutonBaseOpMode {
 
     private final ElapsedTime elapsedTime = new ElapsedTime();
 
     private static DistanceUnit DU = DistanceUnit.INCH;
     private static AngleUnit AU = AngleUnit.DEGREES;
 
-    @Override
+//    protected void setColor( Alliance color ) {
+//        this.color = color;
+//    }
+
     public void init() {
         super.init();
 
-        Pose2D startPose = Constants.CLOSE_START.forAlliance(alliance);
+        Pose2D startPose = Constants.CLOSE_START_BLUE.forAlliance(alliance);
 
-        Pose2D shootPose1 = Constants.CLOSE_SHOT_1.forAlliance(alliance);
-        Pose2D shootPose2 = Constants.CLOSE_SHOT_2.forAlliance(alliance);
-        Pose2D shootPose3 = Constants.CLOSE_SHOT_3.forAlliance(alliance);
+        Pose2D shootPose1 = Constants.CLOSE_SHOT_1_BLUE.forAlliance(alliance);
+        Pose2D shootPose2 = Constants.CLOSE_SHOT_2_BLUE.forAlliance(alliance);
+        Pose2D shootPose3 = Constants.CLOSE_SHOT_3_BLUE.forAlliance(alliance);
 
-        Pose2D intake1StartPose = Constants.INTAKE_CLOSE_START.forAlliance(alliance);
-        Pose2D intake1EndPose = Constants.INTAKE_CLOSE_END.forAlliance(alliance);
-        Pose2D intake2StartPose = Constants.INTAKE_MIDDLE_START.forAlliance(alliance);
-        Pose2D intake2EndPose = Constants.INTAKE_MIDDLE_END.forAlliance(alliance);
+        Pose2D intake1StartPose = Constants.INTAKE_CLOSE_START_BLUE.forAlliance(alliance);
+        Pose2D intake1EndPose = Constants.INTAKE_CLOSE_END_BLUE.forAlliance(alliance);
+        Pose2D intake2StartPose = Constants.INTAKE_MIDDLE_START_BLUE.forAlliance(alliance);
+        Pose2D intake2EndPose = Constants.INTAKE_MIDDLE_END_BLUE.forAlliance(alliance);
 
-        Pose2D endPose = Constants.CLOSE_PARK.forAlliance(alliance);
+        Pose2D endPose = Constants.CLOSE_PARK_BLUE.forAlliance(alliance);
 
         this.autonTaskList = new AutonTaskList(
             this,
@@ -69,8 +70,10 @@ public abstract class Auton_CloseUp_9Ball_AutoAim extends AutonBaseOpMode {
                             0.6
                     ),
 
+                    // wait for shooter to hit velocity
+                    new Wait(this, 1.0),
+
                     // shoot #1
-                    new Aim(this, 0.0, -30.0),
                     new Shoot3(this),
 
                     // start intake and keep it running
@@ -96,9 +99,11 @@ public abstract class Auton_CloseUp_9Ball_AutoAim extends AutonBaseOpMode {
                             0.5
                     ),
 
-                    // pause to inhale last ball, stop feeder so we don't shoot to early
-                    new Wait(this, 1.5),
+                    // stop feeder so we don't shoot to early
                     new StopFeeder(this),
+
+                    // pause to let intake grab the last ball
+                    new Wait(this, 0.33),
 
                     // go to 2nd shoot position
                     new MoveWithPIDTo(
@@ -109,7 +114,6 @@ public abstract class Auton_CloseUp_9Ball_AutoAim extends AutonBaseOpMode {
                     ),
 
                     // shoot #2
-                    new Aim(this, 2.0, -20.0),
                     new Shoot3(this),
 
                     // start intake and keep it running
@@ -134,9 +138,9 @@ public abstract class Auton_CloseUp_9Ball_AutoAim extends AutonBaseOpMode {
                             0.5
                     ),
 
-                    // pause to inhale last ball, stop feeder so we don't shoot to early
-                    new Wait(this, 0.8),
+                    // stop feeder so we don't shoot to early
                     new StopFeeder(this),
+                    new Wait(this, 0.33),
 
                     // return to shoot position
                     new MoveWithPIDTo(
@@ -147,7 +151,6 @@ public abstract class Auton_CloseUp_9Ball_AutoAim extends AutonBaseOpMode {
                     ),
 
                     // shoot
-                    new Aim(this, 8.0, -30.0),
                     new Shoot3(this),
 
                     // Just stay put. No need to move to an end position

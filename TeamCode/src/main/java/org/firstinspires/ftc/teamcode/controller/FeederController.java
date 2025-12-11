@@ -49,6 +49,6 @@ public class FeederController {
         }
         feeder.setPower(fPower);
 
-        telemetry.addData("Feeder speed", String.format(Locale.US, "%.1f", forwardSpeed));
+        //telemetry.addData("Feeder speed", String.format(Locale.US, "%.1f", forwardSpeed));
     }
 }

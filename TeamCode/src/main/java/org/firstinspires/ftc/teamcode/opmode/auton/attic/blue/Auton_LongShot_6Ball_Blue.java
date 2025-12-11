@@ -1,9 +1,9 @@
-package org.firstinspires.ftc.teamcode.opmode.auton.blue;
+package org.firstinspires.ftc.teamcode.opmode.auton.attic.blue;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.teamcode.opmode.auton.base.Auton_LongShot_6Ball;
+import org.firstinspires.ftc.teamcode.opmode.auton.attic.Auton_LongShot_6Ball;
 import org.firstinspires.ftc.teamcode.util.Alliance;
 
 @Autonomous(name="Blue Long (Old)", group="Main")

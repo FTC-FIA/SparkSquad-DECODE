@@ -38,11 +38,11 @@ public abstract class Auton_LongShot_Intake3 extends AutonBaseOpMode {
     public void init() {
         super.init();
 
-        Pose2D startPose = Constants.LONG_START.forAlliance(color);
-        Pose2D shootPose = Constants.LONG_SHOT.forAlliance(color);
-        Pose2D endPose = Constants.LONG_PARK.forAlliance(color);
-        Pose2D intake3StartPose = Constants.INTAKE_FAR_START.forAlliance(color);
-        Pose2D intake3EndPose = Constants.INTAKE_FAR_END.forAlliance(color);
+        Pose2D startPose = Constants.LONG_START_BLUE.forAlliance(color);
+        Pose2D shootPose = Constants.LONG_SHOT_BLUE.forAlliance(color);
+        Pose2D endPose = Constants.LONG_PARK_BLUE.forAlliance(color);
+        Pose2D intake3StartPose = Constants.INTAKE_FAR_START_BLUE.forAlliance(color);
+        Pose2D intake3EndPose = Constants.INTAKE_FAR_END_BLUE.forAlliance(color);
 
         this.autonTaskList = new AutonTaskList(
             this,

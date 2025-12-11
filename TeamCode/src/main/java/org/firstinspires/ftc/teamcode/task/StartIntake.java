@@ -6,7 +6,6 @@ import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 
 public class StartIntake implements Task {
 
-
     private final double intakeSpeed;
     private final Intake intake;
 

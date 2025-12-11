@@ -83,9 +83,5 @@ public class RobotRelativeDriveController {
         telemetry.addData("X", odometer.getX(DistanceUnit.INCH));
         telemetry.addData("Y", odometer.getY(DistanceUnit.INCH));
         telemetry.addData("H", odometer.getHeading(AngleUnit.DEGREES));
-        telemetry.addData("FL power", frontLeftMotor.getPower());
-        telemetry.addData("FR power", frontRightMotor.getPower());
-        telemetry.addData("RL power", rearLeftMotor.getPower());
-        telemetry.addData("RR power", rearRightMotor.getPower());
     }
 }

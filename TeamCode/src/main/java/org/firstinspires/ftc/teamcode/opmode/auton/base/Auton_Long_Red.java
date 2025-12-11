@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.auton.base;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -22,26 +23,23 @@ import org.firstinspires.ftc.teamcode.task.Task;
 import org.firstinspires.ftc.teamcode.task.Wait;
 import org.firstinspires.ftc.teamcode.util.Alliance;
 
-public abstract class Auton_LongShot_6Ball_AutoAim extends AutonBaseOpMode {
+@Autonomous(name="RED - LONG", group="Main")
+public class Auton_Long_Red extends AutonBaseOpMode {
 
     private final ElapsedTime elapsedTime = new ElapsedTime();
-    private Alliance color;
 
     private static DistanceUnit DU = DistanceUnit.INCH;
     private static AngleUnit AU = AngleUnit.DEGREES;
 
-//    protected void setColor( Alliance color ) {
-//        this.color = color;
-//    }
-
     public void init() {
+        setAlliance(Alliance.RED);
         super.init();
 
-        Pose2D startPose = Constants.LONG_START.forAlliance(color);
-        Pose2D shootPose = Constants.LONG_SHOT.forAlliance(color);
-        Pose2D endPose = Constants.LONG_PARK.forAlliance(color);
-        Pose2D intake3StartPose = Constants.INTAKE_FAR_START.forAlliance(color);
-        Pose2D intake3EndPose = Constants.INTAKE_FAR_END.forAlliance(color);
+        Pose2D startPose = Constants.LONG_START_RED.forAlliance(alliance);
+        Pose2D shootPose = Constants.LONG_SHOT_RED.forAlliance(alliance);
+        Pose2D endPose = Constants.LONG_PARK_RED.forAlliance(alliance);
+        Pose2D intake3StartPose = Constants.INTAKE_FAR_START_RED.forAlliance(alliance);
+        Pose2D intake3EndPose = Constants.INTAKE_FAR_END_RED.forAlliance(alliance);
 
         this.autonTaskList = new AutonTaskList(
             this,
@@ -53,10 +51,16 @@ public abstract class Auton_LongShot_6Ball_AutoAim extends AutonBaseOpMode {
                     new StartShooterWithVelocity(this, Constants.LONGSHOT_SHOOTER_VELOCITY),
 
                     // move to shooting position
-                    new MoveWithPIDTo(this, shootPose.getX(DU), shootPose.getY(DU), shootPose.getHeading(AU)),
+                    new MoveWithPIDTo(
+                            this,
+                            shootPose.getX(DU),
+                            shootPose.getY(DU),
+                            shootPose.getHeading(AU)
+                    ),
 
                     // shoot
-                    new Aim(this, 3.0, 0.0),
+                    new Aim(this, 7.0, -8.0), // aim correction is inverted
+                    new Wait(this, 1.0),
                     new Shoot3(this),
 
                     // start intake and keep it running
@@ -67,22 +71,24 @@ public abstract class Auton_LongShot_6Ball_AutoAim extends AutonBaseOpMode {
                             this,
                             intake3StartPose.getX(DU),
                             intake3StartPose.getY(DU),
-                            intake3StartPose.getHeading(AU)
+                            intake3StartPose.getHeading(AU),
+                            0.5
                     ),
 
                     // start feeder to help with intake
-                    new StartFeeder(this),
+                    new StartFeeder(this, 0.6),
 
                     // move to intake end position
                     new MoveWithPIDTo(this,
                             intake3EndPose.getX(DU),
                             intake3EndPose.getY(DU),
                             intake3EndPose.getHeading(AU),
-                            0.5
+                            0.4,
+                            3.0
                     ),
 
                     // stop feeder so we don't shoot to early
-                    new Wait(this, 0.5),
+                    new Wait(this, 0.2),
                     new StopFeeder(this),
 
                     // return to shoot position
@@ -90,11 +96,13 @@ public abstract class Auton_LongShot_6Ball_AutoAim extends AutonBaseOpMode {
                             this,
                             shootPose.getX(DU),
                             shootPose.getY(DU),
-                            shootPose.getHeading(AU)
+                            shootPose.getHeading(AU),
+                            0.6
                     ),
 
                     // shoot
-                    new Aim(this, 3.0, 0.0),
+                    new Aim(this, 5.0, 5.0), // aim correction is inverted
+                    new Wait(this, 0.5),
                     new Shoot3(this),
 
                     // get to end position

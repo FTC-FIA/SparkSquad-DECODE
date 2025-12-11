@@ -35,9 +35,9 @@ public abstract class Auton_CloseUp_I3S3E3 extends AutonBaseOpMode {
 
     public void init() {
         super.init();
-        Pose2D startPose = Constants.CLOSE_START.forAlliance(color);
-        Pose2D shootPose = Constants.CLOSE_SHOT.forAlliance(color);
-        Pose2D endPose = Constants.CLOSE_PARK.forAlliance(color);
+        Pose2D startPose = Constants.CLOSE_START_BLUE.forAlliance(color);
+        Pose2D shootPose = Constants.CLOSE_SHOT_BLUE.forAlliance(color);
+        Pose2D endPose = Constants.CLOSE_PARK_BLUE.forAlliance(color);
 
         this.autonTaskList = new AutonTaskList(
             this,

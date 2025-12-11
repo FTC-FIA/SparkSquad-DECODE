@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.task;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -19,7 +20,7 @@ public class MoveWithPIDTo implements Task {
 
     private static final double MIN_DRIVE_POWER = 0.2;
     private static final double MAX_DRIVE_POWER = 0.7;
-    private static final double MIN_ROTATE_POWER = 0.1;
+    private static final double MIN_ROTATE_POWER = 0.2;
     private static final double MAX_ROTATE_POWER = 0.7;
 
     // error range [-72, 72]; practical range -36, 36
@@ -45,6 +46,7 @@ public class MoveWithPIDTo implements Task {
     private final PIDController rotatePID = new PIDController(rotate_kP, rotate_kI, rotate_kD);
 
     private double speedScale = 1.0;
+    private double timeoutInSeconds = 10.0;
 
     private final Telemetry telemetry;
     private final FtcDashboard dashboard;
@@ -52,6 +54,8 @@ public class MoveWithPIDTo implements Task {
     private final Odometer odometer;
 
     private final SparkLogger logger = SparkLogger.getLogger();
+    private final ElapsedTime timer = new ElapsedTime();
+    private boolean timerWasStarted = false;
 
     private final Pose2D targetPose;
 
@@ -60,13 +64,15 @@ public class MoveWithPIDTo implements Task {
             double targetXInches,
             double targetYInches,
             double targetHDegrees,
-            double speedScale
+            double speedScale,
+            double timeoutInSeconds
     ) {
         this.drive = robot.getFieldRelativeDrive();;
         this.odometer = robot.getOdometer();
         this.telemetry = robot.getTelemetry();
         this.dashboard = robot.getDashboard();
         this.speedScale = speedScale;
+        this.timeoutInSeconds = timeoutInSeconds;
 
         this.targetPose = new Pose2D(
                 DistanceUnit.INCH,
@@ -81,10 +87,20 @@ public class MoveWithPIDTo implements Task {
             RobotBaseOpMode robot,
             double targetXInches,
             double targetYInches,
+            double targetHDegrees,
+            double speedScale
+    ) {
+        this(robot, targetXInches, targetYInches, targetHDegrees, speedScale, 10.0);
+    }
+    public MoveWithPIDTo(
+            RobotBaseOpMode robot,
+            double targetXInches,
+            double targetYInches,
             double targetHDegrees
     ) {
-        this(robot, targetXInches, targetYInches, targetHDegrees, 1.0);
+        this(robot, targetXInches, targetYInches, targetHDegrees, 1.0, 10.0);
     }
+
     /**
      * Keep motor power within min max range
      * @param power the requested power
@@ -99,6 +115,10 @@ public class MoveWithPIDTo implements Task {
 
     public boolean execute() {
 
+        if (!timerWasStarted) {
+            timer.reset();
+            timerWasStarted = true;
+        }
         odometer.update();
 
         double forward;
@@ -182,11 +202,13 @@ public class MoveWithPIDTo implements Task {
 
         logger.log(String.format(Locale.US, "errorX %.2f, errorY %.2f, errorH %.2f", errorX, errorY, errorH));
 
-        // if any errors are > tolerance, keep going
-        return (
-                Math.abs(errorX) > toleranceX
-                || Math.abs(errorY) > toleranceY
-                || Math.abs(errorH) > toleranceH
-        );
+        boolean timeExpired = timer.seconds() > timeoutInSeconds;
+        boolean targetWasReached =
+                Math.abs(errorX) < toleranceX
+                && Math.abs(errorY) < toleranceY
+                && Math.abs(errorH) < toleranceH;
+
+        // keep going if target reached
+        return ( !timeExpired && !targetWasReached );
     }
 }

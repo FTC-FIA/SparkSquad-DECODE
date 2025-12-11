@@ -2,29 +2,150 @@ package org.firstinspires.ftc.teamcode.component.sensor;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.LastKnown;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
+import org.firstinspires.ftc.teamcode.util.Alliance;
+import org.firstinspires.ftc.teamcode.util.PIDController;
+import org.firstinspires.ftc.teamcode.util.Units;
 
 public class Limelight {
     protected Limelight3A limelight;
+    protected LLResult latestResult = null;
+    protected Alliance alliance = Alliance.UNDEFINED;
+    protected ElapsedTime timer = new ElapsedTime();
 
-    public Limelight(Limelight3A limelight) {
+    protected Telemetry telemetry;
+
+    protected double lastResultTimeMS = 0;
+    private static final int STALENESS_THRESHOLD = 100; // ms
+
+    public static final int ALL_TAG_PIPELINE = 0;
+    public static final int BLUE_TAG_PIPELINE = 1;
+    public static final int RED_TAG_PIPELINE = 2;
+    public static final int BASEMENT_BLUE_PIPELINE = 3;
+
+    public Limelight(Limelight3A limelight, Alliance alliance, Telemetry telemetry) {
         this.limelight = limelight;
+        this.alliance = alliance;
+        this.telemetry = telemetry;
+        int pipeline = alliance == Alliance.BLUE ? BLUE_TAG_PIPELINE : RED_TAG_PIPELINE;
+        this.limelight.pipelineSwitch(pipeline);
+        timer.reset();
     }
 
-//    public Pose2D getRobotPose() {
-//        LLResult result = limelight.getLatestResult();
-//        Pose3D pose3D = result.getBotpose();
-//        Position pos = pose3D.getPosition();
-//        YawPitchRollAngles angles = pose3D.getOrientation();
-//        double x = pos.x;
-//        double y = pos.y;
-//        double h = 0.0;
-//
-//
-//    }
+    public void start() {
+        limelight.start();
+    }
+
+    private void updateResult() {
+        double now = timer.milliseconds();
+        boolean isStale = (now - lastResultTimeMS) > STALENESS_THRESHOLD;
+        if (isStale) {
+            latestResult = limelight.getLatestResult();
+            lastResultTimeMS = now;
+        }
+        telemetry.addData("LL result is stale?", isStale);
+        telemetry.addData("last result ms", lastResultTimeMS);
+        telemetry.addData("Timer value", now);
+
+    }
+
+    private boolean prepareAndCheck() {
+        telemetry.addData("LL.alliance", this.alliance);
+        telemetry.addData("LL.latestResult is null?", this.latestResult == null);
+
+        if (this.alliance == Alliance.UNDEFINED || this.limelight == null) {
+            return false;
+        }
+
+        updateResult();
+
+        if (latestResult != null) {
+            telemetry.addData("LL.result is valid?", latestResult.isValid());
+        }
+        return (latestResult != null && latestResult.isValid());
+    }
+
+    /**
+     * Gets the current robot pose X value
+     * @return robot pose X in inches, or Double.NaN if not valid result
+     */
+    public double getRobotX() {
+        if (!prepareAndCheck()) {
+            return Double.NaN;
+        }
+
+        // we need to swap x and y, and apply an inverse for blue alliance
+        double botPoseY = latestResult.getBotpose().getPosition().y;
+        double botPoseBlueX = Units.meters2Inches(-botPoseY);
+        double botPoseRedX = Units.meters2Inches(botPoseY);
+
+        return alliance == Alliance.BLUE ? botPoseBlueX : botPoseRedX;
+    }
+
+    /**
+     * Gets the current robot pose Y value in the odometry coordinate system
+     * @return robot pose Y in inches, or Double.NaN if not valid result
+     */
+    public double getRobotY() {
+        if (!prepareAndCheck()) {
+            return Double.NaN;
+        }
+
+        // we need to swap x and y, and apply an inverse for blue alliance
+        double botPoseX = latestResult.getBotpose().getPosition().x;
+        double botPoseBlueY = Units.meters2Inches(-botPoseX);
+        double botPoseRedY = Units.meters2Inches(botPoseX);
+
+        return alliance == Alliance.BLUE ? botPoseBlueY : botPoseRedY;
+    }
+
+    /**
+     * Gets the current robot pose heading (yaw) value in the odometry coordinate system
+     * @return robot pose H in degrees, or Double.NaN if not valid result
+     */
+    public double getRobotH() {
+        if (!prepareAndCheck()) {
+            return Double.NaN;
+        }
+
+        // we need to swap x and y, and apply an inverse for blue alliance
+        Pose3D botPose = latestResult.getBotpose();
+        double botPoseHeading = botPose.getOrientation().getYaw(AngleUnit.DEGREES);
+        double botPoseBlueH = -botPoseHeading - 90.0;
+        double botPoseRedH = 90.0 - botPoseHeading;
+
+        return alliance == Alliance.BLUE ? botPoseBlueH : botPoseRedH;
+    }
+
+    public double getTx() {
+        if (!prepareAndCheck()) {
+            return Double.NaN;
+        }
+        return latestResult.getTx();
+    }
+
+    public double getTy() {
+        if (!prepareAndCheck()) {
+            return Double.NaN;
+        }
+        return latestResult.getTy();
+    }
+
+    public double getTa() {
+        if (!prepareAndCheck()) {
+            return Double.NaN;
+        }
+        return latestResult.getTa();
+    }
+
 }

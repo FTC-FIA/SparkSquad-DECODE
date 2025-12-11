@@ -27,6 +27,8 @@ public class Aim implements Task {
     private static final DistanceUnit DU = DistanceUnit.INCH;
     private static final AngleUnit AU = AngleUnit.DEGREES;
 
+    private static final double ROTATE_SPEED = 0.3;
+
     public Aim(RobotBaseOpMode robot, double aimCorrectionBlue, double velocityCorrection) {
         mecanumDrive = robot.getMecanumDrive();
         odometer = robot.getOdometer();
@@ -68,9 +70,9 @@ public class Aim implements Task {
 
         double rotateSpeed = 0.0;
         if (hError > Constants.AIM_TOLERANCE) {
-            rotateSpeed = Constants.AIMER_ROTATE_SPEED;
+            rotateSpeed = ROTATE_SPEED;
         } else if (hError < -Constants.AIM_TOLERANCE) {
-            rotateSpeed = -Constants.AIMER_ROTATE_SPEED; //TODO: why negative?
+            rotateSpeed = -ROTATE_SPEED; //TODO: why negative?
         } else {
             rotateSpeed = 0.0;
         }
