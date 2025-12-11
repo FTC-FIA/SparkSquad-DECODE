@@ -142,7 +142,7 @@ public abstract class RobotBaseOpMode extends OpMode
 
         // Initialize components
         odometer = new Odometer(pinpointDriver);
-        limelight = new Limelight(limelight3A, alliance);
+        limelight = new Limelight(limelight3A, alliance, telemetry); // TODO: remove or reconsider pattern
         mecanumDrive = new MecanumDrive(frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor);
         fieldRelativeDrive = new FieldRelativeDrive(
                 frontLeftMotor,
@@ -165,6 +165,7 @@ public abstract class RobotBaseOpMode extends OpMode
         intakeController = new IntakeController(this);
         fieldRelativeDriveController = new FieldRelativeDriveController(this);
         robotRelativeDriveController = new RobotRelativeDriveController(this);
+        limelightOdometerController = new LimelightOdometerController(this);
 
 
         // Log status

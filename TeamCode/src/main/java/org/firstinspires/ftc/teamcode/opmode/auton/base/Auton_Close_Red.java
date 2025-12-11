@@ -23,8 +23,8 @@ import org.firstinspires.ftc.teamcode.task.Task;
 import org.firstinspires.ftc.teamcode.task.Wait;
 import org.firstinspires.ftc.teamcode.util.Alliance;
 
-@Autonomous(name="Blue Close (JustBlue)", group="Main")
-public class Auton_CloseUp_9Ball_JustBlue extends AutonBaseOpMode {
+@Autonomous(name="RED - CLOSE", group="Main")
+public class Auton_Close_Red extends AutonBaseOpMode {
 
     private final ElapsedTime elapsedTime = new ElapsedTime();
 
@@ -33,19 +33,21 @@ public class Auton_CloseUp_9Ball_JustBlue extends AutonBaseOpMode {
 
     @Override
     public void init() {
-        setAlliance(Alliance.BLUE);
+        setAlliance(Alliance.RED);
         super.init();
 
-        Pose2D startPose = Constants.CLOSE_START_BLUE.forAlliance(alliance);
+        Pose2D startPose = Constants.CLOSE_START_RED.forAlliance(alliance);
 
-        Pose2D shootPose1 = Constants.CLOSE_SHOT_1_BLUE.forAlliance(alliance);
-        Pose2D shootPose2 = Constants.CLOSE_SHOT_2_BLUE.forAlliance(alliance);
-        Pose2D shootPose3 = Constants.CLOSE_SHOT_3_BLUE.forAlliance(alliance);
+        Pose2D shootPose1 = Constants.CLOSE_SHOT_1_RED.forAlliance(alliance);
+        Pose2D shootPose2 = Constants.CLOSE_SHOT_2_RED.forAlliance(alliance);
+        Pose2D shootPose3 = Constants.CLOSE_SHOT_3_RED.forAlliance(alliance);
 
-        Pose2D intake1StartPose = Constants.INTAKE_CLOSE_START_BLUE.forAlliance(alliance);
-        Pose2D intake1EndPose = Constants.INTAKE_CLOSE_END_BLUE.forAlliance(alliance);
-        Pose2D intake2StartPose = Constants.INTAKE_MIDDLE_START_BLUE.forAlliance(alliance);
-        Pose2D intake2EndPose = Constants.INTAKE_MIDDLE_END_BLUE.forAlliance(alliance);
+        Pose2D intake1StartPose = Constants.INTAKE_CLOSE_START_RED.forAlliance(alliance);
+        Pose2D intake1EndPose = Constants.INTAKE_CLOSE_END_RED.forAlliance(alliance);
+        Pose2D intake2StartPose = Constants.INTAKE_MIDDLE_START_RED.forAlliance(alliance);
+        Pose2D intake2EndPose = Constants.INTAKE_MIDDLE_END_RED.forAlliance(alliance);
+
+        Pose2D endPose = Constants.CLOSE_PARK_RED.forAlliance(alliance);
 
         this.autonTaskList = new AutonTaskList(
             this,
@@ -71,10 +73,10 @@ public class Auton_CloseUp_9Ball_JustBlue extends AutonBaseOpMode {
                     ),
 
                     // shoot #1
-                    new Aim(this, 1.0, -30.0),
+                    new Aim(this, 2.0, -30.0),
                     new Shoot3(this),
 
-                    // start intake and keep it running
+                    // intake #1 - start intake
                     new StartIntake(this, 1.0),
 
                     // move to intake start position
@@ -82,23 +84,25 @@ public class Auton_CloseUp_9Ball_JustBlue extends AutonBaseOpMode {
                             this,
                             intake1StartPose.getX(DU),
                             intake1StartPose.getY(DU),
-                            intake1StartPose.getHeading(AU)
+                            intake1StartPose.getHeading(AU),
+                            0.6
                     ),
 
                     // start feeder to help with intake
                     new StartFeeder(this),
 
-                    // move to intake end position
+                    // move to 1st intake end position
                     new MoveWithPIDTo(
                             this,
                             intake1EndPose.getX(DU),
                             intake1EndPose.getY(DU),
                             intake1EndPose.getHeading(AU),
-                            0.5
+                            0.5,
+                            2.0
                     ),
 
                     // pause to inhale last ball, stop feeder so we don't shoot to early
-                    new Wait(this, 0.8),
+                    new Wait(this, 0.6),
                     new StopFeeder(this),
 
                     // go to 2nd shoot position
@@ -121,7 +125,8 @@ public class Auton_CloseUp_9Ball_JustBlue extends AutonBaseOpMode {
                             this,
                             intake2StartPose.getX(DU),
                             intake2StartPose.getY(DU),
-                            intake2StartPose.getHeading(AU)
+                            intake2StartPose.getHeading(AU),
+                            0.6
                     ),
 
                     // start feeder to help with intake
@@ -132,7 +137,8 @@ public class Auton_CloseUp_9Ball_JustBlue extends AutonBaseOpMode {
                             intake2EndPose.getX(DU),
                             intake2EndPose.getY(DU),
                             intake2EndPose.getHeading(AU),
-                            0.45
+                            0.4,
+                            2.5
                     ),
 
                     // pause to inhale last ball, stop feeder so we don't shoot to early
@@ -148,7 +154,7 @@ public class Auton_CloseUp_9Ball_JustBlue extends AutonBaseOpMode {
                     ),
 
                     // shoot
-                    new Aim(this, 7.0, -30.0),
+                    new Aim(this, 15.0, -30.0),
                     new Shoot3(this),
 
                     // Just stay put. No need to move to an end position

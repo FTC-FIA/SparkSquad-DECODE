@@ -1,6 +1,5 @@
-package org.firstinspires.ftc.teamcode.opmode.auton.base;
+package org.firstinspires.ftc.teamcode.opmode.auton.attic;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -21,25 +20,26 @@ import org.firstinspires.ftc.teamcode.task.StopIntake;
 import org.firstinspires.ftc.teamcode.task.StopShooter;
 import org.firstinspires.ftc.teamcode.task.Task;
 import org.firstinspires.ftc.teamcode.task.Wait;
-import org.firstinspires.ftc.teamcode.util.Alliance;
 
-@Autonomous(name="Blue Long (JustBlue)", group="Main")
-public class Auton_LongShot_6Ball_JustBlue extends AutonBaseOpMode {
+public abstract class Auton_LongShot_6Ball_AutoAim extends AutonBaseOpMode {
 
     private final ElapsedTime elapsedTime = new ElapsedTime();
 
     private static DistanceUnit DU = DistanceUnit.INCH;
     private static AngleUnit AU = AngleUnit.DEGREES;
 
+//    protected void setColor( Alliance color ) {
+//        this.color = color;
+//    }
+
     public void init() {
-        setAlliance(Alliance.BLUE);
         super.init();
 
-        Pose2D startPose = Constants.LONG_START_BLUE.forAlliance(alliance);
-        Pose2D shootPose = Constants.LONG_SHOT_BLUE.forAlliance(alliance);
-        Pose2D endPose = Constants.LONG_PARK_BLUE.forAlliance(alliance);
-        Pose2D intake3StartPose = Constants.INTAKE_FAR_START_BLUE.forAlliance(alliance);
-        Pose2D intake3EndPose = Constants.INTAKE_FAR_END_BLUE.forAlliance(alliance);
+        Pose2D startPose = Constants.LONG_START_RED.forAlliance(alliance);
+        Pose2D shootPose = Constants.LONG_SHOT_RED.forAlliance(alliance);
+        Pose2D endPose = Constants.LONG_PARK_RED.forAlliance(alliance);
+        Pose2D intake3StartPose = Constants.INTAKE_FAR_START_RED.forAlliance(alliance);
+        Pose2D intake3EndPose = Constants.INTAKE_FAR_END_RED.forAlliance(alliance);
 
         this.autonTaskList = new AutonTaskList(
             this,

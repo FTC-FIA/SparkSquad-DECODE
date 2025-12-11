@@ -30,7 +30,7 @@ public class KickerController {
             kicker.stop();
         }
 
-        telemetry.addData("Kicker power", kicker.getPower());
+        //telemetry.addData("Kicker power", kicker.getPower());
     }
 
 

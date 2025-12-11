@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.opmode.auton.red;
+package org.firstinspires.ftc.teamcode.opmode.auton.attic.red;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.opmode.auton.base.Auton_CloseUp_9Ball_AutoAim;
+import org.firstinspires.ftc.teamcode.opmode.auton.attic.Auton_CloseUp_9Ball_AutoAim;
 import org.firstinspires.ftc.teamcode.util.Alliance;
 
 @Autonomous(name="Red Close (Auto Aim)", group="Main")

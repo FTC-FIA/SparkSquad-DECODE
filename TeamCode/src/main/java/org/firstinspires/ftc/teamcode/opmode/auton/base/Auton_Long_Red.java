@@ -23,8 +23,8 @@ import org.firstinspires.ftc.teamcode.task.Task;
 import org.firstinspires.ftc.teamcode.task.Wait;
 import org.firstinspires.ftc.teamcode.util.Alliance;
 
-@Autonomous(name="Red Long (JustRed)", group="Main")
-public class Auton_LongShot_6Ball_JustRed extends AutonBaseOpMode {
+@Autonomous(name="RED - LONG", group="Main")
+public class Auton_Long_Red extends AutonBaseOpMode {
 
     private final ElapsedTime elapsedTime = new ElapsedTime();
 
@@ -59,7 +59,8 @@ public class Auton_LongShot_6Ball_JustRed extends AutonBaseOpMode {
                     ),
 
                     // shoot
-                    new Aim(this, 5.0, 5.0),
+                    new Aim(this, 7.0, -8.0), // aim correction is inverted
+                    new Wait(this, 1.0),
                     new Shoot3(this),
 
                     // start intake and keep it running
@@ -75,7 +76,7 @@ public class Auton_LongShot_6Ball_JustRed extends AutonBaseOpMode {
                     ),
 
                     // start feeder to help with intake
-                    new StartFeeder(this),
+                    new StartFeeder(this, 0.6),
 
                     // move to intake end position
                     new MoveWithPIDTo(this,
@@ -83,11 +84,11 @@ public class Auton_LongShot_6Ball_JustRed extends AutonBaseOpMode {
                             intake3EndPose.getY(DU),
                             intake3EndPose.getHeading(AU),
                             0.4,
-                            2.5
+                            3.0
                     ),
 
                     // stop feeder so we don't shoot to early
-                    new Wait(this, 0.42),
+                    new Wait(this, 0.2),
                     new StopFeeder(this),
 
                     // return to shoot position
@@ -100,7 +101,8 @@ public class Auton_LongShot_6Ball_JustRed extends AutonBaseOpMode {
                     ),
 
                     // shoot
-                    new Aim(this, 0.0, 10.0),
+                    new Aim(this, 5.0, 5.0), // aim correction is inverted
+                    new Wait(this, 0.5),
                     new Shoot3(this),
 
                     // get to end position

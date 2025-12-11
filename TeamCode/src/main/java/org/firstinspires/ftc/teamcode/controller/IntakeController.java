@@ -30,7 +30,7 @@ public class IntakeController {
         } else {
             intake.stop();
         }
-        telemetry.addData("Intake speed", intake.getIntakePower());
+        //telemetry.addData("Intake speed", intake.getIntakePower());
     }
 
 }

@@ -46,6 +46,5 @@ public abstract class TeleOp_AutoVelocity extends RobotBaseOpMode
 
         // Display Telemetry
         telemetry.addData("Runtime:", runtime.toString());
-        telemetry.update();
     }
 }

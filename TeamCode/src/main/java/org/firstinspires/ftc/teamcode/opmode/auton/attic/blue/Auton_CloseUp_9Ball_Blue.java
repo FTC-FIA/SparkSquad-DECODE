@@ -1,9 +1,9 @@
-package org.firstinspires.ftc.teamcode.opmode.auton.blue;
+package org.firstinspires.ftc.teamcode.opmode.auton.attic.blue;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.teamcode.opmode.auton.base.Auton_CloseUp_9Ball;
+import org.firstinspires.ftc.teamcode.opmode.auton.attic.Auton_CloseUp_9Ball;
 import org.firstinspires.ftc.teamcode.util.Alliance;
 
 @Autonomous(name="Blue Close (Old)", group="Main")

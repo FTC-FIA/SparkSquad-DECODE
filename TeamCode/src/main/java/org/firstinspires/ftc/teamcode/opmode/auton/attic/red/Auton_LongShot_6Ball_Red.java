@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auton.red;
+package org.firstinspires.ftc.teamcode.opmode.auton.attic.red;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 

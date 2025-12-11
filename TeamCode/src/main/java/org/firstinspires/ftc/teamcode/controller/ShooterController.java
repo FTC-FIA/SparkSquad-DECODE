@@ -55,7 +55,7 @@ public class ShooterController {
             shooterLed.setPosition(Constants.LED_RED);
         }
 
-        telemetry.addData("Shooter Velocity (req)", requestedVelocity);
-        telemetry.addData("Shooter Velocity (actual)", String.valueOf(shooter.getShooterVelocity()));
+        //telemetry.addData("Shooter Velocity (req)", requestedVelocity);
+        //telemetry.addData("Shooter Velocity (actual)", String.valueOf(shooter.getShooterVelocity()));
     }
 }

@@ -5,6 +5,7 @@ import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.LastKnown;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.opmode.RobotBaseOpMode;
 import org.firstinspires.ftc.teamcode.util.Alliance;
+import org.firstinspires.ftc.teamcode.util.PIDController;
 import org.firstinspires.ftc.teamcode.util.Units;
 
 public class Limelight {
@@ -20,28 +22,56 @@ public class Limelight {
     protected LLResult latestResult = null;
     protected Alliance alliance = Alliance.UNDEFINED;
     protected ElapsedTime timer = new ElapsedTime();
+
+    protected Telemetry telemetry;
+
     protected double lastResultTimeMS = 0;
     private static final int STALENESS_THRESHOLD = 100; // ms
 
-    public Limelight(Limelight3A limelight, Alliance alliance) {
+    public static final int ALL_TAG_PIPELINE = 0;
+    public static final int BLUE_TAG_PIPELINE = 1;
+    public static final int RED_TAG_PIPELINE = 2;
+    public static final int BASEMENT_BLUE_PIPELINE = 3;
+
+    public Limelight(Limelight3A limelight, Alliance alliance, Telemetry telemetry) {
         this.limelight = limelight;
         this.alliance = alliance;
+        this.telemetry = telemetry;
+        int pipeline = alliance == Alliance.BLUE ? BLUE_TAG_PIPELINE : RED_TAG_PIPELINE;
+        this.limelight.pipelineSwitch(pipeline);
+        timer.reset();
+    }
+
+    public void start() {
+        limelight.start();
     }
 
     private void updateResult() {
-        if (timer.milliseconds() - lastResultTimeMS >  STALENESS_THRESHOLD) {
+        double now = timer.milliseconds();
+        boolean isStale = (now - lastResultTimeMS) > STALENESS_THRESHOLD;
+        if (isStale) {
             latestResult = limelight.getLatestResult();
-            lastResultTimeMS = timer.milliseconds();
+            lastResultTimeMS = now;
         }
+        telemetry.addData("LL result is stale?", isStale);
+        telemetry.addData("last result ms", lastResultTimeMS);
+        telemetry.addData("Timer value", now);
+
     }
 
     private boolean prepareAndCheck() {
+        telemetry.addData("LL.alliance", this.alliance);
+        telemetry.addData("LL.latestResult is null?", this.latestResult == null);
+
         if (this.alliance == Alliance.UNDEFINED || this.limelight == null) {
             return false;
         }
 
         updateResult();
 
+        if (latestResult != null) {
+            telemetry.addData("LL.result is valid?", latestResult.isValid());
+        }
         return (latestResult != null && latestResult.isValid());
     }
 

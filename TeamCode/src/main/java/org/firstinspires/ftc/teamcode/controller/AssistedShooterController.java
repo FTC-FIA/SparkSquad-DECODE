@@ -128,25 +128,25 @@ public class AssistedShooterController {
             }
             mecanumDrive.drive(0.0, 0.0, rotateSpeed);
         }
-        telemetry.addData("Aimer adjustment", aimerAdjustment);
-        telemetry.addData("Velocity adjustment", velocityAdjustment);
-
-        telemetry.addData("Robot Heading", robotHeading);
-        telemetry.addData("Rec'd heading", recommendedHeading);
-        telemetry.addData("Target heading", targetHeading);
-        telemetry.addData("** HEADING ERROR", targetHeading - robotHeading);
-
-        telemetry.addData("Distance to Target", distance);
-        telemetry.addData("Target X", targetX);
-        telemetry.addData("Target Y", targetY);
-
-        //double currVelocity = shooter.getShooterVelocity();
-        telemetry.addData("Rec'd velocity", recommendedVelocity);
-        telemetry.addData("Target velocity", targetVelocity);
-        telemetry.addData("Previous Velocity", previousVelocity);
-        telemetry.addData("Current Velocity", actualVelocity);
-        telemetry.addData("Is Running", isRunning);
-        telemetry.addData("** VELOCITY ERROR", targetVelocity - actualVelocity);
+//        telemetry.addData("Aimer adjustment", aimerAdjustment);
+//        telemetry.addData("Velocity adjustment", velocityAdjustment);
+//
+//        telemetry.addData("Robot Heading", robotHeading);
+//        telemetry.addData("Rec'd heading", recommendedHeading);
+//        telemetry.addData("Target heading", targetHeading);
+//        telemetry.addData("** HEADING ERROR", targetHeading - robotHeading);
+//
+//        telemetry.addData("Distance to Target", distance);
+//        telemetry.addData("Target X", targetX);
+//        telemetry.addData("Target Y", targetY);
+//
+//        //double currVelocity = shooter.getShooterVelocity();
+//        telemetry.addData("Rec'd velocity", recommendedVelocity);
+//        telemetry.addData("Target velocity", targetVelocity);
+//        telemetry.addData("Previous Velocity", previousVelocity);
+//        telemetry.addData("Current Velocity", actualVelocity);
+//        telemetry.addData("Is Running", isRunning);
+//        telemetry.addData("** VELOCITY ERROR", targetVelocity - actualVelocity);
     }
 
 }

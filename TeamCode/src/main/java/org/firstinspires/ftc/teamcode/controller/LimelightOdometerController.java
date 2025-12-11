@@ -13,6 +13,7 @@ public class LimelightOdometerController {
     private Odometer odometer;
     private Limelight limelight;
     private Telemetry telemetry;
+    private boolean isStarted = false;
 
     public LimelightOdometerController(RobotBaseOpMode robot) {
         this.odometer = robot.getOdometer();
@@ -22,23 +23,29 @@ public class LimelightOdometerController {
 
     // handles limelight input, not human input, but does run on every cycle
     public void handleInput() {
+        if (!isStarted) {
+            limelight.start();
+            isStarted = true;
+        }
         odometer.update();
         double limelightX = limelight.getRobotX();
         double limelightY = limelight.getRobotY();
         double limelightH = limelight.getRobotH();
+        telemetry.addData("LL X", limelightX);
+        telemetry.addData("LL Y", limelightY);
+        telemetry.addData("LL H", limelightH);
 
         // check if results are invalid
         if (Double.isNaN(limelightX) || Double.isNaN(limelightY) || Double.isNaN(limelightH)) {
+            telemetry.addData("Limelight override?", "NO");
             return;
         }
 
         // if not, update odometer
         Pose2D limelightPose2D = new Pose2D(DistanceUnit.INCH, limelightX, limelightY, AngleUnit.DEGREES, limelightH);
-        odometer.setPosition(limelightPose2D);
+        //odometer.setPosition(limelightPose2D);
 
-        telemetry.addData("LL X", limelightX);
-        telemetry.addData("LL Y", limelightY);
-        telemetry.addData("LL H", limelightH);
+        telemetry.addData("Limelight override?", "YES");
         //TODO: smooth limelight values?
         //TODO: only update if bot is not moving?
     }

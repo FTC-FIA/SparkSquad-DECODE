@@ -83,21 +83,21 @@ public class Constants {
     public static AlliancePose2D INTAKE_CLOSE_START_BLUE = new AlliancePose2D(20.0, 14.0, 180.0, Alliance.BLUE); // PPG
     public static AlliancePose2D INTAKE_CLOSE_START_RED = new AlliancePose2D(20.0, -14.0, 180.0, Alliance.RED); // PPG
 
-    public static AlliancePose2D INTAKE_MIDDLE_START_BLUE = new AlliancePose2D(24.0, -8.0, 180.0, Alliance.BLUE); // PGP
-    public static AlliancePose2D INTAKE_MIDDLE_START_RED = new AlliancePose2D(24.0, 12.0, 180.0, Alliance.RED); // PGP
+    public static AlliancePose2D INTAKE_MIDDLE_START_BLUE = new AlliancePose2D(24.0, -9.0, 180.0, Alliance.BLUE); // PGP
+    public static AlliancePose2D INTAKE_MIDDLE_START_RED = new AlliancePose2D(24.0, 12.5, 180.0, Alliance.RED); // PGP
 
-    public static AlliancePose2D INTAKE_FAR_START_BLUE = new AlliancePose2D(24.0, -38.0, 180.0, Alliance.BLUE); // GPP
-    public static AlliancePose2D INTAKE_FAR_START_RED = new AlliancePose2D(24.0, 38.0, 180.0, Alliance.RED); // GPP
+    public static AlliancePose2D INTAKE_FAR_START_BLUE = new AlliancePose2D(24.0, -36.0, 180.0, Alliance.BLUE); // GPP
+    public static AlliancePose2D INTAKE_FAR_START_RED = new AlliancePose2D(24.0, 36.0, 180.0, Alliance.RED); // GPP
 
     // Intake end positions
-    public static AlliancePose2D INTAKE_CLOSE_END_BLUE = new AlliancePose2D(54.0, 14.0, 180.0, Alliance.BLUE); // PPG
+    public static AlliancePose2D INTAKE_CLOSE_END_BLUE = new AlliancePose2D(55.0, 14.0, 180.0, Alliance.BLUE); // PPG
     public static AlliancePose2D INTAKE_CLOSE_END_RED = new AlliancePose2D(54.0, -14.0, 180.0, Alliance.RED); // PPG
 
-    public static AlliancePose2D INTAKE_MIDDLE_END_BLUE = new AlliancePose2D(61.0, -8.0, 180.0, Alliance.BLUE); // PGP
-    public static AlliancePose2D INTAKE_MIDDLE_END_RED = new AlliancePose2D(63.0, 12.0, 180.0, Alliance.RED); // PGP
+    public static AlliancePose2D INTAKE_MIDDLE_END_BLUE = new AlliancePose2D(65.0, -9.0, 180.0, Alliance.BLUE); // PGP
+    public static AlliancePose2D INTAKE_MIDDLE_END_RED = new AlliancePose2D(65.0, 12.5, 180.0, Alliance.RED); // PGP
 
-    public static AlliancePose2D INTAKE_FAR_END_BLUE = new AlliancePose2D(61.5, -38.0, 180.0, Alliance.BLUE); // GPP
-    public static AlliancePose2D INTAKE_FAR_END_RED = new AlliancePose2D(61.5, 38.0, 180.0, Alliance.RED); // GPP
+    public static AlliancePose2D INTAKE_FAR_END_BLUE = new AlliancePose2D(64.0, -36.0, 180.0, Alliance.BLUE); // GPP
+    public static AlliancePose2D INTAKE_FAR_END_RED = new AlliancePose2D(64.0, 36.0, 180.0, Alliance.RED); // GPP
 
     // Ending positions
     public static AlliancePose2D CLOSE_PARK_BLUE = new AlliancePose2D(54.0, 30.0, 0.0, Alliance.BLUE);
